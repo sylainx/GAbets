@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="assets"/>
+  <qresource prefix="icons">
+    <file>brands/brands.qrc</file>
+  </qresource>
+  <qresource prefix="images">
+    <file>images/image.qrc</file>
+  </qresource>
+</RCC>
