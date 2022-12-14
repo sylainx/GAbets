@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from Models.UsersModel import UsersModel
+from views.RegisterView import RegisterView
+from views.LoginView import LoginView
 from PyQt5.QtGui import QIcon
 import sys
 
@@ -18,10 +19,10 @@ class MainView(QMainWindow):
     def creerMenu(self):
         self.mnBar = self.menuBar()
         # self.mnBar.setStyleSheet("position:absolute;right:0;")
-        self.inscriptions = self.mnBar.addMenu("Inscriptions")
+        self.inscriptions = self.mnBar.addMenu("Inscription")
         self.session1 = self.inscriptions.addAction("Session 1")
         # ajouter des evements sur le sous-menu session 1
-        self.session1.triggered.connect(self.callDossier)
+        self.session1.triggered.connect(self.callLogin)
         self.session1.setShortcut("CTRL+A")
         self.session2 = self.inscriptions.addAction("Session 2")
         # ajouter des evements sur le sous-menu session 2
@@ -32,9 +33,9 @@ class MainView(QMainWindow):
         self.notes.triggered.connect(self.callNotes)
         self.bulletin = self.mnBar.addMenu("Bulletins")
 
-    def callDossier(self):
-        dossier = UsersModel(self)
-        dossier.show()
+    def callLogin(self):
+        login = LoginView(self)
+        login.show()
 
     def callNotes(self):
         print("Notes")

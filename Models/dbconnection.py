@@ -5,7 +5,7 @@ class DBConnection:
 
     def connection(self):
         host="localhost"
-        db_name="test_betsSport"
+        db_name="ag_betssport"
         user="root"
         pwd=""
 
