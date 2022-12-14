@@ -1,8 +1,10 @@
 import bcrypt
 from datetime import date
+import re
 
 class Helpers:
 
+    
     def __init__(self):
         # TODO:
         pass
@@ -38,3 +40,28 @@ class Helpers:
     
     def get_day(self,):
         return date.today()
+
+    
+    
+    # Define a function for validating an Email
+    def check_email(self,email:str):
+        regex_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+        
+        if(re.fullmatch(regex_email, email)):
+            return True    
+        else:
+            return False
+    
+    def is_validate(self,val):
+        if val:
+            return True
+        return False
+   
+    def validate_password(self,pwd):
+        MIN_PWD=4
+        MAX_PWD=30
+
+        if len(pwd) >= MIN_PWD and len(pwd) <= MAX_PWD and pwd.isalpha():
+            return True
+        
+        return False

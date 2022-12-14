@@ -23,7 +23,7 @@ class TeamsModel:
             # prepare queries
             query = " INSERT INTO `teams`(`id`, `title`, `ratio`, `agent_id`, `created_at`,\
             `updated_at`, `deleted_at`) \
-            VALUES (%s,%s,%s,%s,%s,%s,%s)) "
+            VALUES (%s,%s,%s,%s,%s,%s,%s) "
 
             # cursor
             self.cursor = self.conn.cursor(prepared=True)

@@ -1,6 +1,5 @@
 from PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QRadioButton, QTableWidgetItem, QTableWidget, QTextEdit, QComboBox, QDateEdit, QPushButton, QVBoxLayout, QFormLayout, QGridLayout, QTabWidget, QWidget, QHBoxLayout
 from PyQt5.QtCore import Qt
-from Models.UsersModel import UsersModel
 from Models.RegisterModel import RegisterModel
 from datetime import date
 

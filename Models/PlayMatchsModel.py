@@ -32,7 +32,7 @@ class RegisterModel:
             # creer la chaine de requete
             requete = " INSERT INTO `users`(`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`, `username`, `nif`, \
                 `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) \
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)) "
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
 
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)

@@ -1,6 +1,4 @@
 from datetime import date
-
-import bcrypt
 import mysql.connector
 from PyQt5.QtWidgets import QMessageBox
 from Helpers.Helpers import Helpers

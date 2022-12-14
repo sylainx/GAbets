@@ -9,7 +9,7 @@ class RegisterModel:
     util = Helpers()
 
     def __init__(self, lastname=None, firstname=None, email=None, sexe=None, date_nais=None, tel=None, password=None,
-                 address=None, agent_id=None, username=None, nif=None):
+                 address=None, username=None, nif=None):
         self.lastname = lastname
         self.firstname = firstname
         self.username = username
@@ -20,7 +20,6 @@ class RegisterModel:
         self.password = password
         self.address = address
         self.nif = nif
-        self.agent_id = agent_id
 
     def enregistrer(self):
         try:
@@ -33,16 +32,19 @@ class RegisterModel:
             pwd_hashed = self.util.hash_password(self.password)
 
             # creer la chaine de requete
-            requete = " INSERT INTO `users`(`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`, `username`, `nif`, \
-                `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) \
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)) "
+                        
+            
+            requete = " INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`,\
+                 `username`, `nif`, `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) \
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
 
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)
             # definir les valeurs
-            valeurs = [None, self.firstname, self.lastname, self.email, self.tel, code_user,
-                       self.address, self.username, self.nif, self.sexe, self.date_nais, pwd_hashed, self.get_day, self.get_day, None]
-
+            valeurs = ["None", self.firstname, self.lastname, self.email, self.tel, code_user,
+                       self.address, self.username, self.nif, self.sexe, self.date_nais, pwd_hashed, self.util.get_day(), 
+                       self.util.get_day(), None]
+            print(f'Valeurs: {valeurs} ')
             # executer la requete
             result = self.cursor.execute(requete, valeurs)
 
@@ -62,7 +64,7 @@ class RegisterModel:
             # retourne le nombre de ligne affecte
 
         except mysql.connector.Error as erreur:
-            QMessageBox.warning(None, "Erreur", "Erreur " +
+            QMessageBox.warning(None, "Erreur", "Erreur - " +
                                 str(erreur), QMessageBox.Ok)
             # fermer le cursor
             self.cursor.close()

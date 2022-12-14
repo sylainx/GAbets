@@ -21,7 +21,7 @@ class MatchsModel:
             # creer la chaine de requete
             requete = " INSERT INTO `matchs`(`id`, `home_team_id`, `move_team_id`, `priority_id`, `created_at`, `updated_at`,\
                  `deleted_at`, `agent_id`, `country`)\
-                VALUES (%s,%s,%s,%s,%s)) "
+                VALUES (%s,%s,%s,%s,%s) "
 
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)
