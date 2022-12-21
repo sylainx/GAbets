@@ -32,7 +32,6 @@ class RegisterModel:
             pwd_hashed = self.util.hash_password(self.password)
 
             # creer la chaine de requete
-                        
             
             requete = " INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`,\
                  `username`, `nif`, `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) \

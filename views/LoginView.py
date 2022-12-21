@@ -202,7 +202,6 @@ class LoginView(QDialog):
             errorMsg="Email don't valid"
         
         
-
         # display error
         if errorMsg :
             QMessageBox.warning(

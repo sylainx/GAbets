@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 from views.RegisterView import RegisterView
 from views.LoginView import LoginView
 from PyQt5.QtGui import QIcon
@@ -15,25 +15,33 @@ class MainView(QMainWindow):
         self.setWindowIcon(QIcon("./assets/icons/calendar.png"))
         # self.setStyleSheet("background-color:#a45378")
         self.creerMenu()
+        self.showLineUps()
 
     def creerMenu(self):
         self.mnBar = self.menuBar()
+
         # self.mnBar.setStyleSheet("position:absolute;right:0;")
-        self.inscriptions = self.mnBar.addMenu("Inscription")
-        self.session1 = self.inscriptions.addAction("Session 1")
+        self.inscriptions = self.mnBar.addMenu("Compte")
+        
+        self.account = self.inscriptions.addAction("Connexion")
         # ajouter des evements sur le sous-menu session 1
-        self.session1.triggered.connect(self.callLogin)
-        self.session1.setShortcut("CTRL+A")
-        self.session2 = self.inscriptions.addAction("Session 2")
+        self.account.triggered.connect(self.callAuthenticate)
+        self.account.setShortcut("CTRL+A")
+        self.matchs = self.inscriptions.addAction("Session 2")
         # ajouter des evements sur le sous-menu session 2
-        self.session2.triggered.connect(self.callCourses)
-        self.session2.setShortcut("CTRL+B")
+        self.matchs.triggered.connect(self.callCourses)
+        self.matchs.setShortcut("CTRL+B")
+        
         self.cours = self.mnBar.addMenu("Cours")
         self.notes = self.mnBar.addAction("Notes")
         self.notes.triggered.connect(self.callNotes)
         self.bulletin = self.mnBar.addMenu("Bulletins")
 
-    def callLogin(self):
+
+    def showLineUps(self,):
+        self.tabWidget = QWidget
+
+    def callAuthenticate(self):
         login = LoginView(self)
         login.show()
 

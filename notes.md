@@ -2,14 +2,16 @@
 
 
 
-### library to install
+### library to install to run this project
 
 ``` shell
-
 pip install PyQt5
 pip install pyqt-tools
 # if PyQt5 Designer not installed 
 pip install PyQt5Designer
+# download mysql.connect
+pip install mysql.connector
+pip3 install bcrypt
 
 #Encrypt password
 pip install bcrypt
