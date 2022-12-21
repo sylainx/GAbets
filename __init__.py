@@ -9,7 +9,7 @@ class MainView(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("BETS SPORTS")
+        self.setWindowTitle("AG BETS SPORTS")
         self.setMinimumSize(400, 400)
         self.showMaximized()
         self.setWindowIcon(QIcon("./assets/icons/calendar.png"))

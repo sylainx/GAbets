@@ -72,4 +72,3 @@ class LoginModel:
                 self.conn.close()
 
     # end function check_user_connection
-
