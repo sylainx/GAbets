@@ -39,7 +39,9 @@ class MainView(QMainWindow):
 
 
     def showLineUps(self,):
-        self.tabWidget = QWidget
+        self.tabWidget = QWidget()
+
+        self.tabWidget
 
     def callAuthenticate(self):
         login = LoginView(self)
