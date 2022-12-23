@@ -4,8 +4,10 @@ from views.LoginView import LoginView
 from PyQt5.QtGui import QIcon
 import sys
 
+from views.paymentWidget import Ui_PaymentManageWidget
 
-class MainView(QMainWindow):
+
+class MainProject(QMainWindow, Ui_PaymentManageWidget):
 
     def __init__(self):
         super().__init__()
@@ -15,14 +17,14 @@ class MainView(QMainWindow):
         self.setWindowIcon(QIcon("./assets/icons/calendar.png"))
         # self.setStyleSheet("background-color:#a45378")
         self.creerMenu()
-        self.showLineUps()
+        self.setupUi(self)
 
     def creerMenu(self):
         self.mnBar = self.menuBar()
 
         # self.mnBar.setStyleSheet("position:absolute;right:0;")
         self.inscriptions = self.mnBar.addMenu("Compte")
-        
+
         self.account = self.inscriptions.addAction("Connexion")
         # ajouter des evements sur le sous-menu session 1
         self.account.triggered.connect(self.callAuthenticate)
@@ -31,17 +33,15 @@ class MainView(QMainWindow):
         # ajouter des evements sur le sous-menu session 2
         self.matchs.triggered.connect(self.callCourses)
         self.matchs.setShortcut("CTRL+B")
-        
+
         self.cours = self.mnBar.addMenu("Cours")
         self.notes = self.mnBar.addAction("Notes")
         self.notes.triggered.connect(self.callNotes)
         self.bulletin = self.mnBar.addMenu("Bulletins")
 
-
     def showLineUps(self,):
-        self.tabWidget = QWidget()
-
-        self.tabWidget
+        self.payScreen = Ui_PaymentManageWidget()
+        self.payScreen.setupUi(self)
 
     def callAuthenticate(self):
         login = LoginView(self)
@@ -54,7 +54,13 @@ class MainView(QMainWindow):
         print("cours")
 
 
-app = QApplication([])
-mv = MainView()
-mv.show()
-app.exec()
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    window = MainProject()
+    window.show()
+    sys.exit(app.exec_())
+
+# app = QApplication([])
+# mv = MainView()
+# mv.show()
+# app.exec()

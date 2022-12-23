@@ -17,7 +17,10 @@ pip install bcrypt
 #Try install package 
 python -m pip install <P A C K A G E   N A M E>
 #Convert .ui files in .py
-pyuic5 -m FILE_NAME.ui -o FILE_NAME.py
+# try on Windows
+# pyuic5 -m FILE_NAME.ui -o FILE_NAME.py
+# work in MAC
+pyuic5 FILE_NAME.ui -o FILE_NAME.py
 
 # compile resources - will be contain all assets
 pyrcc5 resources.qrc -o resources.py

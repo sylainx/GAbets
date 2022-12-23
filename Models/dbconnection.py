@@ -8,7 +8,7 @@ class DBConnection:
         host = "localhost"
         db_name = "ag_betssport"
         user = "root"
-        pwd = ''
+        pwd = 'root'
 
         try:
             self.conn = mysql.connector.connect(
