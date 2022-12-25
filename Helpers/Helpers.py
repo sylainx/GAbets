@@ -7,7 +7,10 @@ class Helpers:
     
     def __init__(self):
         # TODO:
-        pass
+        self.NAME="AG BETS SOCCER"
+
+    def app_name(self,)->str:
+        return self.NAME;
 
     def hash_password(self, password: str):
         # PASSWORD IS ENCODE to BYTE before hashed

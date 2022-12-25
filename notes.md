@@ -9,6 +9,10 @@ pip install pyqt-tools
 pip install PyQt5Designer
 # download mysql.connect
 pip install mysql.connector
+# or
+pip install mysql-connector-python-rf
+
+# download bcrypt
 pip3 install bcrypt
 
 #Encrypt password
@@ -26,3 +30,10 @@ pyuic5 FILE_NAME.ui -o FILE_NAME.py
 pyrcc5 resources.qrc -o resources.py
 
 ```
+
+# COLORS
+
+rouge: #E62641;
+color: #FAFAFA;
+background-color: #2C2C2C;
+background-color: #1E1E1E; fonce

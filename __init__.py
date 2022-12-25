@@ -1,23 +1,27 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
+from Controllers.DashboardController import DashboardController
+from Helpers.Helpers import Helpers
 from views.RegisterView import RegisterView
 from views.LoginView import LoginView
 from PyQt5.QtGui import QIcon
 import sys
-
+from views.Dashboard.DashboardView import Ui_DashboardView
 from views.paymentWidget import Ui_PaymentManageWidget
 
-
-class MainProject(QMainWindow, Ui_PaymentManageWidget):
+class MainProject(QMainWindow, ):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("AG BETS SPORTS")
+        self.setWindowTitle(Helpers().app_name())
         self.setMinimumSize(400, 400)
         self.showMaximized()
         self.setWindowIcon(QIcon("./assets/icons/calendar.png"))
-        # self.setStyleSheet("background-color:#a45378")
         self.creerMenu()
-        self.setupUi(self)
+
+        # self.callAuthenticate()
+        self.callDashboard()
+        # show payment Widget
+        # self.callPaymentLayout()
 
     def creerMenu(self):
         self.mnBar = self.menuBar()
@@ -40,12 +44,22 @@ class MainProject(QMainWindow, Ui_PaymentManageWidget):
         self.bulletin = self.mnBar.addMenu("Bulletins")
 
     def showLineUps(self,):
-        self.payScreen = Ui_PaymentManageWidget()
-        self.payScreen.setupUi(self)
+        # self.payScreen = Ui_PaymentManageWidget()
+        # self.payScreen.setupUi(self)
+        print(" there is NOthing now in LIneups now")
 
     def callAuthenticate(self):
         login = LoginView(self)
         login.show()
+
+    def callDashboard(self) -> None:
+        dashboard = DashboardController()
+        dashboard.showDashboard(self)
+
+
+    def callPaymentLayout(self) -> None:
+        pay = Ui_PaymentManageWidget()
+        pay.setupUi(self)
 
     def callNotes(self):
         print("Notes")
@@ -55,12 +69,8 @@ class MainProject(QMainWindow, Ui_PaymentManageWidget):
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)
+    app = QApplication([])
     window = MainProject()
     window.show()
-    sys.exit(app.exec_())
+    app.exec_()
 
-# app = QApplication([])
-# mv = MainView()
-# mv.show()
-# app.exec()

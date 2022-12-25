@@ -1,0 +1,68 @@
+<RCC>
+  <qresource prefix="images">
+    <file>ball.jpg</file>
+    <file>goal.jpg</file>
+    <file>panorama.jpg</file>
+    <file>play.jpg</file>
+    <file>shoot.jpg</file>
+    <file>stadium.jpg</file>
+    <file>tt.png</file>
+  </qresource>
+  <qresource prefix="teams">
+    <file>teams/0XmrZHobvb6ua5tgMOnTEA_48x48.png</file>
+    <file>teams/5BhAG7vGRyQLIXtfMG3L2Q_48x48.png</file>
+    <file>teams/92Aw_iasBENKmzvdpbTpHQ_48x48.png</file>
+    <file>teams/ajaccio.png</file>
+    <file>teams/ajax.png</file>
+    <file>teams/allemagne.png</file>
+    <file>teams/arabie-saoudite.png</file>
+    <file>teams/Argentina.png</file>
+    <file>teams/ars.png</file>
+    <file>teams/aston.png</file>
+    <file>teams/atc.png</file>
+    <file>teams/atm.png</file>
+    <file>teams/australis.png</file>
+    <file>teams/Autriche.png</file>
+    <file>teams/auxerre.png</file>
+    <file>teams/Bayern.png</file>
+    <file>teams/belgique.png</file>
+    <file>teams/benifica.png</file>
+    <file>teams/BQdP4jUBFJfG7U_JBsFIMg_48x48.png</file>
+    <file>teams/brentford.png</file>
+    <file>teams/brezil.png</file>
+    <file>teams/brighton.png</file>
+    <file>teams/cadiz.png</file>
+    <file>teams/Canada.png</file>
+    <file>teams/celta_vigo.png</file>
+    <file>teams/celtic.png</file>
+    <file>teams/chelsea.png</file>
+    <file>teams/clermont.png</file>
+    <file>teams/costa rica.png</file>
+    <file>teams/croatia.png</file>
+    <file>teams/danemark.png</file>
+    <file>teams/DE7-gNIPSRkzKx4FKSwxOw_48x48.png</file>
+    <file>teams/dinamo Zagreb.png</file>
+    <file>teams/Dortmund.png</file>
+    <file>teams/E5wkv8G7RBA2I0VsSq7Y1A_48x48.png</file>
+    <file>teams/E8bC8MBR8FwSP3ONEhMxjw_48x48.png</file>
+    <file>teams/ecuador.png</file>
+    <file>teams/england.png</file>
+    <file>teams/esp.png</file>
+    <file>teams/everton.png</file>
+    <file>teams/fcb.png</file>
+    <file>teams/fiona.png</file>
+    <file>teams/france.png</file>
+    <file>teams/frankfurt.png</file>
+    <file>teams/g2S0HUWrWZX9hwKC87W11Q_48x48.png</file>
+    <file>teams/galles.png</file>
+    <file>teams/getafe.png</file>
+    <file>teams/girona.png</file>
+    <file>teams/goal2.jpg</file>
+    <file>teams/GoeTFIVAZLA5JWk0-A6B0A_48x48.png</file>
+    <file>teams/hollande.png</file>
+    <file>teams/int.png</file>
+    <file>teams/iran.png</file>
+    <file>teams/japon.png</file>
+    <file>teams/juv.png</file>
+  </qresource>
+</RCC>
