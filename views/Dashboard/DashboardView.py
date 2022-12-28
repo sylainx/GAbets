@@ -23,14 +23,14 @@ class Ui_DashboardView(object):
                                  "}\n"
                                  "\n"
                                  "QLineEdit{\n"
-                                 "    height: 35px;\n"
+                                #  "    height: 35px;\n"
                                  "    font-weight: bold;\n"
-                                 "    margin-top:10px;\n"
-                                 "    padding: 5px 15px;\n"
-                                 "    border: 2px solid gray;\n"
+                                #  "    margin-top:10px;\n"
+                                #  "    padding: 5px 15px;\n"
+                                #  "    border: 2px solid gray;\n"
                                  "}\n"
                                  "QLineEdit:focus{\n"
-                                 "    border:1px solid green;\n"
+                                #  "    border:1px solid green;\n"
                                  "}\n"
                                  "\n"
                                  "QCheckBox{\n"
@@ -38,6 +38,12 @@ class Ui_DashboardView(object):
                                  "    color: rgb(255, 255, 255);\n"
                                  "\n"
                                  "}\n"
+                                 "QPushButton{\n"
+                                    "background-color: #2C2C2C;\n"
+                                    "color: #FAFAFA;\n"
+                                    "border-radius: 10px;\n"
+                                    "padding: 10px 15px;"                            
+                                 "}"
                                  "#loginbtn{\n"
                                  "    margin-top:15px;\n"
                                  "    height:50px;\n"
@@ -50,6 +56,9 @@ class Ui_DashboardView(object):
                                  "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        # self.centralwidget.setStyleSheet("background-color: ")
+
+
         self.MainContentFrame = QtWidgets.QFrame(self.centralwidget)
         self.MainContentFrame.setGeometry(
             QtCore.QRect(0, 96, 16777214, 16777214))
@@ -73,6 +82,10 @@ class Ui_DashboardView(object):
         # Left aside
         self.LeftAside = QtWidgets.QFrame(self.MainContentFrame)
         self.LeftAside.setEnabled(True)
+        # self.LeftAside.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.LeftAside.setStyleSheet("background-color: #1E1E1E;")
+        self.LeftAside.setObjectName("left_aside")
+
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -89,25 +102,26 @@ class Ui_DashboardView(object):
         self.LeftAside.setObjectName("LeftAside")
 
         
-        # datas will be load here
-        
-
+        # TODO: LEFT ASIDE -> initialization
         self.horizontalLayout_3.addWidget(self.LeftAside)
         # end left aside
 
 
         # TODO: FUNCTION RIGHT ASIDE
-        self.rightAsideFrameFunc()
+        # self.rightAsideFrameFunc()
+        self.showListMatch()
 
         # TABLE: PAYMENTS HISTORY
         # self.verticalLayout_6.addWidget(self.tabPayment_QTW)
 
-        self.verticalLayout_7.addWidget(self.BottomBox)
+
+        self.RightAside = QtWidgets.QFrame(self.MainContentFrame)
 
         self.horizontalLayout_3.addWidget(self.RightAside)
 
         # TODO: FUCNTION TO CALL HEADER
-        self.headerContentFunc(MainWindow)
+        self.headerContentFunc()
+
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -118,13 +132,15 @@ class Ui_DashboardView(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
+       
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def headerContentFunc(self, MainWindow):
 
-        # start HEADERLAYOUT
+    # END SETUPUI()
 
+    def headerContentFunc(self,):
+
+        # start HEADER LAYOUT
         self.HeaderFrame = QtWidgets.QFrame(self.centralwidget)
         self.HeaderFrame.setGeometry(QtCore.QRect(0, 0, 1131, 86))
         sizePolicy = QtWidgets.QSizePolicy(
@@ -176,9 +192,9 @@ class Ui_DashboardView(object):
                                     "border-radius: 10px;\n"
                                     "padding: 10px 15px;")
         self.matchQPB.setObjectName("matchQPB")
+        self.matchQPB.setText("Matchs")
         self.horizontalLayout_2.addWidget(self.matchQPB)
         self.matchQPB.clicked.connect(lambda: self.printHello())
-        
 
         # end Match BTN
 
@@ -189,10 +205,9 @@ class Ui_DashboardView(object):
                                      "border-radius: 10px;\n"
                                      "padding: 10px 15px;")
         self.betsQPBtn.setObjectName("betsQPB")
+        self.betsQPBtn.setText("Pariages")
         self.horizontalLayout_2.addWidget(self.betsQPBtn)
         self.betsQPBtn.clicked.connect(lambda: self.printBet())
-        
-
         # END match bets BTN
 
         # start team BTN
@@ -203,7 +218,8 @@ class Ui_DashboardView(object):
                                    "padding: 10px 15px;\n"
                                    "")
         self.teamQPB.setObjectName("teamQPB")
-        self.teamQPB.clicked.connect(lambda: self.printTest())
+        self.teamQPB.setText("Equipes")
+        
        
         self.horizontalLayout_2.addWidget(self.teamQPB)
         # end team BTN
@@ -238,17 +254,17 @@ class Ui_DashboardView(object):
                                      "padding: 10px 15px;\n"
                                      "")
         self.logoutQPB.setObjectName("logoutQPB")
+        self.logoutQPB.setText("Logout")
         self.verticalLayout_2.addWidget(self.logoutQPB)
         # self.verticalLayout_2.addWidget("Logout")
         self.horizontalLayout.addWidget(self.RightHeaderFrame)
-        self.retranslateUi(MainWindow)
-
+        
 
 
     def rightAsideFrameFunc(self):
 
         #  FRAME: START RIGHT ASIDE
-        self.RightAside = QtWidgets.QFrame(self.MainContentFrame)
+        # self.verticalLayout_7.addWidget(self.BottomBox)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
         sizePolicy.setHorizontalStretch(0)
@@ -266,25 +282,61 @@ class Ui_DashboardView(object):
 
         self.verticalLayout_7.setContentsMargins(-1, -1, -1, 20)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
+
+
+
+        # TODO: START TOPBOX CONTAINER
+
         self.TopBox = QtWidgets.QFrame(self.RightAside)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        # sizePolicy = QtWidgets.QSizePolicy(
+        #     QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.TopBox.sizePolicy().hasHeightForWidth())
         self.TopBox.setSizePolicy(sizePolicy)
-        self.TopBox.setMaximumSize(QtCore.QSize(16777215, 120))
+        # self.TopBox.setMaximumSize(QtCore.QSize(10, 120))
         self.TopBox.setAutoFillBackground(False)
         self.TopBox.setStyleSheet("background-color: #2C2C2C;\n"
                                   "border-radius: 10px")
         self.TopBox.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.TopBox.setFrameShadow(QtWidgets.QFrame.Raised)
         self.TopBox.setObjectName("TopBox")
+
+
+        # START INCOMEBOX
+        self.IncomeBox = QtWidgets.QFrame(self.TopBox)
+        self.IncomeBox.setStyleSheet("background-color: #1E1E1E;\n"
+                                     "border-radius: 10px")
+        self.IncomeBox.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.IncomeBox.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.IncomeBox.setObjectName("IncomeBox")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.IncomeBox)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+
+        self.incomeLbl = QtWidgets.QLabel(self.IncomeBox)
+        font = QtGui.QFont()
+        font.setFamily("JetBrains Mono")
+        font.setPointSize(14)
+        self.incomeLbl.setFont(font)
+        self.incomeLbl.setText("Revenu")
+        self.incomeLbl.setStyleSheet("color: #fafafa;\n"
+                                     "text-align:center;")
+        self.incomeLbl.setObjectName("incomeLbl")
+        self.verticalLayout_3.addWidget(self.incomeLbl)
+        self.label = QtWidgets.QLabel(self.IncomeBox)
+        self.label.setText("500 HTG")
+        self.label.setStyleSheet("color: #E62641;\n"
+                                 "font: 18pt \"JetBrains Mono\";")
+        self.label.setObjectName("label")
+        self.verticalLayout_3.addWidget(self.label)
+        self.verticalLayout_7.addWidget(self.TopBox)
+        # END EXPENSESBOX
+
+        # START EXPENSESBOX
         self.ExpensesBox = QtWidgets.QFrame(self.TopBox)
-        self.ExpensesBox.setGeometry(QtCore.QRect(4194101, 34, 150, 50))
-        self.ExpensesBox.setMaximumSize(QtCore.QSize(150, 50))
-        self.ExpensesBox.setBaseSize(QtCore.QSize(150, 50))
+        # self.ExpensesBox.setGeometry(QtCore.QRect(10, 34, 150, 50))
+        # self.ExpensesBox.setMaximumSize(QtCore.QSize(150, 50))
         self.ExpensesBox.setStyleSheet("background-color: #1E1E1E;\n"
                                        "border-radius: 10px")
         self.ExpensesBox.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -293,6 +345,8 @@ class Ui_DashboardView(object):
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.ExpensesBox)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.expenses_Lbl = QtWidgets.QLabel(self.ExpensesBox)
+        self.expenses_Lbl.setText("Revenu")
+
         font = QtGui.QFont()
         font.setFamily("JetBrains Mono")
         font.setPointSize(14)
@@ -302,14 +356,18 @@ class Ui_DashboardView(object):
         self.expenses_Lbl.setObjectName("expenses_Lbl")
         self.verticalLayout_4.addWidget(self.expenses_Lbl)
         self.expensesAmount_Lbl = QtWidgets.QLabel(self.ExpensesBox)
+        self.expensesAmount_Lbl.setText("500 HTG")
         self.expensesAmount_Lbl.setStyleSheet("color: #E62641;\n"
                                               "font: 18pt \"JetBrains Mono\";")
         self.expensesAmount_Lbl.setObjectName("expensesAmount_Lbl")
         self.verticalLayout_4.addWidget(self.expensesAmount_Lbl)
+        # END EXPENSESBOX
+
+        # START BETSSBOX
         self.betsQtyBox = QtWidgets.QFrame(self.TopBox)
-        self.betsQtyBox.setGeometry(QtCore.QRect(8388363, 34, 200, 50))
-        self.betsQtyBox.setMaximumSize(QtCore.QSize(200, 50))
-        self.betsQtyBox.setBaseSize(QtCore.QSize(200, 50))
+        # self.betsQtyBox.setGeometry(QtCore.QRect(63, 34, 200, 50))
+        # self.betsQtyBox.setMaximumSize(QtCore.QSize(200, 50))
+        # self.betsQtyBox.setBaseSize(QtCore.QSize(200, 50))
         self.betsQtyBox.setStyleSheet("background-color: #1E1E1E;\n"
                                       "border-radius: 10px")
         self.betsQtyBox.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -318,12 +376,14 @@ class Ui_DashboardView(object):
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.betsQtyBox)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.betsAmountQty_Lbl = QtWidgets.QLabel(self.betsQtyBox)
+        self.betsAmountQty_Lbl.setText("Revenu")
         font = QtGui.QFont()
         font.setFamily("JetBrains Mono")
         font.setPointSize(14)
         self.betsAmountQty_Lbl.setFont(font)
         self.betsAmountQty_Lbl.setStyleSheet("color: #fafafa;\n"
                                              "text-align:center;")
+        self.betQtyAmount_Lbl.setText("500 HTG")        
         self.betsAmountQty_Lbl.setObjectName("betsAmountQty_Lbl")
         self.verticalLayout_5.addWidget(self.betsAmountQty_Lbl)
         self.betQtyAmount_Lbl = QtWidgets.QLabel(self.betsQtyBox)
@@ -331,32 +391,9 @@ class Ui_DashboardView(object):
                                             "font: 18pt \"JetBrains Mono\";")
         self.betQtyAmount_Lbl.setObjectName("betQtyAmount_Lbl")
         self.verticalLayout_5.addWidget(self.betQtyAmount_Lbl)
-        self.IncomeBox = QtWidgets.QFrame(self.TopBox)
-        self.IncomeBox.setGeometry(QtCore.QRect(12582675, 22, 100, 75))
-        self.IncomeBox.setMaximumSize(QtCore.QSize(200, 100))
-        self.IncomeBox.setBaseSize(QtCore.QSize(200, 50))
-        self.IncomeBox.setStyleSheet("background-color: #1E1E1E;\n"
-                                     "border-radius: 10px")
-        self.IncomeBox.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.IncomeBox.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.IncomeBox.setObjectName("IncomeBox")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.IncomeBox)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.incomeLbl = QtWidgets.QLabel(self.IncomeBox)
-        font = QtGui.QFont()
-        font.setFamily("JetBrains Mono")
-        font.setPointSize(14)
-        self.incomeLbl.setFont(font)
-        self.incomeLbl.setStyleSheet("color: #fafafa;\n"
-                                     "text-align:center;")
-        self.incomeLbl.setObjectName("incomeLbl")
-        self.verticalLayout_3.addWidget(self.incomeLbl)
-        self.label = QtWidgets.QLabel(self.IncomeBox)
-        self.label.setStyleSheet("color: #E62641;\n"
-                                 "font: 18pt \"JetBrains Mono\";")
-        self.label.setObjectName("label")
-        self.verticalLayout_3.addWidget(self.label)
-        self.verticalLayout_7.addWidget(self.TopBox)
+
+
+
         self.BottomBox = QtWidgets.QFrame(self.RightAside)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
@@ -365,7 +402,7 @@ class Ui_DashboardView(object):
         sizePolicy.setHeightForWidth(
             self.BottomBox.sizePolicy().hasHeightForWidth())
         self.BottomBox.setSizePolicy(sizePolicy)
-        self.BottomBox.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.BottomBox.setMaximumSize(QtCore.QSize(715, 1215))
         font = QtGui.QFont()
         font.setPointSize(14)
         self.BottomBox.setFont(font)
@@ -379,9 +416,177 @@ class Ui_DashboardView(object):
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.BottomBox)
 
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        # END FRAME: RIGHT ASIDE
+    
+    # END FRAME: RIGHT ASIDE
+
+    def showListMatch (self):
+
+        #  FRAME: START RIGHT ASIDE
+        self.RightAside = QtWidgets.QFrame(self.MainContentFrame)
+
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.RightAside.sizePolicy().hasHeightForWidth())
+        self.RightAside.setSizePolicy(sizePolicy)
+
+        self.RightAside.setStyleSheet("background-color: red;\n"
+                                      "border-radius: 10px")
+        # self.RightAside.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        # self.RightAside.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.RightAside.setObjectName("RightAside")
+
+        # mwen ranplase verticalLayout_7 pa hLayout_2
+        self.hLayout_2 = QtWidgets.QHBoxLayout(self.RightAside)
+        self.hLayout_2.setObjectName("hLayout_2")
+
+        # start head to head
+        self.head_to_head = QtWidgets.QWidget(self.RightAside)
+        self.head_to_head.setObjectName("head_to_head")
+        self.vLayout_4 = QtWidgets.QVBoxLayout(self.head_to_head)
+        self.vLayout_4.setContentsMargins(0, 0, 0, 0)
+        self.vLayout_4.setSpacing(10)
+        self.vLayout_4.setObjectName("vLayout_4")
+        self.images = QtWidgets.QWidget(self.head_to_head)
+        self.images.setMaximumSize(QtCore.QSize(16777215, 201))
+        self.images.setStyleSheet("background-image: url(./assets/images/tt.png);\n"
+"border-radius: 15px;")
+        self.images.setObjectName("images")
+        self.vLayout_5 = QtWidgets.QVBoxLayout(self.images)
+        self.vLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.vLayout_5.setSpacing(0)
+        self.vLayout_5.setObjectName("vLayout_5")
+        self.label = QtWidgets.QLabel(self.images)
+        self.label.setText("")
+        self.label.setObjectName("label")
+        self.vLayout_5.addWidget(self.label)
+        self.vLayout_4.addWidget(self.images)
+        self.h2h = QtWidgets.QWidget(self.head_to_head)
+        self.h2h.setStyleSheet("background-color: #1E1E1E; \n"
+"border-radius: 15px;")
+        self.h2h.setObjectName("h2h")
+        self.vLayout_6 = QtWidgets.QVBoxLayout(self.h2h)
+        self.vLayout_6.setObjectName("vLayout_6")
+        self.lineups_container = QtWidgets.QWidget(self.h2h)
+        self.lineups_container.setStyleSheet("background-color: #2C2C2C;\n"
+"")
+        self.lineups_container.setObjectName("lineups_container")
+        self.hLayout_5 = QtWidgets.QHBoxLayout(self.lineups_container)
+        self.hLayout_5.setObjectName("hLayout_5")
+        self.home_team = QtWidgets.QFrame(self.lineups_container)
+        self.home_team.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.home_team.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.home_team.setObjectName("home_team")
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.home_team)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.homteam_button = QtWidgets.QPushButton(self.home_team)
+        self.homteam_button.setStyleSheet("color: #fff")
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("./assets/images/teams/ajax.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.homteam_button.setIcon(icon)
+        self.homteam_button.setIconSize(QtCore.QSize(32, 32))
+        self.homteam_button.setObjectName("homteam_button")
+        self.horizontalLayout_3.addWidget(self.homteam_button)
+        self.hometeam_cote = QtWidgets.QLabel(self.home_team)
+        self.hometeam_cote.setStyleSheet("color: #E62641;")
+        self.hometeam_cote.setObjectName("hometeam_cote")
+        self.horizontalLayout_3.addWidget(self.hometeam_cote)
+        self.label_2 = QtWidgets.QLabel(self.home_team)
+        self.label_2.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.label_2.setStyleSheet("color: #FAFAFA;")
+        self.label_2.setObjectName("label_2")
+        self.horizontalLayout_3.addWidget(self.label_2)
+        self.hLayout_5.addWidget(self.home_team)
+        self.home_team_2 = QtWidgets.QFrame(self.lineups_container)
+        self.home_team_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.home_team_2.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.home_team_2.setObjectName("home_team_2")
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout(self.home_team_2)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.label_3 = QtWidgets.QLabel(self.home_team_2)
+        self.label_3.setStyleSheet("color: #FAFAFA;")
+        self.label_3.setObjectName("label_3")
+        self.horizontalLayout_4.addWidget(self.label_3)
+        self.hometeam_cote_2 = QtWidgets.QLabel(self.home_team_2)
+        self.hometeam_cote_2.setStyleSheet("color: #E62641;")
+        self.hometeam_cote_2.setObjectName("hometeam_cote_2")
+        self.horizontalLayout_4.addWidget(self.hometeam_cote_2)
+        self.pushButton_6 = QtWidgets.QPushButton(self.home_team_2)
+        self.pushButton_6.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.pushButton_6.setStyleSheet("color: #fff;")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("./assets/images/teams/fcb.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        self.pushButton_6.setIcon(icon1)
+        self.pushButton_6.setIconSize(QtCore.QSize(32, 32))
+        self.pushButton_6.setObjectName("pushButton_6")
+        self.horizontalLayout_4.addWidget(self.pushButton_6)
+        self.hLayout_5.addWidget(self.home_team_2)
+        self.vLayout_6.addWidget(self.lineups_container)
+        self.lineups_container_2 = QtWidgets.QWidget(self.h2h)
+        self.lineups_container_2.setStyleSheet("background-color: #2C2C2C;\n"
+"")
+        self.lineups_container_2.setObjectName("lineups_container_2")
+        self.horizontalLayout_6 = QtWidgets.QHBoxLayout(self.lineups_container_2)
+        self.horizontalLayout_6.setObjectName("horizontalLayout_6")
+        self.home_team_3 = QtWidgets.QFrame(self.lineups_container_2)
+        self.home_team_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.home_team_3.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.home_team_3.setObjectName("home_team_3")
+        self.horizontalLayout_7 = QtWidgets.QHBoxLayout(self.home_team_3)
+        self.horizontalLayout_7.setObjectName("horizontalLayout_7")
+        self.homteam_button_2 = QtWidgets.QPushButton(self.home_team_3)
+        self.homteam_button_2.setStyleSheet("color: #fff")
+        self.homteam_button_2.setIcon(icon)
+        self.homteam_button_2.setIconSize(QtCore.QSize(32, 32))
+        self.homteam_button_2.setObjectName("homteam_button_2")
+        self.horizontalLayout_7.addWidget(self.homteam_button_2)
+        self.hometeam_cote_3 = QtWidgets.QLabel(self.home_team_3)
+        self.hometeam_cote_3.setStyleSheet("color: #E62641;")
+        self.hometeam_cote_3.setObjectName("hometeam_cote_3")
+        self.horizontalLayout_7.addWidget(self.hometeam_cote_3)
+        self.label_4 = QtWidgets.QLabel(self.home_team_3)
+        self.label_4.setStyleSheet("color: #FAFAFA;")
+        self.label_4.setObjectName("label_4")
+        self.horizontalLayout_7.addWidget(self.label_4)
+        self.horizontalLayout_6.addWidget(self.home_team_3)
+        self.home_team_4 = QtWidgets.QFrame(self.lineups_container_2)
+        self.home_team_4.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.home_team_4.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.home_team_4.setObjectName("home_team_4")
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.home_team_4)
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
+        self.label_5 = QtWidgets.QLabel(self.home_team_4)
+        self.label_5.setStyleSheet("color: #FAFAFA;")
+        self.label_5.setObjectName("label_5")
+        self.horizontalLayout_8.addWidget(self.label_5)
+        self.hometeam_cote_4 = QtWidgets.QLabel(self.home_team_4)
+        self.hometeam_cote_4.setStyleSheet("color: #E62641;")
+        self.hometeam_cote_4.setObjectName("hometeam_cote_4")
+        self.horizontalLayout_8.addWidget(self.hometeam_cote_4)
+        self.pushButton_7 = QtWidgets.QPushButton(self.home_team_4)
+        self.pushButton_7.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.pushButton_7.setStyleSheet("color: #fff;")
+        self.pushButton_7.setIcon(icon1)
+        self.pushButton_7.setIconSize(QtCore.QSize(32, 32))
+        self.pushButton_7.setObjectName("pushButton_7")
+        self.horizontalLayout_8.addWidget(self.pushButton_7)
+        self.horizontalLayout_6.addWidget(self.home_team_4)
+        self.vLayout_6.addWidget(self.lineups_container_2)
+        self.vLayout_4.addWidget(self.h2h)
+        self.hLayout_2.addWidget(self.head_to_head)
+        # end head to head
 
 
+        self.right_details = QtWidgets.QWidget(self.RightAside)
+        self.right_details.setStyleSheet("background-color: #1E1E1E; ")
+        self.right_details.setObjectName("right_details")
+        self.hLayout_2.addWidget(self.right_details)
+        # OR self.verticalLayout_6.addWidget(self.RightAside)
+        self.hLayout_2.addWidget(self.RightAside)
+        # TODO: end cent
+       
+       
 
     def printTest(self):
         print("match is clicked")
@@ -400,7 +605,7 @@ class Ui_DashboardView(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.LeftAside)
         self.verticalLayout.setObjectName("verticalLayout")
         self.bottomAsideLFrame = QtWidgets.QFrame(self.LeftAside)
-        self.bottomAsideLFrame.setStyleSheet("background-color: #E62641;\n"
+        self.bottomAsideLFrame.setStyleSheet("background-color: #2C2C2C;\n"
         "color: #FAFAFA;\n"
         "opacity: 50%;\n"
         "border-radius: 10px;")
@@ -409,7 +614,7 @@ class Ui_DashboardView(object):
         self.bottomAsideLFrame.setObjectName("bottomAsideLFrame")
 
         self.title = QtWidgets.QLabel(self.bottomAsideLFrame)
-        self.title.setGeometry(QtCore.QRect(30, 10, 81, 31))
+        # self.title.setGeometry(QtCore.QRect(30, 10, 81, 31))
         font = QtGui.QFont()
         font.setFamily("JetBrains Mono")
         font.setPointSize(-1)
@@ -420,7 +625,7 @@ class Ui_DashboardView(object):
         self.title.setObjectName("title")
 
         self.typeMatchs_WDG = QtWidgets.QFrame(self.bottomAsideLFrame)
-        self.typeMatchs_WDG.setGeometry(QtCore.QRect(0, 50, 161, 381))
+        # self.typeMatchs_WDG.setGeometry(QtCore.QRect(0, 50, 161, 381))
         self.typeMatchs_WDG.setObjectName("typeMatchs_WDG")
 
         # Création du groupe de boutons radio
@@ -453,21 +658,3 @@ class Ui_DashboardView(object):
         self.verticalLayout.addWidget(self.bottomAsideLFrame)
     # end func
 
-
-
-    def retranslateUi(self, MainWindow):
-        _translate = QtCore.QCoreApplication.translate
-        
-        self.expenses_Lbl.setText(_translate("MainWindow", "Revenu"))
-        self.expensesAmount_Lbl.setText(_translate("MainWindow", "500 HTG"))
-        self.betsAmountQty_Lbl.setText(_translate("MainWindow", "Revenu"))
-        self.betQtyAmount_Lbl.setText(_translate("MainWindow", "500 HTG"))
-        self.incomeLbl.setText(_translate("MainWindow", "Revenu"))
-        self.label.setText(_translate("MainWindow", "500 HTG"))
-
-        # TODO: TABLES ITEM CAN BE HERE
-
-        self.matchQPB.setText(_translate("MainWindow", "Matchs"))
-        self.betsQPBtn.setText(_translate("MainWindow", "Pariages"))
-        self.teamQPB.setText(_translate("MainWindow", "Equipes"))
-        self.logoutQPB.setText(_translate("MainWindow", "Logout"))

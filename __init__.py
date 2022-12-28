@@ -4,7 +4,6 @@ from Helpers.Helpers import Helpers
 from views.RegisterView import RegisterView
 from views.LoginView import LoginView
 from PyQt5.QtGui import QIcon
-import sys
 from views.Dashboard.DashboardView import Ui_DashboardView
 from views.paymentWidget import Ui_PaymentManageWidget
 
@@ -53,9 +52,8 @@ class MainProject(QMainWindow, ):
         login.show()
 
     def callDashboard(self) -> None:
-        dashboard = DashboardController()
-        dashboard.showDashboard(self)
-
+        dashboard = DashboardController(self)
+        dashboard.showDashboard()
 
     def callPaymentLayout(self) -> None:
         pay = Ui_PaymentManageWidget()

@@ -34,6 +34,7 @@ pyrcc5 resources.qrc -o resources.py
 # COLORS
 
 rouge: #E62641;
-color: #FAFAFA;
-background-color: #2C2C2C;
-background-color: #1E1E1E; fonce
+color: #FAFAFA; #WHITE
+GREEN: #106327 
+light gray: #2C2C2C; 
+dark gray: #1E1E1E;

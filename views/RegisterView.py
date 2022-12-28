@@ -30,6 +30,7 @@ class RegisterView(QDialog):
         self.paiements = QWidget()
         self.admissions = QWidget()
         # ajouter les widgets dans les Tab
+        
         self.tabWidget.addTab(self.inscriptions, "Inscriptions")
         self.tabWidget.addTab(self.paiements, "Paiements")
         self.tabWidget.addTab(self.admissions, "Admissions")

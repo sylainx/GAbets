@@ -8,9 +8,11 @@ from Models.dbconnection import DBConnection
 
 class TeamsModel:
 
-    def __init__(self, title=None, ratio=None, agent_id=None):
+    def __init__(self, title=None, level=None, img=None, agent_id=None):
+        self.id = int # only to delete and update
         self.title = title
-        self.ratio = ratio
+        self.level = level
+        self.img = img
         self.agent_id = agent_id
         self.util = Helpers()
 
@@ -21,14 +23,14 @@ class TeamsModel:
             self.obj = DBConnection()
             self.conn = self.obj.connection()
             # prepare queries
-            query = " INSERT INTO `teams`(`id`, `title`, `ratio`, `agent_id`, `created_at`,\
+            query = " INSERT INTO `teams`(`id`, `img`, `title`, `level`,`agent_id`, `created_at`,\
             `updated_at`, `deleted_at`) \
-            VALUES (%s,%s,%s,%s,%s,%s,%s) "
+            VALUES (%s,%s,%s,%s,%s,%s,%s,%s) "
 
             # cursor
             self.cursor = self.conn.cursor(prepared=True)
             # define values
-            stmt = [None, self.title, self.ratio, self.agent_id, self.util.get_day(),
+            stmt = [None, self.img, self.title, self.level, self.agent_id, self.util.get_day(),
                     self.util.get_day(), None]
 
             # execute query
@@ -43,6 +45,7 @@ class TeamsModel:
             else:
                 QMessageBox.warning(
                     None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
+            
             # end result
 
             # fermer le cursor
@@ -104,13 +107,19 @@ class TeamsModel:
                 self.conn.close()
         return self.liste
 
-    def update(self, id):
+    def update(self, id:int):
+
+        id=int(id)
+        print(f"IDs: {id} | type: {type(id)}")
+        
         try:
             obj = DBConnection()
             self.conn = obj.connection()
-            requete = " UPDATE `teams` SET title=%s, ratio=%s, agent_id=%s, updated_at=%s,\
-             WHERE id=%s"
-            valeurs = (self.title, self.ratio, self.agent_id,
+            # UPDATE `teams` SET `id`='[value-1]',`img`='[value-2]',`title`='[value-3]',
+            # `level`='[value-4]',`agent_id`='[value-5]',`created_at`='[value-6]',`updated_at`='[value-7]',`deleted_at`='[value-8]' WHERE 1
+            requete = " UPDATE `teams` SET title=%s, level=%s, agent_id=%s, updated_at=%s,\
+                WHERE id=%s "
+            valeurs = (self.title, self.level, self.agent_id,
                        self.util.get_day(), id)
             self.cursor = self.conn.cursor()
 
