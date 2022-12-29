@@ -45,7 +45,6 @@ class Helpers:
         return date.today()
 
     
-    
     # Define a function for validating an Email
     def check_email(self,email:str):
         regex_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
@@ -56,7 +55,8 @@ class Helpers:
             return False
     
     def is_validate(self,val):
-        if val:
+        MIN_VAL = 3
+        if len(val) >= MIN_VAL:
             return True
         return False
    
@@ -67,4 +67,10 @@ class Helpers:
         if len(pwd) >= MIN_PWD and len(pwd) <= MAX_PWD and pwd.isalpha():
             return True
         
+        return False
+
+    def valid_str(self,value:str):
+        if value.isalpha:
+            return True
+
         return False

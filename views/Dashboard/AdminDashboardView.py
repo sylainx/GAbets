@@ -3,12 +3,12 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from Helpers.Helpers import Helpers
 
 
-class Ui_DashboardView(object):
+class Ui_AdminDashboardView(object):
 
     def setupUi(self, MainWindow):
 
         MainWindow.setObjectName("mainWindow")
-        MainWindow.setWindowTitle("AG BETS SPORTS")
+        MainWindow.setWindowTitle("ADMIN AG BETS SPORTS")
         MainWindow.resize(1135, 600)
         MainWindow.setStyleSheet("#title{\n"
                                  "    font-size: 18px;\n"
@@ -76,51 +76,26 @@ class Ui_DashboardView(object):
         self.MainContentFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.MainContentFrame.setObjectName("MainContentFrame")
 
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.MainContentFrame)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.hMainLayout = QtWidgets.QHBoxLayout(self.MainContentFrame)
+        self.hMainLayout.setObjectName("hMainLayout")
 
         # Left aside
         self.LeftAside = QtWidgets.QFrame(self.MainContentFrame)
-        self.LeftAside.setEnabled(True)
-        # self.LeftAside.setLayoutDirection(QtCore.Qt.RightToLeft)
-        self.LeftAside.setStyleSheet("background-color: #1E1E1E;")
-        self.LeftAside.setObjectName("left_aside")
-
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.LeftAside.sizePolicy().hasHeightForWidth())
         
-        self.LeftAside.setSizePolicy(sizePolicy)
-        self.LeftAside.setMinimumSize(QtCore.QSize(180, 0))
-        self.LeftAside.setStyleSheet("background-color: #1E1E1E;\n"
-                                     "border-radius: 10px")
-        self.LeftAside.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.LeftAside.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.LeftAside.setObjectName("LeftAside")
-
         
         # TODO: LEFT ASIDE -> initialization
-        self.horizontalLayout_3.addWidget(self.LeftAside)
+        self.hMainLayout.addWidget(self.LeftAside)
         # end left aside
-
-
-        # TODO: FUNCTION RIGHT ASIDE
-        # self.rightAsideFrameFunc()
-        self.showListMatch()
-
-        # TABLE: PAYMENTS HISTORY
-        # self.verticalLayout_6.addWidget(self.tabPayment_QTW)
 
 
         self.RightAside = QtWidgets.QFrame(self.MainContentFrame)
 
-        self.horizontalLayout_3.addWidget(self.RightAside)
+        # TODO: FUNCTION RIGHT ASIDE
+        # self.rightAsideFrameFunc()
+        # self.showListMatch()
 
-        # TODO: FUCNTION TO CALL HEADER
-        self.headerContentFunc()
+        # TABLE: PAYMENTS HISTORY
+        # self.verticalLayout_6.addWidget(self.tabPayment_QTW)
 
 
         MainWindow.setCentralWidget(self.centralwidget)
@@ -174,8 +149,7 @@ class Ui_DashboardView(object):
             self.LeftHeaderFrame.sizePolicy().hasHeightForWidth())
         self.LeftHeaderFrame.setSizePolicy(sizePolicy)
         self.LeftHeaderFrame.setMinimumSize(QtCore.QSize(352, 0))
-        self.LeftHeaderFrame.setStyleSheet("background-color: #1E1E1E;\n"
-                                           "border-radius: 10px")
+        self.LeftHeaderFrame.setStyleSheet("background-color: #1E1E1E;border-radius: 10px")
         self.LeftHeaderFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.LeftHeaderFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.LeftHeaderFrame.setObjectName("LeftHeaderFrame")
@@ -191,8 +165,7 @@ class Ui_DashboardView(object):
         self.matchQPB.setObjectName("matchQPB")
         self.matchQPB.setText("Matchs")
         self.horizontalLayout_2.addWidget(self.matchQPB)
-        self.matchQPB.clicked.connect(lambda: self.printHello())
-
+        
         # end Match BTN
 
         # start Bet BTN
@@ -221,20 +194,6 @@ class Ui_DashboardView(object):
         self.horizontalLayout_2.addWidget(self.teamQPB)
         # end team BTN
 
-        # TODO: START ADMIN button
-        # if user isADMIN:
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-
-        self.adminQPB = QtWidgets.QPushButton(self.LeftHeaderFrame)
-        self.adminQPB.setStyleSheet("background-color: #42b883;\n"
-                                    "color: #FAFAFA;\n"
-                                    "border-radius: 10px;\n"
-                                    "padding: 10px 15px;")
-        self.adminQPB.setObjectName("adminQPB")
-        self.adminQPB.setText("Admin")
-        self.horizontalLayout_2.addWidget(self.adminQPB)
-        # self.adminQPB.clicked.connect(lambda: self.callAdminDashboard())
-        # END ADMIN BUTTON
 
         self.horizontalLayout.addWidget(self.LeftHeaderFrame)
 
@@ -272,15 +231,16 @@ class Ui_DashboardView(object):
         self.horizontalLayout.addWidget(self.RightHeaderFrame)
         
 
-
     def rightAsideFrameFunc(self):
+
+        self.hMainLayout.addWidget(self.RightAside)
 
         #  FRAME: START RIGHT ASIDE
         # self.verticalLayout_7.addWidget(self.BottomBox)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
+        # sizePolicy.setHorizontalStretch(0)
+        # sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(
             self.RightAside.sizePolicy().hasHeightForWidth())
         self.RightAside.setSizePolicy(sizePolicy)
@@ -490,8 +450,8 @@ class Ui_DashboardView(object):
         self.home_team.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.home_team.setFrameShadow(QtWidgets.QFrame.Raised)
         self.home_team.setObjectName("home_team")
-        self.horizontalLayout_3 = QtWidgets.QHBoxLayout(self.home_team)
-        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.hMainLayout = QtWidgets.QHBoxLayout(self.home_team)
+        self.hMainLayout.setObjectName("hMainLayout")
         self.homteam_button = QtWidgets.QPushButton(self.home_team)
         self.homteam_button.setStyleSheet("color: #fff")
         icon = QtGui.QIcon()
@@ -499,16 +459,16 @@ class Ui_DashboardView(object):
         self.homteam_button.setIcon(icon)
         self.homteam_button.setIconSize(QtCore.QSize(32, 32))
         self.homteam_button.setObjectName("homteam_button")
-        self.horizontalLayout_3.addWidget(self.homteam_button)
+        self.hMainLayout.addWidget(self.homteam_button)
         self.hometeam_cote = QtWidgets.QLabel(self.home_team)
         self.hometeam_cote.setStyleSheet("color: #E62641;")
         self.hometeam_cote.setObjectName("hometeam_cote")
-        self.horizontalLayout_3.addWidget(self.hometeam_cote)
+        self.hMainLayout.addWidget(self.hometeam_cote)
         self.label_2 = QtWidgets.QLabel(self.home_team)
         self.label_2.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.label_2.setStyleSheet("color: #FAFAFA;")
         self.label_2.setObjectName("label_2")
-        self.horizontalLayout_3.addWidget(self.label_2)
+        self.hMainLayout.addWidget(self.label_2)
         self.hLayout_5.addWidget(self.home_team)
         self.home_team_2 = QtWidgets.QFrame(self.lineups_container)
         self.home_team_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -600,19 +560,27 @@ class Ui_DashboardView(object):
        
        
 
-    def printTest(self):
-        print("match is clicked")
-        # exit()
-
-    def printHello(self):
-        print("teams is clicked")
-        # exit()
-
-    def printBet(self):
-        print("Bet sport")
-        # exit()
 
     def showLeftAside(self,MainWindow,match_type)->None:
+
+        self.LeftAside.setEnabled(True)
+        # self.LeftAside.setLayoutDirection(QtCore.Qt.RightToLeft)
+        
+        # sizePolicy = QtWidgets.QSizePolicy(
+        #     QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.MinimumExpanding)
+        # sizePolicy.setHorizontalStretch(0)
+        # sizePolicy.setVerticalStretch(0)
+        # sizePolicy.setHeightForWidth(
+        #     self.LeftAside.sizePolicy().hasHeightForWidth())
+        
+        # self.LeftAside.setSizePolicy(sizePolicy)
+        # self.LeftAside.setMinimumSize(QtCore.QSize(180, 0))
+
+        self.LeftAside.setStyleSheet("background-color: #1E1E1E;\n"
+                                     "border-radius: 10px")
+        self.LeftAside.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.LeftAside.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.LeftAside.setObjectName("LeftAside")
 
         self.verticalLayout = QtWidgets.QVBoxLayout(self.LeftAside)
         self.verticalLayout.setObjectName("verticalLayout")
@@ -637,7 +605,6 @@ class Ui_DashboardView(object):
         self.title.setObjectName("title")
 
         self.typeMatchs_WDG = QtWidgets.QFrame(self.bottomAsideLFrame)
-        # self.typeMatchs_WDG.setGeometry(QtCore.QRect(0, 50, 161, 381))
         self.typeMatchs_WDG.setObjectName("typeMatchs_WDG")
 
         # Création du groupe de boutons radio
@@ -669,3 +636,17 @@ class Ui_DashboardView(object):
 
         self.verticalLayout.addWidget(self.bottomAsideLFrame)
     # end func
+
+
+
+    def printTest(self):
+        print("match is clicked")
+        # exit()
+
+    def printHello(self):
+        print("teams is clicked")
+        # exit()
+
+    def printBet(self):
+        print("Bet sport")
+        # exit()

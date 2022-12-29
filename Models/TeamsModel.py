@@ -9,12 +9,15 @@ from Models.dbconnection import DBConnection
 class TeamsModel:
 
     def __init__(self, title=None, level=None, img=None, agent_id=None):
-        self.id = int # only to delete and update
+        
         self.title = title
         self.level = level
         self.img = img
         self.agent_id = agent_id
         self.util = Helpers()
+        # supp
+        self.id = int    # don't need to insert a team
+        self.priority_id = int  # don't need to insert a team
 
     # end init
 
@@ -34,14 +37,24 @@ class TeamsModel:
                     self.util.get_day(), None]
 
             # execute query
-            result = self.cursor.execute(query, stmt)
+            self.cursor.execute(query, stmt)
+            
+            # Get the ID of the inserted row
+            inserted_id = self.cursor.lastrowid
 
-            if result:
-                # fermer le cursor
+            # Execute a SELECT statement to retrieve the inserted row
+            self.cursor.execute("SELECT * FROM `teams` WHERE id = %s", (inserted_id,))
+            # Fetch the inserted row
+            inserted_row = self.cursor.fetchone()
+
+            # Check the inserted row
+            if inserted_row:
+                # Data has been inserted successfully                
                 self.cursor.close()
                 # validate updates
                 self.conn.commit()
-                return True
+                return inserted_id
+
             else:
                 QMessageBox.warning(
                     None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
@@ -105,6 +118,51 @@ class TeamsModel:
             if self.conn.is_connected():
                 # fermer la connexion
                 self.conn.close()
+        return self.liste
+
+    def searchByName(self, title:str):
+        try:
+            self.obj = DBConnection()
+            self.conn = self.obj.connection()
+            requete = " SELECT * FROM `teams` WHERE title=%s "
+            self.cursor = self.conn.cursor()
+            valeur = (title,)
+            self.cursor.execute(requete, valeur)
+            self.liste = self.cursor.fetchone()
+
+        except mysql.connector.Error as erreur:
+            QMessageBox.warning(
+                None, "Erreur", "Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
+            # fermer le cursor
+            self.cursor.close()
+            # tester si la connexion est ouverte
+            if self.conn.is_connected():
+                # fermer la connexion
+                self.conn.close()
+        return self.liste
+
+    def searchByCategoryId(self,pr_id):
+        try:
+            self.obj = DBConnection()
+            self.conn = self.obj.connection()
+            requete = " SELECT * FROM `teams` t\
+                JOIN `priority_teams` pt ON t.id=pt.team_id\
+            WHERE pt.priority_id =%s "
+            self.cursor = self.conn.cursor()
+            valeur = (pr_id,)
+            self.cursor.execute(requete, valeur)
+            self.liste = self.cursor.fetchall()
+
+        except mysql.connector.Error as erreur:
+            QMessageBox.warning(
+                None, "Erreur", "Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
+            # fermer le cursor
+            self.cursor.close()
+            # tester si la connexion est ouverte
+            if self.conn.is_connected():
+                # fermer la connexion
+                self.conn.close()
+
         return self.liste
 
     def update(self, id:int):
@@ -181,6 +239,67 @@ class TeamsModel:
                 None, "Erreur", "Impossible de surpprimer cette equipe: " + str(erreur), QMessageBox.Ok)
             # fermer le cursor
             self.cursor.close()
+            # tester si la connexion est ouverte
+            if self.conn.is_connected():
+                # fermer la connexion
+                self.conn.close()
+
+
+    # ================= CATEGORY TEAM  =================
+    
+    def saveCategoryTeam(self):
+        try:
+            self.obj = DBConnection()
+            self.conn = self.obj.connection()
+            # prepare queries
+            query = " INSERT INTO `priority_teams`(`priority_id`, `team_id`) \
+            VALUES (%s,%s) "
+
+            # cursor
+            self.cursor = self.conn.cursor(prepared=True)
+            # define values
+            stmt = [self.priority_id, self.id]
+
+            # execute query
+            self.cursor.execute(query, stmt)
+
+            # Execute a SELECT statement to retrieve the inserted row
+            self.cursor.execute("SELECT * FROM `priority_teams` WHERE priority_id = %s \
+                AND team_id = %s", (self.priority_id,self.id))
+
+            # Fetch the inserted row
+            inserted_row = self.cursor.fetchone()
+
+            # Check the inserted row
+            if inserted_row:
+                # Data has been inserted successfully                
+                self.cursor.close()
+                # validate updates
+                self.conn.commit()
+                # retourne le nombre de ligne affecte
+                QMessageBox.information(
+                    None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+                return True
+
+            else:
+                QMessageBox.warning(
+                    None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
+            
+            # end result
+
+            # fermer le cursor
+            self.cursor.close()
+            # validate updates
+            self.conn.commit()
+            return False
+
+        except mysql.connector.Error as erreur:
+            QMessageBox.warning(None, "Erreur", "Erreur " +
+                                str(erreur), QMessageBox.Ok)
+            # fermer le cursor
+            self.cursor.close()
+
+        finally:
             # tester si la connexion est ouverte
             if self.conn.is_connected():
                 # fermer la connexion

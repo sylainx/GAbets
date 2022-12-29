@@ -38,3 +38,8 @@ color: #FAFAFA; #WHITE
 GREEN: #106327 
 light gray: #2C2C2C; 
 dark gray: #1E1E1E;
+
+
+### BUGS
+
+    - Vider donner Widget match avant d'ouvrir le widget Match

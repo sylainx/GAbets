@@ -1,45 +1,55 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 import sys
+# controllers
+# from Controllers.DashboardController import DashboardController
+from Controllers.AdminMatchsController import AdminMatchsController
 # models
 from Models.PriorityModel import PrioritiesModel
 from Models.TeamsModel import TeamsModel
-from views.Admin.Teams.TeamsView import TeamsView
 # views
-from views.Dashboard.DashboardView import Ui_DashboardView
-from Controllers.AdminDashboardController import AdminDashboardController
+from views.Admin.Matchs.MatchsView import MatchsView
+from views.Admin.Teams.TeamsView import TeamsView
+from views.Dashboard.AdminDashboardView import Ui_AdminDashboardView
 
-class DashboardController():
+
+class AdminDashboardController(object):
 
     def __init__(self, parent) -> None:
         self.parent = parent
-        # dashboard admin
-        self.admin_cont_dash = AdminDashboardController(parent)
-        # dashboard view
-        self.dashboard_ui = Ui_DashboardView()
-        # teams view
+        # controllers
+        self.admin_matchs_controller = AdminMatchsController(self)
+        # views
+        self.admin_dashboard_ui = Ui_AdminDashboardView()
         self.teamView = TeamsView()
-        # dashboard model
+        self.matchView = MatchsView()
+        # models
         self.priority_model = PrioritiesModel()
-        # teams model
         self.team_model = TeamsModel()
 
     def showDashboard(self, ):
-        self.dashboard_ui.setupUi(self.parent)
+        self.admin_dashboard_ui.setupUi(self.parent)
+
         # TODO: FUCNTION TO CALL HEADER
-        self.dashboard_ui.headerContentFunc()
-        self.dashboard_ui.teamQPB.clicked.connect(self.displayTeams)
-        self.dashboard_ui.adminQPB.clicked.connect(lambda: self.callAdminDashboard())
+        self.admin_dashboard_ui.headerContentFunc()
+        self.admin_dashboard_ui.teamQPB.clicked.connect(self.displayTeams)
         # END: FUCNTION TO CALL HEADER
-        
+        self.admin_dashboard_ui.rightAsideFrameFunc()
+
         # get matchs option in DB
-        match_ctype = self.priority_model.show()
-        self.dashboard_ui.showLeftAside(self, match_ctype)
-        self.dashboard_ui.match_type_grpe.buttonClicked.connect(
+        match_type = self.priority_model.show()
+        self.admin_dashboard_ui.showLeftAside(self, match_type)
+        self.admin_dashboard_ui.match_type_grpe.buttonClicked.connect(
             lambda: self.get_selected_match_option())
-        # self.dashboard_ui.showListMatch()
-        # show register Widget
+
+
+
+        # ACTION ON HEADER BUTTON
+        self.admin_dashboard_ui.matchQPB.clicked.connect(
+            lambda: self.callMatchController())
+        self.admin_dashboard_ui.teamQPB.clicked.connect(
+            lambda: self.displayTeams())
         # logout
-        self.dashboard_ui.logoutQPB.clicked.connect(
+        self.admin_dashboard_ui.logoutQPB.clicked.connect(
             lambda: self.callLogoutFunc())
 
     # end showDahboardFunc
@@ -58,8 +68,8 @@ class DashboardController():
         self.teamView.deleteBtn.clicked.connect(lambda: self.deleteTeam())
         self.teamView.table_WDG.clicked.connect(lambda: self.listenTabEvent())
 
-        # self.dashboard_ui.match_type_grpe.buttonClicked.connect(
-            # lambda: self.get_selected_match_option())
+        # self.admin_dashboard_ui.match_type_grpe.buttonClicked.connect(
+        # lambda: self.get_selected_match_option())
         self.teamView.groupTeamCategory.itemSelectionChanged.connect(
             lambda: self.associateTeamsXcategories())
 
@@ -80,7 +90,8 @@ class DashboardController():
         img, title, level = teamToSave_dic
 
         if len(title) == 0 or len(level) == 0:
-            QtWidgets.QMessageBox.warning(None, "Erreur", "Veuillez remplir le formulaire", QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.warning(
+                None, "Erreur", "Veuillez remplir le formulaire", QtWidgets.QMessageBox.Ok)
         else:
             agent_id = 1
             # TODO: remove after
@@ -92,13 +103,13 @@ class DashboardController():
             # self.team_model.img = teamToSave_dic["img"]
             self.team_model.img = img
             self.team_model.agent_id = agent_id
-            team_id =  self.team_model.save()
-            
+            team_id = self.team_model.save()
+
             # SAVE CATEGORY TEAM
-            if team_id :
+            if team_id:
                 self.team_model.id = team_id
                 for cat_id in self.list_CategoryId:
-                    self.team_model.priority_id=cat_id
+                    self.team_model.priority_id = cat_id
                     self.team_model.saveCategoryTeam()
                 self.loadFunc()
 
@@ -136,17 +147,16 @@ class DashboardController():
 
         if row:
             # fill form
-            self.team_model.id=self.teamView.table_WDG.item(index, 0).text()
+            self.team_model.id = self.teamView.table_WDG.item(index, 0).text()
             self.teamView.title_QLE.setText(str(row[2]))
             self.teamView.level_CBB.setCurrentText(str(row[3]))
 
         else:
             print("No data found")
 
-
     def get_selected_match_option(self):
         # fin
-        selected_button= self.dashboard_ui.match_type_grpe.checkedButton()
+        selected_button = self.admin_dashboard_ui.match_type_grpe.checkedButton()
         if selected_button is not None:
             return selected_button.text()
         else:
@@ -154,30 +164,28 @@ class DashboardController():
 
     def associateTeamsXcategories(self):
         list_category = self.get_selected_category()
-        self.list_CategoryId= list()
+        self.list_CategoryId = list()
         for row in list_category:
-            p_find= self.priority_model.searchByName(row.text())
+            p_find = self.priority_model.searchByName(row.text())
             if p_find:
-                id :int = list(p_find)[0]
-                self.list_CategoryId.append(id) 
-            
-
+                id: int = list(p_find)[0]
+                self.list_CategoryId.append(id)
 
     def get_selected_category(self):
         # fin
-         
-        selected_items= self.teamView.groupTeamCategory.selectedItems()
+
+        selected_items = self.teamView.groupTeamCategory.selectedItems()
         if selected_items is not None:
             for item in selected_items:
                 print(item.text())
-                
+
             return selected_items
         else:
             return None
 
+    def callMatchController(self):
+        # self.matchView.u
+        self.admin_matchs_controller.start()
 
     def test(self):
         print("Test")
-
-    def callAdminDashboard(self):
-        self.admin_cont_dash.showDashboard()

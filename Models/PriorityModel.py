@@ -12,7 +12,7 @@ class PrioritiesModel:
         self.ratio = ratio
         self.visible = visible
 
-    def enregistrer(self):
+    def save(self):
         try:
             code_user = 1
             self.obj = DBConnection()
@@ -28,12 +28,31 @@ class PrioritiesModel:
 
             # executer la requete
             self.cursor.execute(requete, valeurs)
-            # validation du changement au niveau de la table
-            self.conn.commit()
-            # retourne le nombre de ligne affecte
-            QMessageBox.information(
-                None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+            
+            
+            # Get the ID of the inserted row
+            inserted_id = self.cursor.lastrowid
 
+            # Execute a SELECT statement to retrieve the inserted row
+            self.cursor.execute("SELECT * FROM `priority` WHERE id = %s", (inserted_id,))
+            # Fetch the inserted row
+            inserted_row = self.cursor.fetchone()
+
+            # Check the inserted row
+            if inserted_row:
+                # Data has been inserted successfully                
+                self.cursor.close()
+                # validate updates
+                self.conn.commit()
+                # retourne le nombre de ligne affecte
+                QMessageBox.information(
+                    None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+                return inserted_id
+
+            else:
+                QMessageBox.warning(
+                    None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
+            
         except mysql.connector.Error as erreur:
             QMessageBox.warning(None, "Erreur", "Erreur " +
                                 str(erreur), QMessageBox.Ok)
@@ -85,6 +104,29 @@ class PrioritiesModel:
                 # fermer la connexion
                 self.conn.close()
         return self.liste
+
+    
+    def searchByName(self, name:str):
+        try:
+            self.obj = DBConnection()
+            self.conn = self.obj.connection()
+            requete = " SELECT * FROM `priority` WHERE title=%s "
+            self.cursor = self.conn.cursor()
+            valeur = (name,)
+            self.cursor.execute(requete, valeur)
+            self.liste = self.cursor.fetchone()
+
+        except mysql.connector.Error as erreur:
+            QMessageBox.warning(
+                None, "Erreur", "Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
+            # fermer le cursor
+            self.cursor.close()
+            # tester si la connexion est ouverte
+            if self.conn.is_connected():
+                # fermer la connexion
+                self.conn.close()
+        return self.liste
+
 
     def update(self, id):
         try:

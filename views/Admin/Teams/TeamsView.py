@@ -70,9 +70,9 @@ class TeamsView(QtWidgets.QWidget):
         self.groupTeamCategory = QtWidgets.QListWidget()
         self.groupTeamCategory.setSelectionMode(QtWidgets.QListWidget.ExtendedSelection)    
         
-        self.hLayout4ChBx = QtWidgets.QVBoxLayout()
+        self.vLayout4ChBx = QtWidgets.QVBoxLayout()
     
-        # self.hLayout4ChBx.addWidget(self.teamCategory_CHB)
+        # self.vLayout4ChBx.addWidget(self.teamCategory_CHB)
 
         # action btn        
         hLayout4Btn = QtWidgets.QHBoxLayout()
@@ -107,7 +107,7 @@ class TeamsView(QtWidgets.QWidget):
         self.formLayout.addWidget(self.level_LBL)
         self.formLayout.addWidget(self.level_CBB)
         self.formLayout.addWidget(self.teamCategory_LBL)
-        self.formLayout.addLayout(self.hLayout4ChBx)
+        self.formLayout.addLayout(self.vLayout4ChBx)
         self.formLayout.addLayout(hLayout4Btn)
 
         # add form layout to central Layout
@@ -180,5 +180,5 @@ class TeamsView(QtWidgets.QWidget):
             
             # self.el_ChBx.setObjectName(f"{title}")
             self.groupTeamCategory.addItem(self.el_ChBx)
-            self.hLayout4ChBx.addWidget(self.groupTeamCategory)
+            self.vLayout4ChBx.addWidget(self.groupTeamCategory)
         # end listTypeMatch

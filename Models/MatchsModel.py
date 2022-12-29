@@ -1,3 +1,4 @@
+from Helpers.Helpers import Helpers
 from Models.dbconnection import DBConnection
 from PyQt5.QtWidgets import QMessageBox
 import mysql.connector
@@ -12,8 +13,9 @@ class MatchsModel:
         self.priority_id = priority_id
         self.country = country
         self.agent_id = agent_id
+        self.utils = Helpers()
 
-    def enregistrer(self):
+    def save(self):
         try:
             code_user = 1
             self.obj = DBConnection()
@@ -26,17 +28,38 @@ class MatchsModel:
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)
             # definir les valeurs
-            valeurs = [None, self.home_team_id, self.move_team_id, self.priority_id, self.get_day, self.get_day, None,
+            valeurs = [None, self.home_team_id, self.move_team_id, self.priority_id, self.utils.get_day(), self.utils.get_day(), None,
                        self.agent_id, self.country]
 
             # executer la requete
             self.cursor.execute(requete, valeurs)
             # validation du changement au niveau de la table
             self.conn.commit()
-            # retourne le nombre de ligne affecte
-            QMessageBox.information(
-                None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+            
+            
+            # Get the ID of the inserted row
+            inserted_id = self.cursor.lastrowid
 
+            # Execute a SELECT statement to retrieve the inserted row
+            self.cursor.execute("SELECT * FROM `matchs` WHERE id = %s", (inserted_id,))
+            # Fetch the inserted row
+            inserted_row = self.cursor.fetchone()
+
+            # Check the inserted row
+            if inserted_row:
+                # Data has been inserted successfully                
+                self.cursor.close()
+                # validate updates
+                self.conn.commit()
+                # retourne le nombre de ligne affecte
+                QMessageBox.information(
+                    None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+                return inserted_id
+
+            else:
+                QMessageBox.warning(
+                    None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
+            
         except mysql.connector.Error as erreur:
             QMessageBox.warning(None, "Erreur", "Erreur " +
                                 str(erreur), QMessageBox.Ok)
@@ -47,7 +70,7 @@ class MatchsModel:
                 # fermer la connexion
                 self.conn.close()
 
-    def afficher(self):
+    def show(self):
         try:
             self.obj = DBConnection()
             self.conn = self.obj.connection()
@@ -67,7 +90,7 @@ class MatchsModel:
                 self.conn.close()
         return self.liste
 
-    def rechercher(self, id):
+    def search(self, id):
         try:
             obj = DBConnection()
             self.conn = obj.connection()
@@ -88,14 +111,14 @@ class MatchsModel:
                 self.conn.close()
         return self.liste
 
-    def modifier(self,id):
+    def update(self,id):
         try:
             obj = DBConnection()
             self.conn = obj.connection()
             requete = " UPDATE `MATCHS` SET home_team_id=%s, move_team_id=%s, priority_id=%s, agent_id=%s, country=%s, \
             updated_at=%s WHERE id=%s"
             valeurs = (self.home_team_id, self.move_team_id, self.priority_id, self.agent_id, self.country,
-                    self.get_day, id)
+                    self.utils.get_day(), id)
             self.cursor = self.conn.cursor()
             self.cursor.execute(requete, valeurs)
             self.conn.commit()
@@ -111,7 +134,7 @@ class MatchsModel:
                 # fermer la connexion
                 self.conn.close()
 
-    def supprimer(self, id):
+    def delete(self, id):
 
         try:
             obj = DBConnection()
