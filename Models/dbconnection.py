@@ -1,5 +1,6 @@
 import mysql.connector
 from PyQt5.QtWidgets import QMessageBox
+import platform
 
 
 class DBConnection:
@@ -8,8 +9,14 @@ class DBConnection:
         host = "localhost"
         db_name = "ag_betssport"
         user = "root"
-        pwd = ''
+        if platform.system() == 'Windows':
+            pwd = ''
+        elif platform.system() == 'Darwin':
+            pwd = 'root'
+        else:
+            pwd= ''
 
+            
         try:
             self.conn = mysql.connector.connect(
                 host=host, database=db_name, user=user, password=pwd)

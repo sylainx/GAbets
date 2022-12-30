@@ -13,7 +13,7 @@ class BalanceModel:
         
         self.util= Helpers()
 
-    def enregistrer(self):
+    def save(self):
         try:
             
             self.obj = DBConnection()
@@ -31,12 +31,34 @@ class BalanceModel:
 
             # executer la requete
             self.cursor.execute(requete, valeurs)
-            # validation du changement au niveau de la table
-            self.conn.commit()
-            # retourne le nombre de ligne affecte
-            QMessageBox.information(
-                None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+            
+            # Get the ID of the inserted row
+            inserted_id = self.cursor.lastrowid
 
+            # Execute a SELECT statement to retrieve the inserted row
+            self.cursor.execute("SELECT * FROM `solde` WHERE id = %s", (inserted_id,))
+            # Fetch the inserted row
+            inserted_row = self.cursor.fetchone()
+
+            # Check the inserted row
+            if inserted_row:
+                # Data has been inserted successfully                
+                self.cursor.close()
+                # validate updates
+                self.conn.commit()
+                # retourne le nombre de ligne affecte
+                QMessageBox.information(
+                    None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+                return inserted_id
+
+            else:
+                QMessageBox.warning(
+                    None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
+            
+            # validation du changement au niveau de la table
+            self.cursor.close()
+            self.conn.commit()
+            
         except mysql.connector.Error as erreur:
             QMessageBox.warning(None, "Erreur", "Erreur " +
                                 str(erreur), QMessageBox.Ok)

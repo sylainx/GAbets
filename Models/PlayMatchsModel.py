@@ -20,7 +20,7 @@ class RegisterModel:
         self.nif = nif
         self.agent_id = agent_id
 
-    def enregistrer(self):
+    def save(self):
         try:
             code_user = 1
             self.obj = DBConnection()
@@ -30,7 +30,7 @@ class RegisterModel:
             pwd_hashed = self.util.hash_password(self.password)
 
             # creer la chaine de requete
-            requete = " INSERT INTO `users`(`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`, `username`, `nif`, \
+            requete = " INSERT INTO `play_match`(`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`, `username`, `nif`, \
                 `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) \
                 VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
 
@@ -42,12 +42,30 @@ class RegisterModel:
 
             # executer la requete
             self.cursor.execute(requete, valeurs)
-            # validation du changement au niveau de la table
-            self.conn.commit()
-            # retourne le nombre de ligne affecte
-            QMessageBox.information(
-                None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+            
+            # Get the ID of the inserted row
+            inserted_id = self.cursor.lastrowid
 
+            # Execute a SELECT statement to retrieve the inserted row
+            self.cursor.execute("SELECT * FROM `play_match` WHERE id = %s", (inserted_id,))
+            # Fetch the inserted row
+            inserted_row = self.cursor.fetchone()
+
+            # Check the inserted row
+            if inserted_row:
+                # Data has been inserted successfully                
+                self.cursor.close()
+                # validate updates
+                self.conn.commit()
+                # retourne le nombre de ligne affecte
+                QMessageBox.information(
+                    None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+                return inserted_id
+
+            else:
+                QMessageBox.warning(
+                    None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
+            
         except mysql.connector.Error as erreur:
             QMessageBox.warning(None, "Erreur", "Erreur " +
                                 str(erreur), QMessageBox.Ok)
@@ -58,12 +76,12 @@ class RegisterModel:
                 # fermer la connexion
                 self.conn.close()
 
-    def afficher(self):
+    def show(self):
         try:
             self.obj = DBConnection()
             self.conn = self.obj.connection()
             # requete de selection
-            requete = " SELECT * FROM USERS WHERE `deleted_at` IS NULL "
+            requete = " SELECT * FROM `play_match` WHERE `deleted_at` IS NULL "
             self.cursor = self.conn.cursor()
             self.cursor.execute(requete)
             self.liste = self.cursor.fetchall()
@@ -78,11 +96,11 @@ class RegisterModel:
                 self.conn.close()
         return self.liste
 
-    def rechercher(self, code):
+    def search(self, code):
         try:
             obj = DBConnection()
             self.conn = obj.connection()
-            requete = " SELECT* FROM USERS WHERE CODE=%s "
+            requete = " SELECT* FROM `play_match` WHERE CODE=%s "
             self.cursor = self.conn.cursor()
             valeur = (code,)
             self.cursor.execute(requete, valeur)
@@ -99,11 +117,11 @@ class RegisterModel:
                 self.conn.close()
         return self.liste
 
-    def modifier(self):
+    def update(self):
         try:
             obj = DBConnection()
             self.conn = obj.connection()
-            requete = " UPDATE USERS SET firstname=%s, lastname=%s, username=%s, email=%s, sexe=%s, datenais=%s, tel=%s, \
+            requete = " UPDATE `play_match` SET firstname=%s, lastname=%s, username=%s, email=%s, sexe=%s, datenais=%s, tel=%s, \
                 address=%s, nif=%s, updated_at=%s,\
              WHERE CODE=%s"
             valeurs = (self.firstname, self.lastname, self.username, self.email, self.sexe, self.date_nais,
@@ -123,12 +141,12 @@ class RegisterModel:
                 # fermer la connexion
                 self.conn.close()
 
-    def supprimer(self, code):
+    def delete(self, code):
 
         try:
             obj = DBConnection()
             conn = obj.connection()
-            requete = " DELETE FROM USERS WHERE CODE=%s "
+            requete = " DELETE FROM `play_match` WHERE CODE=%s "
             valeur = (code,)
             self.cursor = self.conn.cursor()
             rep = QMessageBox.question(

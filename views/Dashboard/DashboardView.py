@@ -183,9 +183,6 @@ class Ui_DashboardView(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(
             self.LeftHeaderFrame)
 
-        # match button
-        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-
         self.matchQPB = QtWidgets.QPushButton(self.LeftHeaderFrame)
         self.matchQPB.setStyleSheet("background-color: #2C2C2C;\n"
                                     "color: #FAFAFA;\n"
@@ -224,6 +221,21 @@ class Ui_DashboardView(object):
         self.horizontalLayout_2.addWidget(self.teamQPB)
         # end team BTN
 
+        # TODO: START ADMIN button
+        # if user isADMIN:
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
+        self.adminQPB = QtWidgets.QPushButton(self.LeftHeaderFrame)
+        self.adminQPB.setStyleSheet("background-color: #42b883;\n"
+                                    "color: #FAFAFA;\n"
+                                    "border-radius: 10px;\n"
+                                    "padding: 10px 15px;")
+        self.adminQPB.setObjectName("adminQPB")
+        self.adminQPB.setText("Admin")
+        self.horizontalLayout_2.addWidget(self.adminQPB)
+        # self.adminQPB.clicked.connect(lambda: self.callAdminDashboard())
+        # END ADMIN BUTTON
+
         self.horizontalLayout.addWidget(self.LeftHeaderFrame)
 
         # TODO: Right Header
@@ -260,6 +272,81 @@ class Ui_DashboardView(object):
         self.horizontalLayout.addWidget(self.RightHeaderFrame)
         
 
+    def showLeftAside(self,MainWindow,match_type)->None:
+
+        MAX_WIDTH= 200
+        MAX_HEIGHT= 700
+        self.LeftAsideFrame = QtWidgets.QFrame(self.MainContentFrame)
+        self.LeftAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
+                                     "border-radius: 10px")
+        self.LeftAsideFrame.setEnabled(True)
+        # self.LeftAsideFrame.setMinimumWidth(MAX_WIDTH)
+        # self.LeftAsideFrame.setMinimumHeight(MAX_HEIGHT)
+        # self.LeftAsideFrame.setMaximumSize(MAX_WIDTH,MAX_HEIGHT)
+        self.LeftAsideFrame.setMinimumSize(QtCore.QSize(MAX_WIDTH, 500))
+        # self.LeftAsideFrame.setMaximumWidth(200)
+
+        vLayout_LeftAsideFrame = QtWidgets.QVBoxLayout(self.LeftAsideFrame)
+        vLayout_LeftAsideFrame.setObjectName("verticalLeftAsideFrameLayout")
+        
+        central_FRM = QtWidgets.QFrame(self.LeftAsideFrame)
+        central_FRM.setMinimumSize(QtCore.QSize(MAX_WIDTH, 500))    
+        
+        # central_FRM.setStyleSheet("background-color: pink")
+
+        self.title = QtWidgets.QLabel(central_FRM)
+        self.title.setText("Catégories")
+        font = QtGui.QFont()
+        font.setFamily("JetBrains Mono")
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setItalic(False)
+        font.setWeight(75)
+        self.title.setFont(font)
+        self.title.setObjectName("title")
+        self.title.setStyleSheet("margin-bottom: 10px;padding:5px")
+
+        
+        vLayout_Central_FRM = QtWidgets.QVBoxLayout(central_FRM)
+        vLayout_Central_FRM.setAlignment(QtCore.Qt.AlignTop)
+
+        vLayout_Central_FRM.addWidget(self.title)
+        # Création du groupe de boutons radio
+        self.match_type_grpe = QtWidgets.QButtonGroup()
+
+        # Remplissage du layout avec les données
+        for type_row in match_type:
+            id_, name, prio, visibility = type_row
+            self.chb_radio = QtWidgets.QRadioButton()
+            self.chb_radio.setText(f"{name}")
+            font = QtGui.QFont()
+            font.setFamily("JetBrains Mono")
+            font.setPointSize(14)
+            font.setWeight(50)
+            self.chb_radio.setFont(font)
+            self.chb_radio.setObjectName(f"{name}")
+            # Add RadioButton in Group
+            self.match_type_grpe.addButton(self.chb_radio)
+            # Add Checkbox to QVLayout
+            vLayout_Central_FRM.addWidget(self.chb_radio)
+        # end loop
+
+        # vLayout_Central_FRM.addLayout(vLayout_Central_FRM)
+
+        self.LeftAsideFrame.setLayout(vLayout_Central_FRM)
+
+
+    def centerAsideFunc(self):
+        MAX_WIDTH=700
+        self.centralAsideFrame = QtWidgets.QFrame(self.MainContentFrame)
+        self.centralAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
+                                     "border-radius: 10px")
+        self.centralAsideFrame.setEnabled(True)
+        # self.centralAsideFrame.setMinimumWidth(MAX_WIDTH)
+        # self.centralAsideFrame.setMinimumHeight(MAX_HEIGHT)
+        # self.centralAsideFrame.setMaximumSize(MAX_WIDTH,MAX_HEIGHT)
+        self.centralAsideFrame.setMinimumSize(QtCore.QSize(MAX_WIDTH, 500))
+        # self.centralAsideFrame.setMaximumWidth(200)
 
     def rightAsideFrameFunc(self):
 
@@ -383,10 +470,10 @@ class Ui_DashboardView(object):
         self.betsAmountQty_Lbl.setFont(font)
         self.betsAmountQty_Lbl.setStyleSheet("color: #fafafa;\n"
                                              "text-align:center;")
-        self.betQtyAmount_Lbl.setText("500 HTG")        
         self.betsAmountQty_Lbl.setObjectName("betsAmountQty_Lbl")
         self.verticalLayout_5.addWidget(self.betsAmountQty_Lbl)
         self.betQtyAmount_Lbl = QtWidgets.QLabel(self.betsQtyBox)
+        self.betQtyAmount_Lbl.setText("500 HTG")        
         self.betQtyAmount_Lbl.setStyleSheet("color: #E62641;\n"
                                             "font: 18pt \"JetBrains Mono\";")
         self.betQtyAmount_Lbl.setObjectName("betQtyAmount_Lbl")
@@ -418,6 +505,7 @@ class Ui_DashboardView(object):
         self.verticalLayout_6.setObjectName("verticalLayout_6")
     
     # END FRAME: RIGHT ASIDE
+
 
     def showListMatch (self):
 
@@ -600,61 +688,4 @@ class Ui_DashboardView(object):
         print("Bet sport")
         # exit()
 
-    def showLeftAside(self,MainWindow,match_type)->None:
-
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.LeftAside)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.bottomAsideLFrame = QtWidgets.QFrame(self.LeftAside)
-        self.bottomAsideLFrame.setStyleSheet("background-color: #2C2C2C;\n"
-        "color: #FAFAFA;\n"
-        "opacity: 50%;\n"
-        "border-radius: 10px;")
-        self.bottomAsideLFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.bottomAsideLFrame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.bottomAsideLFrame.setObjectName("bottomAsideLFrame")
-
-        self.title = QtWidgets.QLabel(self.bottomAsideLFrame)
-        # self.title.setGeometry(QtCore.QRect(30, 10, 81, 31))
-        font = QtGui.QFont()
-        font.setFamily("JetBrains Mono")
-        font.setPointSize(-1)
-        font.setBold(True)
-        font.setItalic(False)
-        font.setWeight(75)
-        self.title.setFont(font)
-        self.title.setObjectName("title")
-
-        self.typeMatchs_WDG = QtWidgets.QFrame(self.bottomAsideLFrame)
-        # self.typeMatchs_WDG.setGeometry(QtCore.QRect(0, 50, 161, 381))
-        self.typeMatchs_WDG.setObjectName("typeMatchs_WDG")
-
-        # Création du groupe de boutons radio
-        self.match_type_grpe = QtWidgets.QButtonGroup(self.typeMatchs_WDG)
-        
-        # Création du layout vertical
-        self.layout_CHB = QtWidgets.QVBoxLayout(self.typeMatchs_WDG)
-        
-        # Remplissage du layout avec les données
-        for type_row in match_type:
-            id_, name, prio, visibility = type_row
-
-            self.chb_radio = QtWidgets.QRadioButton()
-            self.chb_radio.setText(f"{name}")
-            font = QtGui.QFont()
-            font.setFamily("JetBrains Mono")
-            font.setPointSize(14)
-            font.setWeight(50)
-            self.chb_radio.setFont(font)
-            self.chb_radio.setObjectName(f"{name}")
-            # Add RadioButton in Group
-            self.match_type_grpe.addButton(self.chb_radio)
-            # Add Checkbox to QVLayout
-            self.layout_CHB.addWidget(self.chb_radio)
-        # end loop
-        
-        # assigner
-        self.typeMatchs_WDG.setLayout(self.layout_CHB)
-
-        self.verticalLayout.addWidget(self.bottomAsideLFrame)
-    # end func
-
+    # end showLeftAside

@@ -104,6 +104,8 @@ class Ui_MainWindow(object):
         self.h2h.setObjectName("h2h")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.h2h)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
+        
+        
         self.lineups_container = QtWidgets.QWidget(self.h2h)
         self.lineups_container.setStyleSheet("background-color: #2C2C2C;\n"
 "")
