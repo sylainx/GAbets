@@ -1,15 +1,20 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout
+
+# controllers
+from Controllers.AuthController import AuthController
 from Controllers.DashboardController import DashboardController
 from Helpers.Helpers import Helpers
+# views
 from views.RegisterView import RegisterView
 from views.LoginView import LoginView
 from PyQt5.QtGui import QIcon
 from views.Dashboard.DashboardView import Ui_DashboardView
 from views.paymentWidget import Ui_PaymentManageWidget
 
+
 class MainProject(QMainWindow):
 
-    def __init__(self,parent=None):
+    def __init__(self, parent=None):
         # super().__init__()
         super(MainProject, self).__init__(parent)
         self.setWindowTitle(Helpers().app_name())
@@ -17,7 +22,8 @@ class MainProject(QMainWindow):
         self.showMaximized()
         self.setWindowIcon(QIcon("./assets/icons/calendar.png"))
         self.creerMenu()
-        self.login = LoginView()
+        self.auth = AuthController(self)
+        self.auth.start()
 
         # self.callAuthenticate()
         self.callDashboard()
@@ -73,4 +79,3 @@ if __name__ == '__main__':
     window = MainProject()
     window.show()
     app.exec_()
-

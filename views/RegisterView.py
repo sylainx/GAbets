@@ -4,7 +4,7 @@ from Models.RegisterModel import RegisterModel
 from datetime import date
 
 
-class RegisterView(QDialog):
+class RegisterView(QWidget):
     insc = RegisterModel()
 
     def __init__(self, parent):
@@ -20,7 +20,7 @@ class RegisterView(QDialog):
 
     def creerOnglet(self):
         mainLayout = QHBoxLayout()
-        
+
         # table widget
         self.tabWidget = QTabWidget()
         self.tabWidget.setTabsClosable(True)
@@ -30,7 +30,7 @@ class RegisterView(QDialog):
         self.paiements = QWidget()
         self.admissions = QWidget()
         # ajouter les widgets dans les Tab
-        
+
         self.tabWidget.addTab(self.inscriptions, "Inscriptions")
         self.tabWidget.addTab(self.paiements, "Paiements")
         self.tabWidget.addTab(self.admissions, "Admissions")
@@ -46,23 +46,23 @@ class RegisterView(QDialog):
         qSexe = QHBoxLayout()
         hbBouton = QHBoxLayout()
         hbBouton.setAlignment(Qt.AlignTop)
-       
+
        # hbBouton.addStretch(0)
         self.btNew = QPushButton("Nouveau")
         self.btNew.clicked.connect(self.nouveau)
 
         self.btSave = QPushButton("Save")
         self.btSave.clicked.connect(self.enregistrer)
-        
+
         self.btUpdate = QPushButton("Update")
         self.btUpdate.clicked.connect(self.modifier)
-        
+
         self.btDelete = QPushButton("Delete")
         self.btDelete.clicked.connect(self.supprimer)
-        
+
         self.btDelete.setEnabled(False)
         self.btUpdate.setEnabled(False)
-        
+
         hbBouton.addWidget(self.btNew)
         hbBouton.addWidget(self.btSave)
         hbBouton.addWidget(self.btUpdate)
@@ -76,7 +76,7 @@ class RegisterView(QDialog):
         self.txtDateNais = QDateEdit()
         self.txtDateNais.setDisplayFormat("dd/MM/yyyy")
         self.txtDateNais.setCalendarPopup(True)
-        
+
         self.txtAdresse = QLineEdit()
         self.txtUsername = QLineEdit()
         self.txtLastname = QLineEdit()
@@ -85,7 +85,6 @@ class RegisterView(QDialog):
         self.txtTel = QLineEdit()
         self.txtNif = QLineEdit()
         self.txtAgentID = QLineEdit()
-
 
         # ajouter des Widgets
         self.form.addRow("Username", self.txtUsername)
