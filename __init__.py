@@ -7,15 +7,17 @@ from PyQt5.QtGui import QIcon
 from views.Dashboard.DashboardView import Ui_DashboardView
 from views.paymentWidget import Ui_PaymentManageWidget
 
-class MainProject(QMainWindow, ):
+class MainProject(QMainWindow):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self,parent=None):
+        # super().__init__()
+        super(MainProject, self).__init__(parent)
         self.setWindowTitle(Helpers().app_name())
         self.setMinimumSize(400, 400)
         self.showMaximized()
         self.setWindowIcon(QIcon("./assets/icons/calendar.png"))
         self.creerMenu()
+        self.login = LoginView()
 
         # self.callAuthenticate()
         self.callDashboard()
