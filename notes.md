@@ -43,3 +43,4 @@ dark gray: #1E1E1E;
 ### BUGS
 
     - Vider donner Widget match avant d'ouvrir le widget Match
+    - Duplication pour enregistrer une equipe   

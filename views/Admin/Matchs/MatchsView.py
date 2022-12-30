@@ -8,8 +8,9 @@ class MatchsView(QtWidgets.QWidget):
         super().__init__()
         self.setWindowTitle("Matchs")
         # self.move(parent.rect().center())
-        # self.setModal(True)
+        
         self.setStyleSheet("background-color: #1E1E1E")
+        # self.minimumWidth(400)
         
         self.teamCategory_LBL = QtWidgets.QLabel("Veuillez choisir le type de match")
         self.team_on_category_LBL = QtWidgets.QLabel("List des équipes dans ce championnat")
@@ -96,14 +97,15 @@ class MatchsView(QtWidgets.QWidget):
         self.formLayout.addWidget(self.table_WDG)
 
     
-    def loadDatas(self,list):
+    def loadDatas(self,list_of_match):
 
-        self.table_WDG.setRowCount(len(list))
-        row=0
-        for i in list:
-            self.table_WDG.setItem(row, 0, QtWidgets.QTableWidgetItem(str(i[1])))
-            self.table_WDG.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i[2])))
-            self.table_WDG.setItem(row, 2, QtWidgets.QTableWidgetItem(str(i[3])))         
+        self.table_WDG.setRowCount(len(list_of_match))
+        row=0        
+        for i in list_of_match:
+            
+            self.table_WDG.setItem(row, 0, QtWidgets.QTableWidgetItem(str(i['home_team'])))
+            self.table_WDG.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i['category'])))
+            self.table_WDG.setItem(row, 2, QtWidgets.QTableWidgetItem(str(i['away_team'])))         
             row+=1
 
     def eventOnTable(self):
@@ -148,3 +150,117 @@ class MatchsView(QtWidgets.QWidget):
             self.team_on_category_CbBx.setObjectName(f"{row[2]}")
             
         # end listTypeMatch
+
+
+    def showLineUpFunc(self, list_match=None):
+        """
+            need to pass list_match
+        """
+        main_FRM = QtWidgets.QFrame()
+        vLayout_LineUp = QtWidgets.QVBoxLayout(main_FRM)
+
+        if list_match:
+
+            for row in list_match: 
+                print("mwen pase")
+
+                self.lineups_container_FRM = QtWidgets.QFrame()
+                # START ONE LINEUP
+                # self.lineups_container_FRM.setStyleSheet("background-color: #2C2C2C;")
+                self.lineups_container_FRM.setStyleSheet("background-color: red;")
+                self.lineups_container_FRM.setObjectName(f"lineups_container_FRM")
+                self.lineups_container_FRM.setMaximumWidth(350)
+                sizePolicy = QtWidgets.QSizePolicy(
+                    QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
+                sizePolicy.setHorizontalStretch(0)
+                sizePolicy.setVerticalStretch(0)
+
+                sizePolicy.setHeightForWidth(
+                    self.lineups_container_FRM.sizePolicy().hasHeightForWidth())
+                self.lineups_container_FRM.setSizePolicy(sizePolicy)
+                self.lineups_container_FRM.setMaximumHeight(100)
+                self.hLayout_LineUpContainer = QtWidgets.QHBoxLayout(self.lineups_container_FRM)
+                self.hLayout_LineUpContainer.setObjectName(f"{row['match_id']} hLayout_LineUpContainer")
+
+
+                self.homeTeam_FRM = QtWidgets.QFrame(self.lineups_container_FRM)
+                self.homeTeam_FRM.setFrameShape(QtWidgets.QFrame.StyledPanel)
+                self.homeTeam_FRM.setFrameShadow(QtWidgets.QFrame.Raised)
+                self.homeTeam_FRM.setObjectName(f"{row['match_id']} homeTeam_FRM")
+
+                self.hLayout_HomeTeam = QtWidgets.QHBoxLayout(self.homeTeam_FRM)
+                self.hLayout_HomeTeam.setObjectName(f"{row['match_id']} hLayout_HomeTeam")
+
+                self.homeTeam_QPB = QtWidgets.QPushButton(self.homeTeam_FRM)
+                self.homeTeam_QPB.setStyleSheet("color: #FAFAFA")
+                self.iconHomeTeam = QtGui.QIcon()
+                self.iconHomeTeam.addPixmap(QtGui.QPixmap("./assets/images/teams/ajax.png"),
+                            QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                self.homeTeam_QPB.setIcon(self.iconHomeTeam)
+                self.homeTeam_QPB.setIconSize(QtCore.QSize(32, 32))
+                self.homeTeam_QPB.setObjectName(f"{row['match_id']} homeTeam_QPB")
+                self.homeTeam_QPB.setText(f"{row['home_team']}")
+                # add QPB to HLayout
+                self.hLayout_HomeTeam.addWidget(self.homeTeam_QPB)
+            
+                self.lbl_rate_hometeam = QtWidgets.QLabel(self.homeTeam_FRM)
+                self.lbl_rate_hometeam.setStyleSheet("color: #E62641;")
+                self.lbl_rate_hometeam.setObjectName(f"{row['match_id']} lbl_rate_hometeam")
+                self.lbl_rate_hometeam.setText("1.5")
+                # add LBL_RATE to HLayout
+                self.hLayout_HomeTeam.addWidget(self.lbl_rate_hometeam)
+
+                self.lbl_score_homeTeam = QtWidgets.QLabel(self.homeTeam_FRM)
+                self.lbl_score_homeTeam.setLayoutDirection(QtCore.Qt.LeftToRight)
+                self.lbl_score_homeTeam.setStyleSheet("color: #FAFAFA;")
+                self.lbl_score_homeTeam.setText("5")
+                self.lbl_score_homeTeam.setObjectName(f"{row['match_id']} lbl_score_homeTeam")
+                # add LBL_SCORE to HLayout
+                self.hLayout_HomeTeam.addWidget(self.lbl_score_homeTeam)
+                # add HomeTeam_FRM to Parent Frame
+                self.hLayout_LineUpContainer.addWidget(self.homeTeam_FRM)
+
+
+                # ==== AWAY TEAM ====
+                self.awayTeam_FRM = QtWidgets.QFrame(self.lineups_container_FRM)
+                self.awayTeam_FRM.setFrameShape(QtWidgets.QFrame.StyledPanel)
+                self.awayTeam_FRM.setFrameShadow(QtWidgets.QFrame.Raised)
+                self.awayTeam_FRM.setObjectName(f"{row['match_id']} awayTeam_FRM")
+
+                self.hLayout_awayTeam = QtWidgets.QHBoxLayout(self.awayTeam_FRM)
+                self.hLayout_awayTeam.setObjectName(f"{row['match_id']} hLayout_awayTeam")
+
+                self.lbl_score_awayTeam = QtWidgets.QLabel(self.awayTeam_FRM)
+                self.lbl_score_awayTeam.setStyleSheet("color: #FAFAFA;")
+                self.lbl_score_awayTeam.setObjectName(f"{row['match_id']} lbl_score_awayTeam")
+                self.lbl_score_awayTeam.setText("0")
+                self.hLayout_awayTeam.addWidget(self.lbl_score_awayTeam)
+
+                self.lbl_rate_awayTeam = QtWidgets.QLabel(self.awayTeam_FRM)
+                self.lbl_rate_awayTeam.setStyleSheet("color: #E62641;")
+                self.lbl_rate_awayTeam.setObjectName(f"{row['match_id']} lbl_rate_awayTeam")
+                self.lbl_rate_awayTeam.setText("1.5")
+                self.hLayout_awayTeam.addWidget(self.lbl_rate_awayTeam)
+                
+                self.qpb_awayTeam = QtWidgets.QPushButton(self.awayTeam_FRM)
+                self.qpb_awayTeam.setLayoutDirection(QtCore.Qt.RightToLeft)
+                self.qpb_awayTeam.setStyleSheet("color: #FAFAFA;")
+                self.qpb_awayTeam.setText(f"{row['away_team']}")
+                self.iconAwayTeam = QtGui.QIcon()
+                self.iconAwayTeam.addPixmap(QtGui.QPixmap("./assets/images/teams/fcb.png"),
+                                QtGui.QIcon.Normal, QtGui.QIcon.Off)
+                self.qpb_awayTeam.setIcon(self.iconAwayTeam)
+                self.qpb_awayTeam.setIconSize(QtCore.QSize(32, 32))
+                self.qpb_awayTeam.setObjectName(f"{row['match_id']} qpb_awayTeam")
+                self.hLayout_awayTeam.addWidget(self.qpb_awayTeam)
+                # add AwayTeam_FRM to Parent Frame
+                self.hLayout_LineUpContainer.addWidget(self.awayTeam_FRM)
+
+                vLayout_LineUp.addWidget(self.lineups_container_FRM)
+
+            # end loop    
+            return main_FRM
+
+        # end verification
+        return None
+    

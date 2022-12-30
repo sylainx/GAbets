@@ -6,6 +6,7 @@ from Controllers.AdminMatchsController import AdminMatchsController
 # models
 from Models.PriorityModel import PrioritiesModel
 from Models.TeamsModel import TeamsModel
+
 # views
 from views.Admin.Matchs.MatchsView import MatchsView
 from views.Admin.Teams.TeamsView import TeamsView
@@ -26,20 +27,37 @@ class AdminDashboardController(object):
         self.priority_model = PrioritiesModel()
         self.team_model = TeamsModel()
 
+
     def showDashboard(self, ):
         self.admin_dashboard_ui.setupUi(self.parent)
 
         # TODO: FUCNTION TO CALL HEADER
         self.admin_dashboard_ui.headerContentFunc()
         self.admin_dashboard_ui.teamQPB.clicked.connect(self.displayTeams)
-        # END: FUCNTION TO CALL HEADER
-        self.admin_dashboard_ui.rightAsideFrameFunc()
-
+        
         # get matchs option in DB
         match_type = self.priority_model.show()
-        self.admin_dashboard_ui.showLeftAside(self, match_type)
-        self.admin_dashboard_ui.match_type_grpe.buttonClicked.connect(
-            lambda: self.get_selected_match_option())
+        
+        self.admin_dashboard_ui.showLeftAside(match_type)
+        self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.LeftAsideFrame)
+        
+        self.admin_dashboard_ui.centerAsideFunc()
+        self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.centralAsideFrame)
+        
+        # get value of child
+        getLineUps = self.admin_matchs_controller.loadLineUpsFunc()
+        self.admin_dashboard_ui.showListMatch()
+        self.admin_dashboard_ui.vLayoutCenterAside.addWidget(self.admin_dashboard_ui.ListMatchContent_FRM)
+        if getLineUps:
+            self.admin_dashboard_ui.vLayout_ToLineUpContainer.addChildWidget(getLineUps)
+
+        # self.admin_dashboard_ui.hMainLayout.addWidget()
+
+    
+    
+
+        # self.admin_dashboard_ui.match_type_grpe.buttonClicked.connect(
+        #     lambda: self.get_selected_match_option())
 
 
 

@@ -277,8 +277,8 @@ class TeamsModel:
                 # validate updates
                 self.conn.commit()
                 # retourne le nombre de ligne affecte
-                QMessageBox.information(
-                    None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+                # QMessageBox.information(
+                #     None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
                 return True
 
             else:
