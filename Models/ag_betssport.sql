@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 27, 2022 at 06:29 PM
+-- Generation Time: Dec 30, 2022 at 06:49 PM
 -- Server version: 5.7.34
 -- PHP Version: 8.0.8
 
@@ -56,6 +56,38 @@ CREATE TABLE `matchs` (
   `agent_id` int(100) NOT NULL,
   `country` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `matchs`
+--
+
+INSERT INTO `matchs` (`id`, `home_team_id`, `move_team_id`, `priority_id`, `created_at`, `updated_at`, `deleted_at`, `agent_id`, `country`) VALUES
+(1, 15, 16, 2, '2022-12-29 04:36:33', '2022-12-29 04:36:33', NULL, 1, 'Haiti'),
+(5, 18, 20, 1, '2022-12-30 14:44:32', '2022-12-30 14:44:32', NULL, 1, 'Haiti'),
+(6, 24, 28, 1, '2022-12-30 14:44:32', '2022-12-30 14:44:32', NULL, 1, 'Portugal'),
+(7, 25, 26, 5, '2022-12-30 14:44:32', '2022-12-30 14:44:32', NULL, 1, 'Espagne');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `match_teams`
+--
+
+CREATE TABLE `match_teams` (
+  `match_id` int(11) NOT NULL,
+  `home_team_id` int(11) NOT NULL,
+  `away_team_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `match_teams`
+--
+
+INSERT INTO `match_teams` (`match_id`, `home_team_id`, `away_team_id`) VALUES
+(1, 15, 16),
+(5, 18, 20),
+(6, 24, 28),
+(7, 25, 26);
 
 -- --------------------------------------------------------
 
@@ -110,10 +142,64 @@ CREATE TABLE `priority` (
 --
 
 INSERT INTO `priority` (`id`, `title`, `ratio`, `visible`) VALUES
-(1, 'Championnat', 500, 1),
-(2, 'Ccoupe du monde', 900, 1),
+(1, 'Ligue des champions', 800, 1),
+(2, 'Coupe du monde', 950, 1),
 (3, 'Eliminatoire', 200, 1),
-(4, 'Amical', 100, 1);
+(4, 'Amical', 100, 1),
+(5, 'Liga', 10, 1),
+(6, 'Premier League', 700, 1),
+(7, 'Ligue 1', 500, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `priority_teams`
+--
+
+CREATE TABLE `priority_teams` (
+  `priority_id` int(11) NOT NULL,
+  `team_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `priority_teams`
+--
+
+INSERT INTO `priority_teams` (`priority_id`, `team_id`) VALUES
+(2, 15),
+(3, 15),
+(3, 16),
+(4, 16),
+(1, 18),
+(4, 18),
+(5, 18),
+(1, 20),
+(5, 20),
+(4, 20),
+(1, 24),
+(4, 24),
+(5, 24),
+(1, 25),
+(4, 25),
+(5, 25),
+(1, 26),
+(4, 26),
+(5, 26),
+(1, 27),
+(4, 27),
+(5, 27),
+(1, 28),
+(4, 28),
+(7, 28),
+(1, 29),
+(4, 29),
+(7, 29),
+(1, 30),
+(4, 30),
+(7, 30),
+(1, 31),
+(4, 31),
+(7, 31);
 
 -- --------------------------------------------------------
 
@@ -168,7 +254,7 @@ CREATE TABLE `teams` (
   `agent_id` int(100) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `deleted_at` datetime NOT NULL
+  `deleted_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -176,7 +262,18 @@ CREATE TABLE `teams` (
 --
 
 INSERT INTO `teams` (`id`, `img`, `title`, `level`, `agent_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'assets/images/teams/fcb.png', 'FC Barcelona', 100, 1, '2022-12-27 18:28:03', '2022-12-27 18:28:03', '0000-00-00 00:00:00');
+(15, 'assets/images/teams/fcb.png', 'hhhhhhhsssa', 1000, 1, '2022-12-28 00:00:00', '2022-12-28 00:00:00', NULL),
+(16, 'assets/images/teams/fcb.png', 'Hello', 100, 1, '2022-12-28 00:00:00', '2022-12-28 00:00:00', NULL),
+(18, 'assets/images/teams/fcb.png', 'Real Madrid', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(20, 'assets/images/teams/fcb.png', 'FC Barcelona', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(24, 'assets/images/teams/fcb.png', 'Atletico Madrid', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(25, 'assets/images/teams/fcb.png', 'Valence', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(26, 'assets/images/teams/fcb.png', 'Real Betis', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(27, 'assets/images/teams/fcb.png', 'Villa Real', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(28, 'assets/images/teams/fcb.png', 'Paris SG', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(29, 'assets/images/teams/fcb.png', 'Marseille', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(30, 'assets/images/teams/fcb.png', 'Monaco', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
+(31, 'assets/images/teams/fcb.png', 'Lyon', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -235,6 +332,14 @@ ALTER TABLE `matchs`
   ADD KEY `FK_matchs_priority` (`priority_id`);
 
 --
+-- Indexes for table `match_teams`
+--
+ALTER TABLE `match_teams`
+  ADD UNIQUE KEY `match_id` (`match_id`),
+  ADD KEY `FK_match_teams_homeTeam_id` (`home_team_id`),
+  ADD KEY `FK_match_teams_awayTeam_id` (`away_team_id`);
+
+--
 -- Indexes for table `payments`
 --
 ALTER TABLE `payments`
@@ -256,6 +361,13 @@ ALTER TABLE `play_match`
 --
 ALTER TABLE `priority`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `priority_teams`
+--
+ALTER TABLE `priority_teams`
+  ADD KEY `FK_priority_teams_team_id` (`team_id`),
+  ADD KEY `FK_priority_teams_priority_id` (`priority_id`);
 
 --
 -- Indexes for table `ratios`
@@ -300,7 +412,7 @@ ALTER TABLE `bets`
 -- AUTO_INCREMENT for table `matchs`
 --
 ALTER TABLE `matchs`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -318,7 +430,7 @@ ALTER TABLE `play_match`
 -- AUTO_INCREMENT for table `priority`
 --
 ALTER TABLE `priority`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `ratios`
@@ -336,7 +448,7 @@ ALTER TABLE `solde`
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -367,6 +479,14 @@ ALTER TABLE `matchs`
   ADD CONSTRAINT `FK_matchs_priority` FOREIGN KEY (`priority_id`) REFERENCES `priority` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `match_teams`
+--
+ALTER TABLE `match_teams`
+  ADD CONSTRAINT `FK_match_teams_awayTeam_id` FOREIGN KEY (`away_team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_match_teams_homeTeam_id` FOREIGN KEY (`home_team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_match_teams_match_id` FOREIGN KEY (`match_id`) REFERENCES `matchs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `payments`
 --
 ALTER TABLE `payments`
@@ -380,6 +500,13 @@ ALTER TABLE `payments`
 ALTER TABLE `play_match`
   ADD CONSTRAINT `FK_play_matchs_ID_match` FOREIGN KEY (`match_id`) REFERENCES `matchs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_play_matchs_agent` FOREIGN KEY (`agent_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `priority_teams`
+--
+ALTER TABLE `priority_teams`
+  ADD CONSTRAINT `FK_priority_teams_priority_id` FOREIGN KEY (`priority_id`) REFERENCES `priority` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_priority_teams_team_id` FOREIGN KEY (`team_id`) REFERENCES `teams` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `solde`

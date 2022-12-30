@@ -157,8 +157,9 @@ class MatchsView(QtWidgets.QWidget):
             need to pass list_match
         """
         main_FRM = QtWidgets.QFrame()
-        vLayout_LineUp = QtWidgets.QVBoxLayout(main_FRM)
+        scrollLayout_LineUp = QtWidgets.QScrollArea()
 
+        vLayout_LineUp = QtWidgets.QVBoxLayout(main_FRM)
         if list_match:
 
             for row in list_match: 
@@ -262,5 +263,8 @@ class MatchsView(QtWidgets.QWidget):
             return main_FRM
 
         # end verification
+        scrollLayout_LineUp.setWidget(main_FRM)
+
+
         return None
     
