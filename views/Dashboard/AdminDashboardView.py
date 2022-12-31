@@ -5,11 +5,11 @@ from Helpers.Helpers import Helpers
 
 class Ui_AdminDashboardView(object):
 
-    def setupUi(self, MainWindow):
+    def setupUi(self,  MainWindow: QtWidgets.QMainWindow):
 
         MainWindow.setObjectName("mainWindow")
         MainWindow.setWindowTitle("ADMIN AG BETS SPORTS")
-        # MainWindow.resize(1135, 600)
+        MainWindow.setMinimumSize(1135, 600)
         MainWindow.setStyleSheet("#title{\n"
                                  "    font-size: 18px;\n"
                                  "    font-weight:bold;\n"
@@ -56,21 +56,12 @@ class Ui_AdminDashboardView(object):
                                  "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
-        # self.centralwidget.setStyleSheet("background-color: ")
 
         self.MainContentFrame = QtWidgets.QFrame(self.centralwidget)
         self.MainContentFrame.setGeometry(
             QtCore.QRect(0, 96, 1150, 16777214))
 
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-
-        sizePolicy.setHeightForWidth(
-            self.MainContentFrame.sizePolicy().hasHeightForWidth())
-        self.MainContentFrame.setSizePolicy(sizePolicy)
-        self.MainContentFrame.setMaximumSize(QtCore.QSize(1150, 16777214))
+        
         self.MainContentFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.MainContentFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.MainContentFrame.setObjectName("MainContentFrame")
@@ -99,108 +90,127 @@ class Ui_AdminDashboardView(object):
 
     def headerContentFunc(self,):
 
+        
         # start HEADER LAYOUT
         self.HeaderFrame = QtWidgets.QFrame(self.centralwidget)
-        self.HeaderFrame.setGeometry(QtCore.QRect(0, 0, 1131, 86))
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(100)
-        sizePolicy.setHeightForWidth(
-            self.HeaderFrame.sizePolicy().hasHeightForWidth())
-        self.HeaderFrame.setSizePolicy(sizePolicy)
-        self.HeaderFrame.setMinimumSize(QtCore.QSize(0, 0))
-        self.HeaderFrame.setMaximumSize(QtCore.QSize(16777215, 200))
+        self.HeaderFrame.setMinimumSize(1250, 86)
+
         font = QtGui.QFont()
         font.setFamily("JetBrains Mono")
         font.setPointSize(14)
         self.HeaderFrame.setFont(font)
-        self.HeaderFrame.setStyleSheet("")
-        self.HeaderFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.HeaderFrame.setFrameShadow(QtWidgets.QFrame.Raised)
-
+        # self.HeaderFrame.setStyleSheet("background-color: pink;border-radius:10px")
+        self.HeaderFrame.setContentsMargins(0, 0, 0, 0)
         self.HeaderFrame.setObjectName("HeaderFrame")
+
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.HeaderFrame)
-        self.horizontalLayout.setSizeConstraint(
-            QtWidgets.QLayout.SetDefaultConstraint)
+        # self.horizontalLayout.setSizeConstraint(
+        #     QtWidgets.QLayout.SetDefaultConstraint)
+
+        self.horizontalLayout.setContentsMargins(0,0,0,0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.LeftHeaderFrame = QtWidgets.QFrame(self.HeaderFrame)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.LeftHeaderFrame.sizePolicy().hasHeightForWidth())
-        self.LeftHeaderFrame.setSizePolicy(sizePolicy)
-        self.LeftHeaderFrame.setMinimumSize(QtCore.QSize(352, 0))
-        self.LeftHeaderFrame.setStyleSheet(
-            "background-color: #1E1E1E;border-radius: 10px")
-        self.LeftHeaderFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.LeftHeaderFrame.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.LeftHeaderFrame.setObjectName("LeftHeaderFrame")
 
-        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(
-            self.LeftHeaderFrame)
+        self.leftHeaderFrame = QtWidgets.QFrame(self.HeaderFrame)
+        self.leftHeaderFrame.setContentsMargins(0, 0, 0, 0)
 
-        self.matchQPB = QtWidgets.QPushButton(self.LeftHeaderFrame)
-        self.matchQPB.setStyleSheet("background-color: #2C2C2C;\n"
+        self.leftHeaderFrame.setMinimumSize(QtCore.QSize(352, 0))
+        self.leftHeaderFrame.setStyleSheet("border-radius: 10px")
+        self.leftHeaderFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.leftHeaderFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.leftHeaderFrame.setContentsMargins(0,0,0,0)
+        self.leftHeaderFrame.setObjectName("leftHeaderFrame")
+
+        self.hLayout_LeftHeader_FRM = QtWidgets.QHBoxLayout(
+            self.leftHeaderFrame)
+        self.hLayout_LeftHeader_FRM.setContentsMargins(0,0,0,0)
+
+        self.app_name= QtWidgets.QLabel("GA Bets")
+        self.app_name.setStyleSheet("font-size: 22px;color: #FAFAFA;")
+        self.app_name.setMaximumWidth(100)
+
+        self.hLayout_LeftHeader_FRM.addWidget(self.app_name)
+        self.horizontalLayout.addWidget(self.leftHeaderFrame, alignment=QtCore.Qt.AlignLeft)
+
+        self.centerHeaderFrame = QtWidgets.QFrame(self.HeaderFrame)
+        self.centerHeaderFrame.setContentsMargins(0, 0, 0, 0)
+
+        self.centerHeaderFrame.setMinimumSize(QtCore.QSize(352, 0))
+        self.centerHeaderFrame.setStyleSheet("border-radius: 10px")
+        self.centerHeaderFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.centerHeaderFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.centerHeaderFrame.setObjectName("centerHeaderFrame")
+
+        self.hLayout_centerHeader_FRM = QtWidgets.QHBoxLayout(
+            self.centerHeaderFrame)
+
+        self.matchQPB = QtWidgets.QPushButton(self.centerHeaderFrame)
+        self.matchQPB.setStyleSheet("background-color: #1E1E1E;\n"
                                     "color: #FAFAFA;\n"
                                     "border-radius: 10px;\n"
                                     "padding: 10px 15px;")
         self.matchQPB.setObjectName("matchQPB")
         self.matchQPB.setText("Matchs")
-        self.horizontalLayout_2.addWidget(self.matchQPB)
-
+        self.hLayout_centerHeader_FRM.addWidget(self.matchQPB)
+        self.matchQPB.clicked.connect(lambda: self.printHello())
         # end Match BTN
 
         # start Bet BTN
-        self.betsQPBtn = QtWidgets.QPushButton(self.LeftHeaderFrame)
-        self.betsQPBtn.setStyleSheet("background-color: #2C2C2C;\n"
+        self.betsQPBtn = QtWidgets.QPushButton(self.centerHeaderFrame)
+        self.betsQPBtn.setStyleSheet("background-color: #1E1E1E;\n"
                                      "color: #FAFAFA;\n"
                                      "border-radius: 10px;\n"
                                      "padding: 10px 15px;")
         self.betsQPBtn.setObjectName("betsQPB")
         self.betsQPBtn.setText("Pariages")
-        self.horizontalLayout_2.addWidget(self.betsQPBtn)
+        self.hLayout_centerHeader_FRM.addWidget(self.betsQPBtn)
         self.betsQPBtn.clicked.connect(lambda: self.printBet())
         # END match bets BTN
 
         # start team BTN
-        self.teamQPB = QtWidgets.QPushButton(self.LeftHeaderFrame)
-        self.teamQPB.setStyleSheet("background-color: #2C2C2C;\n"
+        self.teamQPB = QtWidgets.QPushButton(self.centerHeaderFrame)
+        self.teamQPB.setStyleSheet("background-color: #1E1E1E;\n"
                                    "color: #FAFAFA;\n"
                                    "border-radius: 10px;\n"
                                    "padding: 10px 15px;\n"
                                    "")
         self.teamQPB.setObjectName("teamQPB")
         self.teamQPB.setText("Equipes")
-
-        self.horizontalLayout_2.addWidget(self.teamQPB)
+        self.hLayout_centerHeader_FRM.addWidget(self.teamQPB)
         # end team BTN
+        self.hLayout_centerHeader_FRM.setObjectName("hLayout_centerHeader_FRM")
 
-        self.horizontalLayout.addWidget(self.LeftHeaderFrame)
+        self.horizontalLayout.addWidget(
+            self.centerHeaderFrame, alignment=QtCore.Qt.AlignJustify)
+
 
         # TODO: Right Header
 
-        self.RightHeaderFrame = QtWidgets.QFrame(self.HeaderFrame)
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.RightHeaderFrame.sizePolicy().hasHeightForWidth())
-        self.RightHeaderFrame.setSizePolicy(sizePolicy)
-        self.RightHeaderFrame.setMinimumSize(QtCore.QSize(0, 0))
+        self.RightHeaderFrame = QtWidgets.QFrame(self.HeaderFrame)        
         self.RightHeaderFrame.setStyleSheet("border: none;\n"
                                             "background-color: none;")
         self.RightHeaderFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.RightHeaderFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.RightHeaderFrame.setObjectName("RightHeaderFrame")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(
+
+        self.hLayout_RightHeaderAside = QtWidgets.QHBoxLayout(
             self.RightHeaderFrame)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.hLayout_RightHeaderAside.setObjectName("hLayout_RightHeaderAside")
+
+        self.balance = QtWidgets.QPushButton(self.RightHeaderFrame)
+        
+        self.balance.setStyleSheet("background-color: #1E1E1E;\n"
+                                   "color: #FAFAFA;\n"
+                                   "opacity: 50%;\n"
+                                   "border-radius: 10px;\n"
+                                   "padding: 10px 15px;\n"
+                                   "")
+        self.balance.setObjectName("balance")
+        self.balance.setText(f"Balance: {0} HTG")
+        self.hLayout_RightHeaderAside.addWidget(self.balance)
+
+        
         self.logoutQPB = QtWidgets.QPushButton(self.RightHeaderFrame)
-        self.logoutQPB.setMaximumSize(QtCore.QSize(200, 16777215))
+        
         self.logoutQPB.setStyleSheet("background-color: #E62641;\n"
                                      "color: #FAFAFA;\n"
                                      "opacity: 50%;\n"
@@ -209,29 +219,29 @@ class Ui_AdminDashboardView(object):
                                      "")
         self.logoutQPB.setObjectName("logoutQPB")
         self.logoutQPB.setText("Logout")
-        self.verticalLayout_2.addWidget(self.logoutQPB)
-        # self.verticalLayout_2.addWidget("Logout")
-        self.horizontalLayout.addWidget(self.RightHeaderFrame)
+        self.hLayout_RightHeaderAside.addWidget(self.logoutQPB)
+        # self.hLayout_RightHeaderAside.addWidget("Logout")
+        self.horizontalLayout.addWidget(self.RightHeaderFrame, alignment=QtCore.Qt.AlignRight)
+
+
     # end headerContentFunc
 
     def showLeftAside(self, match_type) -> None:
         MAX_WIDTH = 300
         MAX_HEIGHT = 700
 
-        self.LeftAsideFrame = QtWidgets.QFrame()
+        self.LeftAsideFrame = QtWidgets.QFrame(self.MainContentFrame)
         self.LeftAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
                                           "border-radius: 10px")
         self.LeftAsideFrame.setEnabled(True)
         self.LeftAsideFrame.setMinimumSize(QtCore.QSize(MAX_WIDTH, 500))
-        self.LeftAsideFrame.setMaximumWidth(200)
+        # self.LeftAsideFrame.setMaximumWidth(200)
 
         vLayout_LeftAsideFrame = QtWidgets.QVBoxLayout(self.LeftAsideFrame)
         vLayout_LeftAsideFrame.setObjectName("verticalLeftAsideFrameLayout")
 
         central_FRM = QtWidgets.QFrame(self.LeftAsideFrame)
         central_FRM.setMinimumSize(QtCore.QSize(MAX_WIDTH, 500))
-
-        # central_FRM.setStyleSheet("background-color: pink")
 
         self.title = QtWidgets.QLabel(central_FRM)
         self.title.setText("Catégories")
@@ -278,16 +288,12 @@ class Ui_AdminDashboardView(object):
     def centerAsideFunc(self):
         MAX_WIDTH = 100
         MAX_HEIGHT = 400
-        self.centralAsideFrame = QtWidgets.QFrame()
+        self.centralAsideFrame = QtWidgets.QFrame(self.MainContentFrame)
         self.centralAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
                                              "border-radius: 10px")
         self.centralAsideFrame.setEnabled(True)
         self.centralAsideFrame.setContentsMargins(0,0,0,0)
-        # self.centralAsideFrame.setMinimumWidth(MAX_WIDTH)
-        # self.centralAsideFrame.setMinimumHeight(MAX_HEIGHT)
-        # self.centralAsideFrame.setMaximumSize(MAX_WIDTH,MAX_HEIGHT)
-        # self.centralAsideFrame.setMinimumSize(QtCore.QSize(MAX_WIDTH, 500))
-        # self.centralAsideFrame.setMaximumSize(10,0)
+        
 
         self.vLayoutCenterAside = QtWidgets.QVBoxLayout(self.centralAsideFrame)
 
@@ -298,16 +304,6 @@ class Ui_AdminDashboardView(object):
         #  FRAME: START RIGHT ASIDE
         self.ListMatchContent_FRM = QtWidgets.QFrame(self.MainContentFrame)
 
-        sizePolicy = QtWidgets.QSizePolicy(
-            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(
-            self.ListMatchContent_FRM.sizePolicy().hasHeightForWidth())
-        self.ListMatchContent_FRM.setSizePolicy(sizePolicy)
-
-        # self.ListMatchContent_FRM.setStyleSheet("background-color: pink;\n"
-        #                                         "border-radius: 10px")
         self.ListMatchContent_FRM.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.ListMatchContent_FRM.setFrameShadow(QtWidgets.QFrame.Raised)
         self.ListMatchContent_FRM.setContentsMargins(0,0,0,0)

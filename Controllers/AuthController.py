@@ -25,18 +25,23 @@ class AuthController():
         self.toggleAuthScreen()
     # end start Controller
 
+    def endAuth(self):
+        self.authView.close()
+        self.parent.connected_user=True
+        self.parent.toggleConnection()
+    # end auth
+
     def toggleAuthScreen(self):
         if not self.isSignUp:
             self.setupLoginFunc()
         else:
             self.setupRegisterFunc()
 
-        print(f"IS SIGNUP: {self.isSignUp}")
     # end toggleAuthScreen()
 
     def setupLoginFunc(self):
         self.authView.displayLogin()
-        print("Mwen nan setupL")
+        
         # invite
         self.authView.inviteSignUpBtn.clicked.connect(
             lambda: self.toggle())
@@ -70,7 +75,8 @@ class AuthController():
             self.login_model.username = username
             self.login_model.password = password
             isConnexionSuccess= self.login_model.check_user_connect()
-            print(f"IS SUCCESS: {isConnexionSuccess}")
+            if isConnexionSuccess:
+                self.endAuth()
 
     def validateLogin(self, username: str, password: str):
         result = False
