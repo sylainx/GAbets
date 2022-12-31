@@ -5,9 +5,7 @@ from Controllers.AuthController import AuthController
 from Controllers.DashboardController import DashboardController
 from Helpers.Helpers import Helpers
 # views
-from views.LoginView import LoginView
 from PyQt5.QtGui import QIcon
-from views.Dashboard.DashboardView import Ui_DashboardView
 from views.paymentWidget import Ui_PaymentManageWidget
 
 

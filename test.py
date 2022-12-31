@@ -21,8 +21,10 @@ def verify_password( pwd: str, hashed_pwd: str):
 
     # encoding user password
     user_bytes = user_password.encode('utf-8')
-    hashed_pwd = hashed_pwd.encode('utf-8')
-
+    print(f"pwd: {hashed_pwd}")
+    if not isinstance(hashed_pwd, bytes):
+        hashed_pwd = hashed_pwd.encode('utf-8')
+    
     # checking password
     result = bcrypt.checkpw(user_bytes, hashed_pwd)
 

@@ -9,7 +9,7 @@ from Helpers.Helpers import Helpers
 from datetime import date
 
 
-class LoginView(QWidget):
+class AuthView(QWidget):
     to_login = LoginModel()
     to_register = RegisterModel()
     util = Helpers()
@@ -27,8 +27,9 @@ class LoginView(QWidget):
         # QWidget io pemet u personalize page la
         # vLayout_MainContent = QVBoxLayout(self)
         self.content = QWidget(self)
-        # self.content.setMaximumSize(800, 640)
-        self.content.setMinimumSize(750, 400)
+        self.setMinimumSize(750, 400)
+        self.content.setMinimumSize(800, 640)
+        self.setMaximumSize(810, 650)
         self.content.setStyleSheet(
             "background-color: #2C2C2C;"
             "    font-size: 15px;\n"
@@ -37,17 +38,17 @@ class LoginView(QWidget):
             "\n"
             "QLabel{\n"
             "    font: 15px \"JetBrains Mono\";\n"
-            "    color: blue;\n"
+            "    color: #FAFAFA\n"
             # "    margin-top:5px;    \n"
             "}\n"
             "\n"
             "QLineEdit{\n"
             "    height: 30px;\n"
             "    font-weight: bold;\n"
-            "    border: 1px solid #1E1E1E;\n"
+            "    border: 1px solid #FAFAFA;\n"
             "}\n"
             "QLineEdit:focus{\n"
-            "    border:1px solid blue;\n"
+            "    border:0px solid #FAFAFA\n"
             "}\n"
             "")
 
@@ -97,14 +98,14 @@ class LoginView(QWidget):
         self.gridLayout.setColumnStretch(2, 3)
 
         # end left aside
-        # self.displayLogin()
 
     def displayLogin(self):
 
         content_rightside = QWidget()
+
         rightside_layout = QHBoxLayout()
         content_rightside.setStyleSheet(
-            "background-color: white;"
+            "background-color: #2C2C2C;"
             "border-radius: 10px;"
         )
         content_rightside.setLayout(rightside_layout)
@@ -119,16 +120,16 @@ class LoginView(QWidget):
         # creating a form self.gridLayout
         # pass_layout = QHBoxLayout()
         form_layout = QVBoxLayout()
-        self.loginbtn = QPushButton("Sign in")
-        self.loginbtn.setCursor(Qt.PointingHandCursor)
-        self.loginbtn.setStyleSheet("color: white;\n"
+        self.login_QPB = QPushButton("Sign in")
+        self.login_QPB.setCursor(Qt.PointingHandCursor)
+        self.login_QPB.setStyleSheet("color: white;\n"
                                     "    margin-top:15px;\n"
                                     "    height:50px;\n"
                                     "    width:100px;\n"
                                     "color:white;\n"
                                     "text-align:center;\n"
-                                    "background-color:blue;\n"
-                                    "border-radius:15px;\n"
+                                    "background-color: #1E1E1E;\n"
+                                    "border-radius:10px;\n"
                                     "font-size:18px;\n"
                                     )
 
@@ -138,38 +139,50 @@ class LoginView(QWidget):
         self.no_account.setStyleSheet("font-size: 12px;\n"
                                       "    margin-top:10px;\n"
                                       "    text-align:center;\n"
-                                      "    color: #1E1E1E;\n")
+                                      "    color: #FAFAFA;\n")
         self.inviteSignUpBtn = QPushButton("Create an account")
         self.inviteSignUpBtn.setCursor(Qt.PointingHandCursor)
         self.inviteSignUpBtn.setStyleSheet("font-size: 12px;\n"
                                            "    margin-top:10px;\n"
                                            "    text-align:center;\n"
-                                           "    color: blue;\n")
+                                           "    color: #42b883;\n")
 
         # create link back to login
         self.no_account_HLYT.addWidget(self.no_account)
         self.no_account_HLYT.addWidget(self.inviteSignUpBtn)
         form_layout.setAlignment(Qt.AlignTop)
-        self.label_title = QLabel("Login Page")
+        self.label_title = QLabel("Login")
         self.label_title.setAlignment(QtCore.Qt.AlignCenter)
         self.label_title.setStyleSheet("    font-size: 20px;\n"
                                        "    font-weight:bold;\n"
                                        "    margin:10px 0px 35px 0px;\n"
                                        "    text-align:center;\n"
-                                       "    color:blue;\n"
+                                       "    color:#FAFAFA\n"
                                        )
 
-        self.txtUsername = QLineEdit()
-        self.txtPassword = QLineEdit()
-        self.txtPassword.setEchoMode(QLineEdit.Password)
+        self.txtUsername_QLE = QLineEdit()
+        self.txtPassword_QLE = QLineEdit()
+        self.txtPassword_QLE.setEchoMode(QLineEdit.Password)
+
+        self.lbl_errorMessage = QLabel()
+        self.lbl_errorMessage.setVisible(False)
+        self.lbl_errorMessage.setContentsMargins(0,0,0,0)
+        self.lbl_errorMessage.setStyleSheet(
+            "color: #E62641;"
+            "font-size: 12px;"
+            "text-align:center;"
+            "margin: 10px 10px 0px 10px;"
+        )
+
         # adding rows
         # for name and adding input text
         form_layout.addWidget(self.label_title)
-        form_layout.addWidget(QLabel("User name"))
-        form_layout.addWidget(self.txtUsername)
+        form_layout.addWidget(QLabel("Username"))
+        form_layout.addWidget(self.txtUsername_QLE)
         form_layout.addWidget(QLabel("Password"))
-        form_layout.addWidget(self.txtPassword)
-        form_layout.addWidget(self.loginbtn)
+        form_layout.addWidget(self.txtPassword_QLE)
+        form_layout.addWidget(self.lbl_errorMessage)
+        form_layout.addWidget(self.login_QPB)
         form_layout.addLayout(self.no_account_HLYT)
         #     Setting self.gridLayout
         rightside_layout.addLayout(form_layout)
@@ -180,27 +193,21 @@ class LoginView(QWidget):
         # TODO will be prepare infos to submit login in Model
 
         # fill
-        self.to_login.username = self.txtUsername.text()
-        self.to_login.password = self.txtPassword.text()
+        self.to_login.username = self.txtUsername_QLE.text()
+        self.to_login.password = self.txtPassword_QLE.text()
 
         # verify if user is sucessfully connected
         id_user_connected = self.to_login.check_user_connect()
 
     # end clearFields
 
-    def test(self):
-        print("testttttttttttttt")
 
     def displayRegister(self):
 
-        # self.content.setMinimumSize(800, 640)
-        self.setMinimumSize(800, 640)
-        self.content.setMinimumSize(800, 640)
-        self.setMaximumSize(810, 650)
         rightside_layout = QHBoxLayout()
         content_rightside = QWidget()
         content_rightside.setStyleSheet(
-            "background-color: #f9fbfc;"
+            "background-color: #1E1E1E;"
             "border-radius: 10px;"
         )
         content_rightside.setLayout(rightside_layout)
@@ -221,25 +228,26 @@ class LoginView(QWidget):
                                     "    width:100px;\n"
                                     "color:white;\n"
                                     "text-align:center;\n"
-                                    "background-color:blue;\n"
+                                    "background-color: #1E1E1E;\n"
                                     "border-radius:10px;\n"
-                                    "font-size:15px;\n"
+                                    "font-size:18px;\n"
                                     )
+                                    
         self.have_account = QLabel("have an account?")
         self.have_account.setAlignment(QtCore.Qt.AlignCenter)
         self.have_account.setStyleSheet("font-size: 12px;\n"
                                         "    margin-top:5px;\n"
-                                        "    color:1E1E1E;\n"
+                                        "    color: #FAFAFA;\n"
                                         "    text-align:center;\n")
 
-        self.inviteSignUpBtn = QPushButton("Login to account")
-        self.inviteSignUpBtn.setCursor(Qt.PointingHandCursor)
-        self.inviteSignUpBtn.setStyleSheet("font-size: 12px;\n"
+        self.inviteLogin_QPB = QPushButton("Login to account")
+        self.inviteLogin_QPB.setCursor(Qt.PointingHandCursor)
+        self.inviteLogin_QPB.setStyleSheet("font-size: 12px;\n"
                                            "    margin-top:5px;\n"
                                            "    text-align:center;\n"
-                                           "    color: blue;\n")
+                                           "    color: #42b883;\n")
 
-        self.inviteSignUpBtn.clicked.connect(lambda: self.test())
+        
         form_layout.setAlignment(Qt.AlignTop)
         self.label_title = QLabel("Sign Up Page")
         self.label_title.setAlignment(QtCore.Qt.AlignCenter)
@@ -247,11 +255,11 @@ class LoginView(QWidget):
                                        "    font-weight:bold;\n"
                                        "    margin-top:5px;\n"
                                        "    text-align:center;\n"
-                                       "    color:blue;\n"
+                                       "    color: #FAFAFA;\n"
                                        )
         # create link back to login
         have_account_LYT.addWidget(self.have_account)
-        have_account_LYT.addWidget(self.inviteSignUpBtn)
+        have_account_LYT.addWidget(self.inviteLogin_QPB)
         # add radioButton to Widget
         self.rdMale = QRadioButton("Masculin")
         self.rdFemale = QRadioButton("Feminin")
@@ -262,20 +270,20 @@ class LoginView(QWidget):
         self.txtDateOfBirth.setDisplayFormat("dd/MM/yyyy")
         self.txtDateOfBirth.setCalendarPopup(True)
         self.txtDateOfBirth.setStyleSheet(
-            "    color:#1E1E1E;\n"
+            "color: #FAFAFA;\n"
         )
 
         self.txtFirstName = QLineEdit()
         self.txtLastName = QLineEdit()
-        self.txtUserName = QLineEdit()
+        self.txtUsername_QLE = QLineEdit()
         self.txtAdress = QLineEdit()
         self.txtEmail = QLineEdit()
         self.txtPhone = QLineEdit()
         self.txtNif = QLineEdit()
-        self.txtPassword = QLineEdit()
+        self.txtPassword_QLE = QLineEdit()
         self.txtConfirmPassword = QLineEdit()
         self.txtConfirmPassword.setEchoMode(QLineEdit.Password)
-        self.txtPassword.setEchoMode(QLineEdit.Password)
+        self.txtPassword_QLE.setEchoMode(QLineEdit.Password)
 
         # adding rows
         # for name and adding input text
@@ -285,7 +293,7 @@ class LoginView(QWidget):
         form_layout.addWidget(QLabel("Last name"))
         form_layout.addWidget(self.txtLastName)
         form_layout.addWidget(QLabel("User name"))
-        form_layout.addWidget(self.txtUserName)
+        form_layout.addWidget(self.txtUsername_QLE)
         form_layout.addWidget(QLabel("User Email"))
         form_layout.addWidget(self.txtEmail)
         form_layout.addWidget(QLabel("user Adress"))
@@ -300,7 +308,7 @@ class LoginView(QWidget):
         form_layout.addWidget(QLabel("user Nif"))
         form_layout.addWidget(self.txtNif)
         form_layout.addWidget(QLabel("Password"))
-        form_layout.addWidget(self.txtPassword)
+        form_layout.addWidget(self.txtPassword_QLE)
         form_layout.addWidget(QLabel("confirm Password"))
         form_layout.addWidget(self.txtConfirmPassword)
         form_layout.addWidget(self.loginbtn)
@@ -313,53 +321,9 @@ class LoginView(QWidget):
         #
         self.content.setLayout(self.gridLayout)
 
-    # def goToRegisterForm(self):
-    #     # TODO will be ....
-    #     gender = None
-    #     errorMsg = ""
-
-    #     self.to_register.username = self.txtUsername.text()
-    #     self.to_register.lastname = self.txtLastname.text()
-    #     self.to_register.firstname = self.txtFirstname.text()
-    #     self.to_register.email = self.txtEmail.text()
-
-    #     # save Gender
-    #     if self.rdFemale.isChecked():
-    #         gender = self.rdFemale.text()
-    #     else:
-    #         gender = self.rdMale.text()
-    #     self.to_register.sexe = gender
-    #     # end save Gender
-
-    #     self.to_register.date_nais = self.txtDateOfBirth.date().toPyDate()
-    #     self.to_register.tel = self.txtPhone.text()
-    #     self.to_register.address = self.txtAddress.text()
-    #     self.to_register.password = self.txtPassword.text()
-    #     confirm_pwd= self.txtConfirmPassword.text()
-    #     self.to_register.nif = self.txtNif.text()
-
-    #     # before send | verify some things
-    #     # check_email
-    #     if self.util.check_email(self.to_register.email):
-    #         # password
-    #         if self.to_register.password == confirm_pwd:
-    #             self.to_register.enregistrer()
-    #             return True
-    #         else:
-    #             errorMsg="Password don't match"
-    #     else:
-    #         errorMsg="Email don't valid"
-
-    #     # display error
-    #     if errorMsg :
-    #         QMessageBox.warning(
-    #             None, "Error", errorMsg, QMessageBox.Ok)
-
-    #     return False
-
     # def clearFields(self):
     #     # TODO will be clear all fields
-    #     self.txtUsername.clear()
+    #     self.txtUsername_QLE.clear()
     #     self.txtFirstname.clear()
     #     self.txtLastname.clear()
     #     self.txtAddress.clear()
@@ -367,6 +331,6 @@ class LoginView(QWidget):
     #     self.txtNif.clear()
     #     self.txtPhone.clear()
     #     self.txtDateOfBirth.clear()
-    #     self.txtPassword.clear()
+    #     self.txtPassword_QLE.clear()
     #     self.rdFemale.setChecked(False)
     #     self.rdMale.setChecked(False)

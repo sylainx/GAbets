@@ -30,11 +30,11 @@ class LoginModel:
             # execute query
             self.cursor.execute(query, statement)
             # return nb line
-            self.data_found = self.cursor.fetchone()
+            data_found = self.cursor.fetchone()
 
-            if self.data_found and type(self.data_found) is tuple:
-
-                if (self.util.verify_password(self.password, self.data_found[0])):
+            if data_found and type(data_found) is tuple:
+                
+                if (self.util.verify_password(self.password, bytes(data_found[0]))):
                     # retourne le nombre de ligne affecte
                     QMessageBox.information(
                         None, "Confirmation", "Connexion reussi", QMessageBox.Ok)
@@ -44,14 +44,14 @@ class LoginModel:
                     if self.conn.is_connected():
                         self.conn.close()
 
-                    return self.data_found[1]
+                    return data_found[1]
                 else:
                     QMessageBox.warning(
-                        None, "Error", "Mot de passe incorrect", QMessageBox.Ok)
+                        None, "Error", "Mot de passe introuvable", QMessageBox.Ok)
                 # end clause hash_password
             else:
                 QMessageBox.warning(
-                    None, "Error", "Nom d'utilisateur incorrect", QMessageBox.Ok)
+                    None, "Error", "Nom d'utilisateur introuvable", QMessageBox.Ok)
 
             # end clause data_found
             # close cursor
