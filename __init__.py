@@ -31,7 +31,7 @@ class MainProject(QMainWindow):
 
     def creerMenu(self):
         self.mnBar = self.menuBar()
-
+        
         # self.mnBar.setStyleSheet("position:absolute;right:0;")
         self.inscriptions = self.mnBar.addMenu("Compte")
 

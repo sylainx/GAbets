@@ -222,9 +222,6 @@ class Ui_AdminDashboardView(object):
         self.LeftAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
                                           "border-radius: 10px")
         self.LeftAsideFrame.setEnabled(True)
-        # self.LeftAsideFrame.setMinimumWidth(MAX_WIDTH)
-        # self.LeftAsideFrame.setMinimumHeight(MAX_HEIGHT)
-        # self.LeftAsideFrame.setMaximumSize(MAX_WIDTH,MAX_HEIGHT)
         self.LeftAsideFrame.setMinimumSize(QtCore.QSize(MAX_WIDTH, 500))
         self.LeftAsideFrame.setMaximumWidth(200)
 
@@ -280,10 +277,12 @@ class Ui_AdminDashboardView(object):
 
     def centerAsideFunc(self):
         MAX_WIDTH = 100
+        MAX_HEIGHT = 400
         self.centralAsideFrame = QtWidgets.QFrame()
         self.centralAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
                                              "border-radius: 10px")
         self.centralAsideFrame.setEnabled(True)
+        self.centralAsideFrame.setContentsMargins(0,0,0,0)
         # self.centralAsideFrame.setMinimumWidth(MAX_WIDTH)
         # self.centralAsideFrame.setMinimumHeight(MAX_HEIGHT)
         # self.centralAsideFrame.setMaximumSize(MAX_WIDTH,MAX_HEIGHT)
@@ -291,7 +290,7 @@ class Ui_AdminDashboardView(object):
         # self.centralAsideFrame.setMaximumSize(10,0)
 
         self.vLayoutCenterAside = QtWidgets.QVBoxLayout(self.centralAsideFrame)
-        
+
     # end centerAsideFunc
 
     def showListMatch(self):
@@ -311,23 +310,24 @@ class Ui_AdminDashboardView(object):
         #                                         "border-radius: 10px")
         self.ListMatchContent_FRM.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.ListMatchContent_FRM.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.ListMatchContent_FRM.setContentsMargins(0,0,0,0)
         self.ListMatchContent_FRM.setObjectName("ListMatchContent_FRM")
 
         #
         self.hLayout_2 = QtWidgets.QHBoxLayout(self.ListMatchContent_FRM)
         self.hLayout_2.setObjectName("hLayout_2")
+        self.hLayout_2.setContentsMargins(0,0,0,0)
 
-        
         # start head to head
         self.head_to_head = QtWidgets.QWidget(self.ListMatchContent_FRM)
         self.head_to_head.setObjectName("head_to_head")
         self.vLayout_4 = QtWidgets.QVBoxLayout(self.head_to_head)
         self.vLayout_4.setContentsMargins(0, 0, 0, 0)
-        self.vLayout_4.setSpacing(10)
+        # self.vLayout_4.setSpacing(10)
         self.vLayout_4.setObjectName("vLayout_4")
 
         self.images = QtWidgets.QWidget(self.head_to_head)
-        self.images.setMaximumSize(QtCore.QSize(16777215, 201))
+        self.images.setMaximumSize(QtCore.QSize(400, 200))
         self.images.setStyleSheet("background-image: url(./assets/images/tt.png);\n"
                                   "border-radius: 15px;")
         self.images.setObjectName("images")
@@ -336,28 +336,26 @@ class Ui_AdminDashboardView(object):
         self.vLayout_5.setSpacing(0)
         self.vLayout_5.setObjectName("vLayout_5")
         self.lbl_coverImage = QtWidgets.QLabel(self.images)
-        self.lbl_coverImage.setText("")
         self.lbl_coverImage.setObjectName("label")
 
         self.vLayout_5.addWidget(self.lbl_coverImage)
         self.vLayout_4.addWidget(self.images)
 
         self.h2h = QtWidgets.QWidget(self.head_to_head)
-        
-        self.h2h.setStyleSheet("background-color: #1E1E1E; \n"
-                               "border-radius: 15px;")
+
+        self.h2h.setStyleSheet(
+            "background-color: #1E1E1E;border-radius: 15px;")
         self.h2h.setObjectName("h2h")
 
         # TODO: content list of matchs
         self.vLayout_ToLineUpContainer = QtWidgets.QVBoxLayout(self.h2h)
-        self.vLayout_ToLineUpContainer.setObjectName("vLayout_ToLineUpContainer")
+        self.vLayout_ToLineUpContainer.setObjectName(
+            "vLayout_ToLineUpContainer")
         self.vLayout_ToLineUpContainer.setAlignment(QtCore.Qt.AlignTop)
-        
+
         self.vLayout_4.addWidget(self.h2h)
         self.hLayout_2.addWidget(self.head_to_head)
         # end head to head
-
-
 
         self.right_details = QtWidgets.QWidget(self.ListMatchContent_FRM)
         self.right_details.setStyleSheet("background-color: #2C2C2C; ")
@@ -365,7 +363,7 @@ class Ui_AdminDashboardView(object):
         self.hLayout_2.addWidget(self.right_details)
 
         # self.vLayout_ToLineUpContainer.addWidget(self.ListMatchContent_FRM)
-        
+
         # TODO: end cent
 
     def printTest(self):
