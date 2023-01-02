@@ -1,12 +1,13 @@
 from PyQt5.QtWidgets import QMessageBox
 import mysql.connector
+import secrets
 from datetime import date
 from Models.dbconnection import DBConnection
 from Helpers.Helpers import Helpers
 
 
 class RegisterModel:
-    util = Helpers()
+    # util = Helpers()
 
     def __init__(self, lastname=None, firstname=None, email=None, sexe=None, date_nais=None, tel=None, password=None,
                  address=None, username=None, nif=None):
@@ -20,10 +21,39 @@ class RegisterModel:
         self.password = password
         self.address = address
         self.nif = nif
+        self.util = Helpers()
+
+# fonction permettant de generer un code d'utilisateur unique
+    def generer_code(self) -> str:
+    # generate 1 secure random numbers between 10 and 500
+        for x in range(0, 1):
+            self.secret_code = "CODE_" + (10 + secrets.randbelow(500)).__str__()
+            self.verify_code(self.secret_code)
+        # recursive function : get unique ID in all_commandes
+        return self.secret_code
+
+# fonction permettant de verifier si le code n'existe pas 
+    def verify_code(self,secret_code):
+        
+        self.obj_con = DBConnection()
+        self.conn = self.obj_con.connection()
+        # prepare
+        query = " SELECT `code_user` FROM `users` WHERE code_user=%s "
+        self.cursor = self.conn.cursor(prepared=True)
+        # define values
+        statement = [secret_code]
+        # execute query
+        self.cursor.execute(query, statement)
+        # return nb line
+        data_found = self.cursor.fetchone()
+        if data_found == True:
+            self.generer_code()
+
+    
 
     def enregistrer(self):
         try:
-            code_user = 1
+            code_user = self.generer_code()
 
             self.obj = DBConnection()
             self.conn = self.obj.connection()

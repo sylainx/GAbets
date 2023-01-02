@@ -29,7 +29,7 @@ class AuthView(QWidget):
         self.content = QWidget(self)
         self.setMinimumSize(750, 400)
         self.content.setMinimumSize(800, 640)
-        self.setMaximumSize(810, 650)
+        self.setMaximumSize(810, 700)
         self.content.setStyleSheet(
             "background-color: #2C2C2C;"
             "    font-size: 15px;\n"
@@ -45,10 +45,10 @@ class AuthView(QWidget):
             "QLineEdit{\n"
             "    height: 30px;\n"
             "    font-weight: bold;\n"
-            "    border: 1px solid #FAFAFA;\n"
+            "    border: 1px solid white;\n"
             "}\n"
             "QLineEdit:focus{\n"
-            "    border:0px solid #FAFAFA\n"
+            "    border:0px solid white\n"
             "}\n"
             "")
 
@@ -59,7 +59,7 @@ class AuthView(QWidget):
         body_layout = QHBoxLayout()
         self.gridLayout = QGridLayout()
 
-        # Label lan genyen logo ki league
+        # Label lan genyen imaj la ladann
         label_img = QLabel(self)
         pixmap = QPixmap("./assets/images/home-29.png")
         label_img.setPixmap(pixmap)
@@ -130,7 +130,7 @@ class AuthView(QWidget):
                                     "text-align:center;\n"
                                     "background-color: #1E1E1E;\n"
                                     "border-radius:10px;\n"
-                                    "font-size:18px;\n"
+                                    "font-size:15px;\n"
                                     )
 
         self.no_account_HLYT = QHBoxLayout()
@@ -275,7 +275,7 @@ class AuthView(QWidget):
 
         self.txtFirstName = QLineEdit()
         self.txtLastName = QLineEdit()
-        self.txtUsername_QLE = QLineEdit()
+        self.txtUsername = QLineEdit()
         self.txtAdress = QLineEdit()
         self.txtEmail = QLineEdit()
         self.txtPhone = QLineEdit()
@@ -293,11 +293,13 @@ class AuthView(QWidget):
         form_layout.addWidget(QLabel("Last name"))
         form_layout.addWidget(self.txtLastName)
         form_layout.addWidget(QLabel("User name"))
-        form_layout.addWidget(self.txtUsername_QLE)
+        form_layout.addWidget(self.txtUsername)
         form_layout.addWidget(QLabel("User Email"))
         form_layout.addWidget(self.txtEmail)
         form_layout.addWidget(QLabel("user Adress"))
         form_layout.addWidget(self.txtAdress)
+        form_layout.addWidget(QLabel("user Phone"))
+        form_layout.addWidget(self.txtPhone)
 
         form_layout.addWidget(QLabel("Sexe"))
         form_layout.addLayout(q_gender_LYT)
