@@ -134,8 +134,10 @@ class AuthController():
             self.register_model.nif = nif
             self.register_model.password = password
             isConnexionSuccess= self.register_model.enregistrer()
-            print(f"IS SUCCESS: {isConnexionSuccess}")
-
+            
+            if isConnexionSuccess:
+                self.user_id = isConnexionSuccess
+                self.endAuth()
 
     def validationSignUp(self, firstname: str, lastname: str, email: str, tel: str, adresse: str, username: str, nif: str, sexe: str ,datenaiss: str,password : str, confirmpasswrd: str ):
         result = False

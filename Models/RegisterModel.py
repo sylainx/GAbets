@@ -64,33 +64,45 @@ class RegisterModel:
             # creer la chaine de requete
             
             requete = " INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`,\
-                 `username`, `nif`, `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) \
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+                 `username`, `nif`, `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`,`is_admin`) \
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
 
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)
             # definir les valeurs
-            valeurs = ["None", self.firstname, self.lastname, self.email, self.tel, code_user,
+            valeurs = [None, self.firstname, self.lastname, self.email, self.tel, code_user,
                        self.address, self.username, self.nif, self.sexe, self.date_nais, pwd_hashed, self.util.get_day(), 
-                       self.util.get_day(), None]
+                       self.util.get_day(), None, None]
             print(f'Valeurs: {valeurs} ')
             # executer la requete
-            result = self.cursor.execute(requete, valeurs)
+            self.cursor.execute(requete, valeurs)
 
-            if result:
-                # fermer le cursor
+            # Get the ID of the inserted row
+            inserted_id = self.cursor.lastrowid
+
+            # Execute a SELECT statement to retrieve the inserted row
+            self.cursor.execute("SELECT * FROM `USERS` WHERE id = %s", (inserted_id,))
+            # Fetch the inserted row
+            inserted_row = self.cursor.fetchone()
+
+            # Check the inserted row
+            if inserted_row:
+                # Data has been inserted successfully                
                 self.cursor.close()
                 # validate updates
                 self.conn.commit()
-                return True
+                return inserted_id
+
             else:
                 QMessageBox.warning(
-                    None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
+                    None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)            
             # end result
 
-            # validation du changement au niveau de la table
+            # fermer le cursor
+            self.cursor.close()
+            # validate updates
             self.conn.commit()
-            # retourne le nombre de ligne affecte
+            return False
 
         except mysql.connector.Error as erreur:
             QMessageBox.warning(None, "Erreur", "Erreur - " +
