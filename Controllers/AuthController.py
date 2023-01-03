@@ -27,7 +27,10 @@ class AuthController():
 
     def endAuth(self):
         self.authView.close()
+        # is define in parent (__init__.py)
         self.parent.connected_user=True
+        self.parent.user_id=self.user_id
+        # end define in parent
         self.parent.toggleConnection()
     # end auth
 
@@ -76,6 +79,7 @@ class AuthController():
             self.login_model.password = password
             isConnexionSuccess= self.login_model.check_user_connect()
             if isConnexionSuccess:
+                self.user_id = isConnexionSuccess
                 self.endAuth()
 
     def validateLogin(self, username: str, password: str):

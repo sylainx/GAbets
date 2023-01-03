@@ -7,7 +7,7 @@ from datetime import date
 
 class MatchsModel:
 
-    def __init__(self, home_team_id=None, move_team_id=None, priority_id=None,  country=None, agent_id=None):
+    def __init__(self, home_team_id=None, move_team_id=None, priority_id=None, country=None, agent_id=None):
         self.home_team_id = home_team_id
         self.move_team_id = move_team_id
         self.priority_id = priority_id
@@ -17,49 +17,49 @@ class MatchsModel:
 
     def save(self):
         try:
-            code_user = 1
+            
             self.obj = DBConnection()
             self.conn = self.obj.connection()
             # creer la chaine de requete
             requete = " INSERT INTO `matchs`(`id`, `home_team_id`, `move_team_id`, `priority_id`, `created_at`, `updated_at`,\
                  `deleted_at`, `agent_id`, `country`)\
-                VALUES (%s,%s,%s,%s,%s) "
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) "
 
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)
             # definir les valeurs
-            valeurs = [None, self.home_team_id, self.move_team_id, self.priority_id, self.utils.get_day(), self.utils.get_day(), None,
-                       self.agent_id, self.country]
+            valeurs = [None, self.home_team_id, self.move_team_id, self.priority_id, self.utils.get_day(), self.utils.get_day(), 
+                None, self.agent_id, self.country]
 
             # executer la requete
             self.cursor.execute(requete, valeurs)
             # validation du changement au niveau de la table
             self.conn.commit()
-            
-            
+
             # Get the ID of the inserted row
             inserted_id = self.cursor.lastrowid
 
             # Execute a SELECT statement to retrieve the inserted row
-            self.cursor.execute("SELECT * FROM `matchs` WHERE id = %s", (inserted_id,))
+            self.cursor.execute(
+                "SELECT * FROM `matchs` WHERE id = %s", (inserted_id,))
             # Fetch the inserted row
             inserted_row = self.cursor.fetchone()
 
             # Check the inserted row
             if inserted_row:
-                # Data has been inserted successfully                
+                # Data has been inserted successfully
                 self.cursor.close()
                 # validate updates
                 self.conn.commit()
                 # retourne le nombre de ligne affecte
-                QMessageBox.information(
-                    None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+                # QMessageBox.information(
+                #     None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
                 return inserted_id
 
             else:
                 QMessageBox.warning(
                     None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
-            
+
         except mysql.connector.Error as erreur:
             QMessageBox.warning(None, "Erreur", "Erreur " +
                                 str(erreur), QMessageBox.Ok)
@@ -111,14 +111,14 @@ class MatchsModel:
                 self.conn.close()
         return self.liste
 
-    def update(self,id):
+    def update(self, id):
         try:
             obj = DBConnection()
             self.conn = obj.connection()
             requete = " UPDATE `MATCHS` SET home_team_id=%s, move_team_id=%s, priority_id=%s, agent_id=%s, country=%s, \
             updated_at=%s WHERE id=%s"
             valeurs = (self.home_team_id, self.move_team_id, self.priority_id, self.agent_id, self.country,
-                    self.utils.get_day(), id)
+                       self.utils.get_day(), id)
             self.cursor = self.conn.cursor()
             self.cursor.execute(requete, valeurs)
             self.conn.commit()

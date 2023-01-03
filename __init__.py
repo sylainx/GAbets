@@ -7,7 +7,6 @@ from Helpers.Helpers import Helpers
 # views
 from PyQt5.QtGui import QIcon
 from views.AuthView import AuthView
-from views.paymentWidget import Ui_PaymentManageWidget
 
 
 class MainProject(QMainWindow):
@@ -22,18 +21,17 @@ class MainProject(QMainWindow):
         self.creerMenu()
         # properties
         # TODO: PASS false FALSE show login form
-        # self.connected_user = False
-        self.connected_user = True
-        self.agent_id = None
+        self.connected_user = False
+        self.user_id = None
         # initiate
         self.auth = AuthController(self)
         self.toggleConnection()
         
     
-    def toggleConnection(self):
+    def toggleConnection(self,):
         
         if(self.connected_user):
-            self.dashboard = DashboardController(self)
+            self.dashboard = DashboardController(self,self.user_id)
             self.dashboard.showDashboard()
             
         else:

@@ -7,7 +7,7 @@ from datetime import date
 class UsersModel:
 
     def __init__(self, lastname=None, firstname=None, email=None, sexe=None, date_nais=None, tel=None, password=None,
-                 address=None, agent_id=None, username=None, nif=None):
+                 address=None, agent_id=None, username=None, nif=None, is_admin=None):
         self.lastname = lastname
         self.firstname = firstname
         self.username = username
@@ -19,22 +19,23 @@ class UsersModel:
         self.address = address
         self.nif = nif
         self.agent_id = agent_id
+        self.is_admin = is_admin
 
-    def enregistrer(self):
+    def save(self):
         try:
             code_user = 1
             self.obj = DBConnection()
             self.conn = self.obj.connection()
             # creer la chaine de requete
             requete = " INSERT INTO `users`(`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`, `username`, `nif`, \
-                `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) \
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+                `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`,`is_admin`) \
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
 
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)
             # definir les valeurs
             valeurs = [None, self.firstname, self.lastname, self.email, self.tel, code_user,
-                       self.address, self.username, self.nif, self.sexe, self.date_nais, self.password, self.get_day, self.get_day, None]
+                       self.address, self.username, self.nif, self.sexe, self.date_nais, self.password, self.get_day, self.get_day, None, self.is_admin]
 
             # executer la requete
             self.cursor.execute(requete, valeurs)
@@ -73,7 +74,7 @@ class UsersModel:
                 # fermer la connexion
                 self.conn.close()
 
-    def afficher(self):
+    def show(self):
         try:
             self.obj = DBConnection()
             self.conn = self.obj.connection()
@@ -93,11 +94,11 @@ class UsersModel:
                 self.conn.close()
         return self.liste
 
-    def rechercher(self, code):
+    def search(self, code):
         try:
             obj = DBConnection()
             self.conn = obj.connection()
-            requete = " SELECT* FROM USERS WHERE CODE=%s "
+            requete = " SELECT * FROM `USERS` WHERE id=%s "
             self.cursor = self.conn.cursor()
             valeur = (code,)
             self.cursor.execute(requete, valeur)
@@ -114,7 +115,7 @@ class UsersModel:
                 self.conn.close()
         return self.liste
 
-    def modifier(self):
+    def update(self):
         try:
             obj = DBConnection()
             self.conn = obj.connection()
@@ -138,7 +139,7 @@ class UsersModel:
                 # fermer la connexion
                 self.conn.close()
 
-    def supprimer(self, code):
+    def delete(self, code):
 
         try:
             obj = DBConnection()

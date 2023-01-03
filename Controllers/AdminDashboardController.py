@@ -15,10 +15,11 @@ from views.Dashboard.AdminDashboardView import Ui_AdminDashboardView
 
 class AdminDashboardController(object):
 
-    def __init__(self, parent) -> None:
+    def __init__(self, parent,user_id) -> None:
         self.parent = parent
+        self.user_id = user_id
         # controllers
-        self.admin_matchs_controller = AdminMatchsController(self)
+        self.admin_matchs_controller = AdminMatchsController(self,self.user_id)
         # views
         self.admin_dashboard_ui = Ui_AdminDashboardView()
         self.teamView = TeamsView()
@@ -39,10 +40,10 @@ class AdminDashboardController(object):
         match_type = self.priority_model.show()
         
         self.admin_dashboard_ui.showLeftAside(match_type)
-        self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.LeftAsideFrame)
+        self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.LeftAsideFrame, alignment=QtCore.Qt.AlignLeft)
         
         self.admin_dashboard_ui.centerAsideFunc()
-        self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.centralAsideFrame)
+        self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.centralAsideFrame, alignment=QtCore.Qt.AlignJustify)
         
         # get value of child
         getLineUps = self.admin_matchs_controller.loadLineUpsFunc()
@@ -50,16 +51,11 @@ class AdminDashboardController(object):
         self.admin_dashboard_ui.vLayoutCenterAside.addWidget(self.admin_dashboard_ui.ListMatchContent_FRM)
         if getLineUps:
             self.admin_dashboard_ui.vLayout_ToLineUpContainer.addChildWidget(getLineUps)
-
         # self.admin_dashboard_ui.hMainLayout.addWidget()
 
-    
-    
-
-        # self.admin_dashboard_ui.match_type_grpe.buttonClicked.connect(
-        #     lambda: self.get_selected_match_option())
 
 
+        # ======== A C T I O N S  ========
 
         # ACTION ON HEADER BUTTON
         self.admin_dashboard_ui.matchQPB.clicked.connect(

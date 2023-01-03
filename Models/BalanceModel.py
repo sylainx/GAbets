@@ -92,7 +92,6 @@ class BalanceModel:
         return self.liste
 
 
-
     def search(self, id):
         try:
             obj = DBConnection()
@@ -102,6 +101,33 @@ class BalanceModel:
             valeur = (id,)
             self.cursor.execute(requete, valeur)
             self.liste = self.cursor.fetchone()
+
+        except mysql.connector.Error as erreur:
+            QMessageBox.warning(
+                None, "Erreur", "Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
+            # fermer le cursor
+            self.cursor.close()
+            # tester si la connexion est ouverte
+            if self.conn.is_connected():
+                # fermer la connexion
+                self.conn.close()
+        return self.liste
+
+
+    def searchForUser(self, user_id, action=None):
+        try:
+            obj = DBConnection()
+            self.conn = obj.connection()
+            requete = " SELECT montant,action,user_id FROM `solde` WHERE user_id=%s "
+            if action and action == 1 or action== 2:
+                requete += "AND action= %s"
+            else:
+                requete += ""   # empty but necessary
+            
+            self.cursor = self.conn.cursor()
+            valeur = (user_id,action)
+            self.cursor.execute(requete, valeur)
+            self.liste = self.cursor.fetchall()
 
         except mysql.connector.Error as erreur:
             QMessageBox.warning(

@@ -97,7 +97,7 @@ class Ui_MainWindow(object):
         self.title.setGeometry(QtCore.QRect(30, 10, 81, 31))
         font = QtGui.QFont()
         font.setFamily("JetBrains Mono")
-        font.setPointSize(-1)
+        # font.setPointSize(-1)
         font.setBold(True)
         font.setItalic(False)
         font.setWeight(75)

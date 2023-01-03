@@ -9,6 +9,7 @@ class TeamsView(QtWidgets.QWidget):
         self.setWindowTitle("Team")
         self.setMinimumSize(100, 600)
         self.setMaximumSize(600, 600)
+        self.centerWidget()
         # self.move(parent.rect().center())
         self.setGeometry(
             QtCore.QRect(0, 96, 16777214, 16777214))
@@ -28,6 +29,17 @@ class TeamsView(QtWidgets.QWidget):
         self.ui()
         self.createFormRegister()
         self.listOfDatas()
+
+
+    def centerWidget(self):	
+        # Ajout de cette méthode pour centrer la fenêtre        
+        frameGm = self.frameGeometry()        
+        screen = QtWidgets.QApplication.desktop().screenNumber(QtWidgets.QApplication.desktop().cursor().pos())        
+        centerPoint = QtWidgets.QApplication.desktop().screenGeometry(screen).center()        
+        frameGm.moveCenter(centerPoint)        
+        self.move(frameGm.topLeft())
+    # end centerWidget
+
 
     def ui(self):
         mainLayout = QtWidgets.QVBoxLayout()
@@ -118,6 +130,7 @@ class TeamsView(QtWidgets.QWidget):
         # TODO will be clear all fields
         self.title_QLE.clear()
         self.level_CBB.setCurrentIndex(0)
+
 
 
     def listOfDatas(self):

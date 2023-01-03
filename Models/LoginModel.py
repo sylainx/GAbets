@@ -29,21 +29,21 @@ class LoginModel:
 
             # execute query
             self.cursor.execute(query, statement)
-            # return nb line
+            # return pwd & user_id
             data_found = self.cursor.fetchone()
 
             if data_found and type(data_found) is tuple:
                 
                 if (self.util.verify_password(self.password, bytes(data_found[0]))):
                     # retourne le nombre de ligne affecte
-                    QMessageBox.information(
-                        None, "Confirmation", "Connexion reussi", QMessageBox.Ok)
+                    # QMessageBox.information(
+                    #     None, "Confirmation", "Connexion reussi", QMessageBox.Ok)
                     # close cursor
                     self.cursor.close()
                     # test to close connection
                     if self.conn.is_connected():
                         self.conn.close()
-
+                    
                     return data_found[1]
                 else:
                     QMessageBox.warning(

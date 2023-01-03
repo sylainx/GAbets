@@ -2,15 +2,15 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from Helpers.Helpers import Helpers
 
 
-class MatchsView(QtWidgets.QWidget):
+class PaymentsView(QtWidgets.QWidget):
 
     def __init__(self, parent=None) -> None:
         super().__init__()
         self.setWindowTitle("Matchs")
-        self.centerWidget()
-        self.setMinimumSize(600,400)
+        # self.move(parent.rect().center())
 
         self.setStyleSheet("background-color: #1E1E1E")
+        # self.minimumWidth(400)
 
         self.teamCategory_LBL = QtWidgets.QLabel(
             "Veuillez choisir le type de match")
@@ -32,16 +32,6 @@ class MatchsView(QtWidgets.QWidget):
         mainLayout.addWidget(self.mainContainer_WDG)
         self.setLayout(mainLayout)
 
-    def centerWidget(self):	
-        # Ajout de cette méthode pour centrer la fenêtre        
-        frameGm = self.frameGeometry()        
-        screen = QtWidgets.QApplication.desktop().screenNumber(QtWidgets.QApplication.desktop().cursor().pos())        
-        centerPoint = QtWidgets.QApplication.desktop().screenGeometry(screen).center()    
-        frameGm.moveCenter(centerPoint)    
-        self.move(frameGm.topLeft())
-
-
-        
     def createFormRegister(self):
         # layout
         mainLayout = QtWidgets.QVBoxLayout()
@@ -62,8 +52,8 @@ class MatchsView(QtWidgets.QWidget):
         # action btn
         hLayout4Btn = QtWidgets.QHBoxLayout()
 
-        self.saveMatchBtn = QtWidgets.QPushButton("Enregistrer")
-        self.saveMatchBtn.setStyleSheet("background-color: #106327;\n"
+        self.saveBtn = QtWidgets.QPushButton("Enregistrer")
+        self.saveBtn.setStyleSheet("background-color: #106327;\n"
                                    "color: #FAFAFA;\n"
                                    "border-radius: 10px;\n"
                                    "padding: 10px 15px;")
@@ -75,7 +65,7 @@ class MatchsView(QtWidgets.QWidget):
                                      "padding: 10px 15px;")
         self.cancelBtn.setEnabled(False)
         # add btn horizontal
-        hLayout4Btn.addWidget(self.saveMatchBtn)
+        hLayout4Btn.addWidget(self.saveBtn)
         hLayout4Btn.addWidget(self.cancelBtn)
 
         # add QLineEdit & QComboBox to formLayout
@@ -124,8 +114,8 @@ class MatchsView(QtWidgets.QWidget):
     def eventOnTable(self):
         index = self.table_WDG.currentRow()
 
-        self.saveMatchBtn.setEnabled(False)
-        self.saveMatchBtn.setStyleSheet("background-color: #2C2C2C;\n"
+        self.saveBtn.setEnabled(False)
+        self.saveBtn.setStyleSheet("background-color: #2C2C2C;\n"
                                    "color: #FAFAFA;\n"
                                    "border-radius: 10px;\n"
                                    "padding: 10px 15px;")
@@ -169,16 +159,14 @@ class MatchsView(QtWidgets.QWidget):
         """
             need to pass list_match
         """
+        main_FRM = QtWidgets.QFrame()
+        main_FRM.setContentsMargins(0,0,0,0)
+        main_FRM.setStyleSheet('background-color: #2C2C2C')
+        
         scrollLayout_LineUp = QtWidgets.QScrollArea()
         scrollLayout_LineUp.setContentsMargins(0,0,0,0)
-        scrollLayout_LineUp.setWidgetResizable(True)
-        
-        main_FRM = QtWidgets.QFrame()
-        # main_FRM.setContentsMargins(6,6,6,6)        
-        main_FRM.setStyleSheet('background-color: #2C2C2C')
-        main_FRM.setMinimumWidth(600)
         vLayout_LineUp = QtWidgets.QVBoxLayout(main_FRM)
-        vLayout_LineUp.setContentsMargins(10,10,10,10)
+        vLayout_LineUp.setContentsMargins(10,10,10,0)
         vLayout_LineUp.setAlignment(QtCore.Qt.AlignTop)
 
         # self.setMaximumHeight(200)
@@ -194,17 +182,15 @@ class MatchsView(QtWidgets.QWidget):
                     f"lineups_container_FRM")
                 # self.lineups_container_FRM.setFixedWidth(MAX_WIDTH)
                 sizePolicy = QtWidgets.QSizePolicy(
-                    QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+                    QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
                 sizePolicy.setHorizontalStretch(0)
                 sizePolicy.setVerticalStretch(0)
                 sizePolicy.setHeightForWidth(
                     self.lineups_container_FRM.sizePolicy().hasHeightForWidth())
                 self.lineups_container_FRM.setSizePolicy(sizePolicy)
-                # self.lineups_container_FRM.setMaximumHeight(100)
-
-                self.vLyt_BoxLineUp = QtWidgets.QVBoxLayout(self.lineups_container_FRM)
-
-                self.hLayout_LineUpContainer = QtWidgets.QHBoxLayout()
+                self.lineups_container_FRM.setMaximumHeight(100)
+                self.hLayout_LineUpContainer = QtWidgets.QHBoxLayout(
+                    self.lineups_container_FRM)
                 self.hLayout_LineUpContainer.setContentsMargins(0,0,0,0)
                 self.hLayout_LineUpContainer.setObjectName(
                     f"{row['match_id']} hLayout_LineUpContainer")
@@ -216,7 +202,7 @@ class MatchsView(QtWidgets.QWidget):
                 self.homeTeam_FRM.setObjectName(
                     f"{row['match_id']} homeTeam_FRM")                
                 self.homeTeam_FRM.setContentsMargins(0,0,0,0)
-                # self.homeTeam_FRM.setStyleSheet("background: pink")
+                self.homeTeam_FRM.setStyleSheet("background: pink")
 
                 self.hLayout_HomeTeam = QtWidgets.QHBoxLayout(
                     self.homeTeam_FRM)
@@ -231,8 +217,8 @@ class MatchsView(QtWidgets.QWidget):
                 
                 self.iconHomeTeam.addPixmap(QtGui.QPixmap("./assets/images/teams/ajax.png"),
                                             QtGui.QIcon.Normal, QtGui.QIcon.Off)
-                self.homeTeam_QPB.setIcon(self.iconHomeTeam)
-                self.homeTeam_QPB.setIconSize(QtCore.QSize(32, 32))
+                # self.homeTeam_QPB.setIcon(self.iconHomeTeam)
+                # self.homeTeam_QPB.setIconSize(QtCore.QSize(32, 32))
                 font = QtGui.QFont()
                 font.setFamily("JetBrains Mono")
                 font.setPointSize(12)
@@ -320,7 +306,7 @@ class MatchsView(QtWidgets.QWidget):
                 self.iconAwayTeam = QtGui.QIcon()
                 self.iconAwayTeam.addPixmap(QtGui.QPixmap("./assets/images/teams/fcb.png"),
                                             QtGui.QIcon.Normal, QtGui.QIcon.Off)
-                self.qpb_awayTeam.setIcon(self.iconAwayTeam)
+                # self.qpb_awayTeam.setIcon(self.iconAwayTeam)
                 font = QtGui.QFont()
                 font.setFamily("JetBrains Mono")
                 font.setPointSize(12)
@@ -332,26 +318,12 @@ class MatchsView(QtWidgets.QWidget):
                 # add AwayTeam_FRM to Parent Frame
                 self.hLayout_LineUpContainer.addWidget(self.awayTeam_FRM)
 
-                # PARIER BUTTON
-                self.vLyt_BoxLineUp.addLayout(self.hLayout_LineUpContainer)
-                self.bet_QPB  = QtWidgets.QPushButton()
-                self.bet_QPB.setText("Parier")
-                self.bet_QPB.setObjectName(f"{row['match_id']}")
-                self.bet_QPB.setStyleSheet("margin: 0px 1px; background: #42b883; opacity:30%; border-radius: 5px;")                
-                self.vLyt_BoxLineUp.addWidget(self.bet_QPB)
                 vLayout_LineUp.addWidget(self.lineups_container_FRM)
 
             # end loop
-            scrollLayout_LineUp.setWidget(main_FRM)
-            return scrollLayout_LineUp
+            return main_FRM
 
         # end verification
-        
+        scrollLayout_LineUp.setWidget(main_FRM)
 
         return None
-
-
-    def mousePressEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
-            # code pour gérer le clic de souris ici
-            print("Left mouse button clicked")

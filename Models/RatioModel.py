@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMessageBox
 import mysql.connector
 
 
-class RatiosModel:
+class RatioModel:
 
     def __init__(self, title=None, ratio=None, visible=None, ):
         self.title = title

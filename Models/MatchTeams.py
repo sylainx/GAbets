@@ -23,21 +23,19 @@ class MatchTeams:
             # prepare queries
             query = " INSERT INTO `match_teams`(`match_id`, \
                 `home_team_id`, `away_team_id`) \
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s) "
+            VALUES (%s,%s,%s) "
 
             # cursor
             self.cursor = self.conn.cursor(prepared=True)
             # define values
-            stmt = [None, self.match_id, self.home_team_id, self.away_team_id]
+            stmt = [self.match_id, self.home_team_id, self.away_team_id]
 
             # execute query
             self.cursor.execute(query, stmt)
             
-            # Get the ID of the inserted row
-            inserted_id = self.cursor.lastrowid
 
             # Execute a SELECT statement to retrieve the inserted row
-            self.cursor.execute("SELECT * FROM `match_teams` WHERE id = %s", (inserted_id,))
+            self.cursor.execute("SELECT * FROM `match_teams` WHERE match_id = %s", (self.match_id,))
             # Fetch the inserted row
             inserted_row = self.cursor.fetchone()
 
@@ -47,7 +45,7 @@ class MatchTeams:
                 self.cursor.close()
                 # validate updates
                 self.conn.commit()
-                return inserted_id
+                return inserted_row
 
             else:
                 QMessageBox.warning(
