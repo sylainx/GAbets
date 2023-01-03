@@ -28,8 +28,8 @@ class AuthView(QWidget):
         # vLayout_MainContent = QVBoxLayout(self)
         self.content = QWidget(self)
         self.setMinimumSize(750, 400)
-        self.content.setMinimumSize(800, 640)
-        self.setMaximumSize(810, 700)
+        self.content.setMinimumSize(800, 660)
+        self.setMaximumSize(810, 750)
         self.content.setStyleSheet(
             "background-color: #2C2C2C;"
             "    font-size: 15px;\n"

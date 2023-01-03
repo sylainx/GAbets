@@ -18,6 +18,7 @@ class MainProject(QMainWindow):
         self.setMinimumSize(1250, 600)
         self.showMaximized()
         self.setWindowIcon(QIcon("./assets/icons/calendar.png"))
+        # self.setStyleSheet("background:#2C2C2CC")
         self.creerMenu()
         # properties
         # TODO: PASS false FALSE show login form

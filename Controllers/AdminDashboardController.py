@@ -3,6 +3,8 @@ import sys
 # controllers
 # from Controllers.DashboardController import DashboardController
 from Controllers.AdminMatchsController import AdminMatchsController
+# 
+from Controllers.AdminUsersController import AdminUsersController
 # models
 from Models.PriorityModel import PrioritiesModel
 from Models.TeamsModel import TeamsModel
@@ -10,6 +12,8 @@ from Models.TeamsModel import TeamsModel
 # views
 from views.Admin.Matchs.MatchsView import MatchsView
 from views.Admin.Teams.TeamsView import TeamsView
+from views.Admin.Users.UsersView import UsersView
+
 from views.Dashboard.AdminDashboardView import Ui_AdminDashboardView
 
 
@@ -20,13 +24,16 @@ class AdminDashboardController(object):
         self.user_id = user_id
         # controllers
         self.admin_matchs_controller = AdminMatchsController(self,self.user_id)
+        self.admin_users_controller = AdminUsersController(self,self.user_id)
         # views
         self.admin_dashboard_ui = Ui_AdminDashboardView()
         self.teamView = TeamsView()
         self.matchView = MatchsView()
+        self.userView = UsersView()
         # models
         self.priority_model = PrioritiesModel()
         self.team_model = TeamsModel()
+        
 
 
     def showDashboard(self, ):
@@ -62,6 +69,8 @@ class AdminDashboardController(object):
             lambda: self.callMatchController())
         self.admin_dashboard_ui.teamQPB.clicked.connect(
             lambda: self.displayTeams())
+        self.admin_dashboard_ui.usersQPB.clicked.connect(
+            lambda: self.callUsersController())    
         # logout
         self.admin_dashboard_ui.logoutQPB.clicked.connect(
             lambda: self.callLogoutFunc())
@@ -200,6 +209,11 @@ class AdminDashboardController(object):
     def callMatchController(self):
         # self.matchView.u
         self.admin_matchs_controller.start()
+
+        # call user controller
+    def callUsersController(self):
+        # self.matchView.u
+        self.admin_users_controller.start()    
 
     def test(self):
         print("Test")

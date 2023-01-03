@@ -264,7 +264,7 @@ class Ui_DashboardView(QtWidgets.QWidget):
         font.setWeight(75)
         self.title.setFont(font)
         self.title.setObjectName("title")
-        self.title.setStyleSheet("margin-bottom: 10px; padding: 5px;")
+        self.title.setStyleSheet("margin-bottom: 10px; color: #FAFAFA; padding: 5px;")
 
         vLayout_Central_FRM = QtWidgets.QVBoxLayout(central_FRM)
         vLayout_Central_FRM.setAlignment(QtCore.Qt.AlignTop)
@@ -283,6 +283,7 @@ class Ui_DashboardView(QtWidgets.QWidget):
             font.setPointSize(14)
             font.setWeight(50)
             self.chb_radio.setFont(font)
+            self.chb_radio.setStyleSheet("color: #FAFAFA;")
             self.chb_radio.setObjectName(f"{name}")
             # Add RadioButton in Group
             self.match_type_grpe.addButton(self.chb_radio)

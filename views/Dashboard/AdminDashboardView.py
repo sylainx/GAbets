@@ -184,6 +184,20 @@ class Ui_AdminDashboardView(object):
         self.teamQPB.setText("Equipes")
         self.hLayout_centerHeader_FRM.addWidget(self.teamQPB)
         # end team BTN
+        
+        # start users BTN
+        self.usersQPB = QtWidgets.QPushButton(self.centerHeaderFrame)
+        self.usersQPB.setStyleSheet("background-color: #1E1E1E;\n"
+                                   "color: #FAFAFA;\n"
+                                   "border-radius: 10px;\n"
+                                   "padding: 10px 15px;\n"
+                                   "")
+        self.usersQPB.setObjectName("usersQPB")
+        self.usersQPB.setText("Utilisateurs")
+        self.hLayout_centerHeader_FRM.addWidget(self.usersQPB)
+        self.usersQPB.clicked.connect(lambda: self.printBet())
+        # end users BTN
+
         self.hLayout_centerHeader_FRM.setObjectName("hLayout_centerHeader_FRM")
 
         self.horizontalLayout.addWidget(
