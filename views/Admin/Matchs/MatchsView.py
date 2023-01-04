@@ -13,9 +13,9 @@ class MatchsView(QtWidgets.QWidget):
         self.setStyleSheet("background-color: #1E1E1E")
 
         self.teamCategory_LBL = QtWidgets.QLabel(
-            "Veuillez choisir le type de match")
+            "Veuillez choisir le type de match").setStyleSheet("color:#FAFAFA")
         self.team_on_category_LBL = QtWidgets.QLabel(
-            "List des équipes dans ce championnat")
+            "List des équipes dans ce championnat").setStyleSheet("color:#FAFAFA")
 
         # call methods
         self.ui()
@@ -172,8 +172,11 @@ class MatchsView(QtWidgets.QWidget):
         scrollLayout_LineUp = QtWidgets.QScrollArea()
         scrollLayout_LineUp.setContentsMargins(0,0,0,0)
         scrollLayout_LineUp.setWidgetResizable(True)
+        self.group_btn_bets = QtWidgets.QButtonGroup()
         
         main_FRM = QtWidgets.QFrame()
+        # main_FRM.mouseDoubleClickEvent()
+        # main_FRM.mousePressEvent()
         # main_FRM.setContentsMargins(6,6,6,6)        
         main_FRM.setStyleSheet('background-color: #2C2C2C')
         main_FRM.setMinimumWidth(600)
@@ -337,7 +340,8 @@ class MatchsView(QtWidgets.QWidget):
                 self.bet_QPB  = QtWidgets.QPushButton()
                 self.bet_QPB.setText("Parier")
                 self.bet_QPB.setObjectName(f"{row['match_id']}")
-                self.bet_QPB.setStyleSheet("margin: 0px 1px; background: #42b883; opacity:30%; border-radius: 5px;")                
+                self.bet_QPB.setStyleSheet("margin: 0px 1px; background: #42b883; opacity:30%; border-radius: 5px;")
+                self.group_btn_bets.addButton(self.bet_QPB)
                 self.vLyt_BoxLineUp.addWidget(self.bet_QPB)
                 vLayout_LineUp.addWidget(self.lineups_container_FRM)
 
@@ -349,9 +353,3 @@ class MatchsView(QtWidgets.QWidget):
         
 
         return None
-
-
-    def mousePressEvent(self, event):
-        if event.button() == QtCore.Qt.LeftButton:
-            # code pour gérer le clic de souris ici
-            print("Left mouse button clicked")

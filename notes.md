@@ -5,17 +5,11 @@
 ``` shell
 pip install PyQt5
 pip install pyqt-tools
-# if PyQt5 Designer not installed 
-pip install PyQt5Designer
 # download mysql.connect
 pip install mysql.connector
-# or
+# Run this, if there is an error with mysql-connector
 pip install mysql-connector-python-rf
-
 # download bcrypt
-pip3 install bcrypt
-
-#Encrypt password
 pip install bcrypt
 
 #Try install package 
@@ -32,12 +26,11 @@ pyrcc5 resources.qrc -o resources.py
 ```
 
 # COLORS
-
-rouge: #E62641;
-color: #FAFAFA; #WHITE
-GREEN: #106327 
-light gray: #2C2C2C; 
-dark gray: #1E1E1E;
+    rouge: #E62641;
+    color: #FAFAFA; #WHITE
+    GREEN: #106327 
+    light gray: #2C2C2C; 
+    dark gray: #1E1E1E;
 
 
 ### BUGS

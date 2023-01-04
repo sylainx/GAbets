@@ -5,6 +5,7 @@ from Models.MatchTeams import MatchTeams
 from Models.MatchsModel import MatchsModel
 # models
 from Models.PriorityModel import PrioritiesModel
+from Models.RatioModel import RatioModel
 from Models.TeamsModel import TeamsModel
 from views.Admin.Matchs.MatchsView import MatchsView
 # views
@@ -26,6 +27,7 @@ class AdminMatchsController(object):
         self.team_model = TeamsModel()
         self.priority_model = PrioritiesModel()
         self.matchs_model = MatchsModel()
+        self.ratios_model = RatioModel()
         self.matchs_team_model = MatchTeams()
 
     def start(self, ):
@@ -116,7 +118,6 @@ class AdminMatchsController(object):
                 # more details
                 if match_id:
 
-                    print(f"Match id: {match_id}")
                     self.matchs_team_model.match_id = match_id
                     self.matchs_team_model.home_team_id = home_team
                     self.matchs_team_model.away_team_id = move_team
@@ -150,7 +151,6 @@ class AdminMatchsController(object):
             listMatch_filter = list()
             for i in list_of_matchs:
                 match_id = i[0]
-
                 # team_model.search(...) return: (id, img, title,...)
                 # pass [2] to have team 'title'
                 hTeamFind = self.team_model.search(i[1])[2]
@@ -159,7 +159,14 @@ class AdminMatchsController(object):
                 # priority_model.search(...) return: (id, title,...)
                 # pass [1] to have category 'title'
                 categ = self.priority_model.search(i[3])[1]
-                match_date = i[4]
+                match_date = i[4]                
+                # lister les choix de pariage
+                odds = self.ratios_model.show()
+                if odds:
+                    dict_odds = {x[1]: x[2] for x in odds}
+                else:
+                    dict_odds = dict()
+                # endlister les choix de pariage
 
                 infoMatch_filter = {
                     'match_id': match_id,
@@ -168,18 +175,39 @@ class AdminMatchsController(object):
                     'category': categ,
                     'date_match': match_date,
                 }
+                # ajouter la liste des odds au dict
+                infoMatch_filter.update(dict_odds)
                 listMatch_filter.append(infoMatch_filter)
             # end loop
             return listMatch_filter
         # end verification
         return False
 
+    def get_match_by_id(self,matchId):
+        list_matchs = self.loadMatchsFunc()
+        if list_matchs:
+            return next(filter(lambda x: x['match_id'] == int(matchId), list_matchs), None)
+
+        return None
     def getTeamById(self, team_id):
         team = self.team_model.search(team_id)
         if team:
             return team
 
         return False
+
+    def calculate_coefficient(self, pririotyMatch:int, t1Lvl: int, t2Lvl: int, ratioQuote):
+        if pririotyMatch != None and t1Lvl !=  None and t2Lvl != None and ratioQuote  != None :
+            if t1Lvl < t2Lvl:
+                frac = (t2Lvl - t1Lvl) / t2Lvl
+            else:
+                frac = (t1Lvl - t2Lvl) / t1Lvl
+
+            odds = (frac + pririotyMatch) / 2
+
+            return odds
+
+        return 100
 
     def closeMatchsWidget(self):
         """ 
