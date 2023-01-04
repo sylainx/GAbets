@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtCore, QtGui
 import sys
 import random
+from datetime import date
 from views.Admin.Users.UsersView import UsersView
 from Models.UsersModel import UsersModel
 # views
@@ -25,4 +26,48 @@ class AdminUsersController(object):
       list_users = self.users_model.show()
       if list_users:
         self.usersView.loadDatas(list_users)
-      # end  
+      self.usersView.table_WDG.cellClicked.connect(lambda:self.listenTabEvent())
+
+      # to delete user
+      self.usersView.deleteBtn.clicked.connect(lambda:self.deleteElementEvent())  
+      # end 
+      # 
+      #
+    def deleteElementEvent(self,):
+        id = self.usersView.txtCode.text()
+        if id:
+          self.users_model.delete(id)
+        list_users = self.users_model.search()
+        if list_users:
+          self.usersView.loadDatas(list_users)
+        
+
+    def listenTabEvent(self):
+          
+        index = self.usersView.table_WDG.currentRow()
+        
+        self.usersView.saveBtn.setEnabled(False)
+        self.usersView.updateBtn.setEnabled(False)
+        self.usersView.deleteBtn.setEnabled(True)
+
+        row = self.users_model.search(
+            self.usersView.table_WDG.item(index, 0).text())
+
+        if row:
+
+            # fill form
+            self.users_model.id = self.usersView.table_WDG.item(index, 0).text()
+            self.usersView.txtFirstName.setText(str(row[1]))
+            self.usersView.txtLastName.setText(str(row[2]))
+            self.usersView.txtEmail.setText(str(row[3]))
+            self.usersView.txtPhone.setText(str(row[4]))
+            self.usersView.txtAdress.setText(str(row[6]))
+            self.usersView.txtUsername.setText(str(row[7]))
+            self.usersView.txtNif.setText(str(row[8]))
+            if row[9] == "Masculin":
+              self.usersView.rdMale.setChecked(True)
+            else:
+              self.usersView.rdFemale.setChecked(True)  
+            self.usersView.txtDateOfBirth.setDate(date.fromisoformat(str(row[10])))
+        else:
+            print("No data found")  

@@ -9,7 +9,7 @@ class UsersView(QtWidgets.QWidget):
         super().__init__()
         self.setWindowTitle("Users")
         self.setMinimumSize(100, 600)
-        self.setMaximumSize(600, 600)
+        self.setMaximumSize(600, 640)
         self.centerWidget()
         # self.move(parent.rect().center())
         self.setGeometry(
@@ -76,6 +76,7 @@ class UsersView(QtWidgets.QWidget):
         # add radioButton to Widget
         self.rdMale = QRadioButton("Masculin")
         self.rdFemale = QRadioButton("Feminin")
+        
         self.q_gender_LYT.addWidget(self.rdFemale)
         self.q_gender_LYT.addWidget(self.rdMale)
         # Create date
@@ -86,6 +87,8 @@ class UsersView(QtWidgets.QWidget):
             "color: #FAFAFA;\n"
         )
 
+        self.txtCode = QLineEdit()
+        self.txtCode.setEnabled(False)
         self.txtFirstName = QLineEdit()
         self.txtLastName = QLineEdit()
         self.txtUsername = QLineEdit()
@@ -147,67 +150,7 @@ class UsersView(QtWidgets.QWidget):
         self.hLayout4Btn.addWidget(self.deleteBtn)
         # create elements will be in the forms
 
-        # load image
-        # pixmap = QtGui.QPixmap("./assets/images/teams/fcb.png")
-        
-        # # Création du widget qui affichera l'image
-        # self.imgText_QLB.setText("Image")
-        # self.img_QLB.setPixmap(pixmap)
-
-        # self.title_LBL.setText("Titre")
-        # self.level_LBL.setText("Niveau")
-        # self.teamCategory_LBL.setText("Categorie d'equipe")
-        # # list combobox
-        # level_list = list(["10", "100", "1000"])
-        # self.level_CBB.addItems(level_list)
-        # self.level_CBB.setStyleSheet("color: #FAFAFA;\n"
-        #                             "background-color: #2C2C2C;\n"
-        #                            "border-radius: 10px;\n"
-        #                            "padding: 10px 15px;")
-
-        # # type de matchs
-        # self.groupTeamCategory = QtWidgets.QListWidget()
-        # self.groupTeamCategory.setSelectionMode(QtWidgets.QListWidget.ExtendedSelection)    
-        
-        # self.vLayout4ChBx = QtWidgets.QVBoxLayout()
-    
-        # # self.vLayout4ChBx.addWidget(self.teamCategory_CHB)
-
-        # # action btn        
-        # hLayout4Btn = QtWidgets.QHBoxLayout()
-        
-        # self.saveBtn = QtWidgets.QPushButton("Enregistrer")
-        # self.saveBtn.setStyleSheet("background-color: #106327;\n"
-        #                            "color: #FAFAFA;\n"
-        #                            "border-radius: 10px;\n"
-        #                            "padding: 10px 15px;")
-        # self.updateBtn = QtWidgets.QPushButton("Modifier")
-        # self.updateBtn.setEnabled(False)
-        # self.updateBtn.setStyleSheet("background-color: #2C2C2C;\n"
-        #                            "color: #FAFAFA;\n"
-        #                            "border-radius: 10px;\n"
-        #                            "padding: 10px 15px;")
-        # self.deleteBtn = QtWidgets.QPushButton("Supprimer")
-        # self.deleteBtn.setStyleSheet("background-color: #2C2C2C;\n"
-        #                            "color: #FAFAFA;\n"
-        #                            "border-radius: 10px;\n"
-        #                            "padding: 10px 15px;")
-        # self.deleteBtn.setEnabled(False)
-        # # add btn horizontal
-        # hLayout4Btn.addWidget(self.saveBtn)
-        # hLayout4Btn.addWidget(self.updateBtn)
-        # hLayout4Btn.addWidget(self.deleteBtn)
-        
-        # # add QLineEdit & QComboBox to formLayout
-        # self.formLayout.addWidget(self.imgText_QLB)
-        # self.formLayout.addWidget(self.img_QLB)
-        # self.formLayout.addWidget(self.title_LBL)
-        # self.formLayout.addWidget(self.title_QLE)
-        # self.formLayout.addWidget(self.level_LBL)
-        # self.formLayout.addWidget(self.level_CBB)
-        # self.formLayout.addWidget(self.teamCategory_LBL)
-        # self.formLayout.addLayout(self.vLayout4ChBx)
-        # self.formLayout.addLayout(hLayout4Btn)
+       
 
         # add form layout to central Layout
         mainLayout.addLayout(self.text_userLayout)
@@ -265,6 +208,7 @@ class UsersView(QtWidgets.QWidget):
 
     def eventOnTable(self):
         index=self.table_WDG.currentRow()
+
         
         self.saveBtn.setEnabled(False)
         self.saveBtn.setStyleSheet("background-color: #2C2C2C;\n"
@@ -282,18 +226,7 @@ class UsersView(QtWidgets.QWidget):
         self.deleteBtn.setStyleSheet("background-color: #E62641;\n"
                                    "color: #FAFAFA;\n"
                                    "border-radius: 10px;\n"
-                                   "padding: 10px 15px;")
+                                   "padding: 10px 15px;")                           
 
-
-    # def listTypeOfMatch(self, list):
-
-    #     for row in list:
-    #         id, title, ratio, visible = row
-    #         self.el_ChBx = QtWidgets.QListWidgetItem(f"{title}")
-    #         self.el_ChBx.setBackground(QtGui.QColor("#2C2C2C"))
-    #         self.el_ChBx.setForeground(QtGui.QColor("#FAFAFA"))
-            
-    #         # self.el_ChBx.setObjectName(f"{title}")
-    #         self.groupTeamCategory.addItem(self.el_ChBx)
-    #         self.vLayout4ChBx.addWidget(self.groupTeamCategory)
-    #     # end listTypeMatch
+      
+    # 

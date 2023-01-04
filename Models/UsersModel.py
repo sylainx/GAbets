@@ -21,6 +21,8 @@ class UsersModel:
         self.agent_id = agent_id
         self.is_admin = is_admin
 
+        self.id = int
+
     def save(self):
         try:
             code_user = 1
