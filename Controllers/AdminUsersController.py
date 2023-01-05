@@ -34,10 +34,12 @@ class AdminUsersController(object):
       # 
       #
     def deleteElementEvent(self,):
-        id = self.usersView.txtCode.text()
-        if id:
+        index = self.usersView.table_WDG.currentRow()
+        id = self.usersView.table_WDG.item(index, 0).text()
+        code_id = int(id)
+        if code_id :
+          list_users = self.users_model.search(code_id)
           self.users_model.delete(id)
-        list_users = self.users_model.search()
         if list_users:
           self.usersView.loadDatas(list_users)
         
