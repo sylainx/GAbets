@@ -62,7 +62,7 @@ class AuthView(QWidget):
 
         # Label lan genyen imaj la ladann
         label_img = QLabel(self)
-        pixmap = QPixmap("./assets/images/logo_gabets.png")
+        pixmap = QPixmap("./assets/images/messi.jpeg")
         label_img.setPixmap(pixmap)
         # self.setCentralWidget(label_league)
         label_img.setMinimumWidth(150)
@@ -82,7 +82,7 @@ class AuthView(QWidget):
 
         content_leftside = QWidget()
         content_leftside.setStyleSheet(
-            "background-color: white;"
+            "background-color: #2C2C2C;"
             "border-radius: 10px;"
         )
         content_leftside.setLayout(body_layout)

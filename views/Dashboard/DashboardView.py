@@ -341,7 +341,7 @@ class Ui_DashboardView(QtWidgets.QWidget):
 
         self.images_WDG = QtWidgets.QWidget(self.Left_MatchContent_WDG)
         self.images_WDG.setMaximumSize(QtCore.QSize(600, 200))
-        self.images_WDG.setStyleSheet("background-image: url(./assets/images/tt.png);\n"
+        self.images_WDG.setStyleSheet("background-image: url(./assets/images/panorama.jpeg);\n"
                                       "border-radius: 15px;")
         self.images_WDG.setObjectName("images_WDG")
 

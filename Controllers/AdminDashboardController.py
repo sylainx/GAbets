@@ -3,8 +3,9 @@ import sys
 # controllers
 # from Controllers.DashboardController import DashboardController
 from Controllers.AdminMatchsController import AdminMatchsController
-# 
+#
 from Controllers.AdminUsersController import AdminUsersController
+from Controllers.UserController import UserController
 from Helpers.Helpers import Helpers
 from Models.BalanceModel import BalanceModel
 from Models.BetsModel import BetsModel
@@ -18,34 +19,39 @@ from views.Admin.Matchs.MatchsView import MatchsView
 from views.Admin.Teams.TeamsView import TeamsView
 from views.Admin.Users.AddFundsView import AddFundsView
 from views.Admin.Users.UsersView import UsersView
+from views.Dashboard.BetView import BetView
+from views.Dashboard.DashboardView import Ui_DashboardView
 
 from views.Dashboard.AdminDashboardView import Ui_AdminDashboardView
 
 
 class AdminDashboardController(object):
 
-    def __init__(self, parent,user_id) -> None:
+    def __init__(self, parent, user_id) -> None:
         self.parent = parent
         self.user_id = user_id
         # controllers
-        self.admin_matchs_controller = AdminMatchsController(self,self.user_id)
-        self.admin_users_controller = AdminUsersController(self,self.user_id)
-        
+        self.admin_matchs_controller = AdminMatchsController(
+            self, self.user_id)
+        self.admin_users_controller = AdminUsersController(self, self.user_id)
+        self.users_controller = UserController(self, self.user_id)
+
         # views
         self.admin_dashboard_ui = Ui_AdminDashboardView()
         self.teamView = TeamsView()
         self.matchView = MatchsView()
         self.userView = UsersView()
+        self.betView = BetView()
         self.addFundsView = AddFundsView()
+        self.ui_dashboard = Ui_DashboardView()
         # models
         self.priority_model = PrioritiesModel()
         self.team_model = TeamsModel()
         self.bets_model = BetsModel()
         self.matchs_model = MatchsModel()
         self.balance_model = BalanceModel()
-        # 
+        #
         self.util = Helpers()
-
 
     def showDashboard(self, ):
         self.admin_dashboard_ui.setupUi(self.parent)
@@ -53,60 +59,67 @@ class AdminDashboardController(object):
         # TODO: FUCNTION TO CALL HEADER
         self.admin_dashboard_ui.headerContentFunc()
         self.admin_dashboard_ui.teamQPB.clicked.connect(self.displayTeams)
-        
+
         # get matchs option in DB
         match_type = self.priority_model.show()
-        
+
         self.admin_dashboard_ui.showLeftAside(match_type)
-        self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.LeftAsideFrame, alignment=QtCore.Qt.AlignLeft)
-        
+        self.admin_dashboard_ui.hMainLayout.addWidget(
+            self.admin_dashboard_ui.LeftAsideFrame, alignment=QtCore.Qt.AlignLeft)
+
         self.admin_dashboard_ui.centerAsideFunc()
-        self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.centralAsideFrame, alignment=QtCore.Qt.AlignJustify)
-        
+        self.admin_dashboard_ui.hMainLayout.addWidget(
+            self.admin_dashboard_ui.centralAsideFrame, alignment=QtCore.Qt.AlignJustify)
+
         # get value of child
         self.admin_dashboard_ui.showListBetsFunc()
-        # donnees bets pour afficher dans la table        
+        # donnees bets pour afficher dans la table
         getBetsData = self.bets_model.show()
         if getBetsData:
             list_info_bet = list()
             # chercher nom equipe:
             for row in getBetsData:
-                match_id= self.matchs_model.search(row[1])           
-                user= self.admin_users_controller.getUserById(row[3])
+                match_id = self.matchs_model.search(row[1])
+                user = self.admin_users_controller.getUserById(row[3])
 
                 if match_id and user:
                     hTm = self.team_model.search(match_id[1])[2]
                     mvTm = self.team_model.search(match_id[2])[2]
                     print(f"LIST INFO: {hTm} \n")
                     print(f"LIST INFO: {mvTm} \n")
-                    
+
                     if hTm and mvTm:
-                        dict_info_bet={
+                        dict_info_bet = {
                             'id': row[0],
                             'amount': row[5],
                             'match': f"{hTm} - {mvTm}",
-                            'user' : f"{user[1]} {user[2]}",
-                            'date' : row[4],
+                            'user': f"{user[1]} {user[2]}",
+                            'date': row[4],
                         }
                         list_info_bet.append(dict_info_bet)
-            
+
             # end nom equipe:
             # print(f"LIST INFO: {list_info_bet} ")
             self.admin_dashboard_ui.loadDatas(list_info_bet)
-        # end donnees bets table        
-
+        # end donnees bets table
 
         # ======== A C T I O N S  ========
-
+        actual_balance = self.users_controller.get_actual_balance()
+        self.admin_dashboard_ui.balance.setText(
+            f"Balance: {actual_balance} HTG")
         # ACTION ON HEADER BUTTON
         self.admin_dashboard_ui.matchQPB.clicked.connect(
             lambda: self.callMatchController())
         self.admin_dashboard_ui.teamQPB.clicked.connect(
             lambda: self.displayTeams())
         self.admin_dashboard_ui.usersQPB.clicked.connect(
-            lambda: self.callUsersController())    
+            lambda: self.callUsersController())
         self.admin_dashboard_ui.addFundsQPB.clicked.connect(
-            lambda: self.callBackAddFund())    
+            lambda: self.callBackAddFund())
+            
+            #
+        self.ui_dashboard.betsQPBtn.clicked.connect(lambda: self.displayBetFunc())
+        # 
         # logout
         self.admin_dashboard_ui.logoutQPB.clicked.connect(
             lambda: self.callLogoutFunc())
@@ -246,7 +259,6 @@ class AdminDashboardController(object):
         # self.matchView.u
         self.admin_matchs_controller.start()
 
-    
     def callBackAddFund(self):
         self.addFundsView.show()
         self.addFundsView.btn_increase_amount_QPB.clicked.connect(
@@ -257,20 +269,21 @@ class AdminDashboardController(object):
         amount_increase = self.addFundsView.amount_increase_QLE.text()
 
         if self.util.valid_str(code_user) and self.util.valid_float(amount_increase):
-            
+
             user = self.admin_users_controller.getUserByCode(code_user)
-            
+
             if user:
-                
-                actn=1   # add fund
+
+                actn = 1   # add fund
                 self.balance_model.code_user = code_user
                 self.balance_model.action = actn
                 self.balance_model.agent_id = self.user_id
-                self.balance_model.montant=amount_increase
+                self.balance_model.montant = amount_increase
                 # save fund
-                self.balance_model.save() 
+                self.balance_model.save()
                 # close QDialog
                 self.addFundsView.clearFields()
+                self.users_controller.get_actual_balance()
                 self.addFundsView.accept()
         else:
             QtWidgets.QMessageBox.warning(
@@ -279,7 +292,10 @@ class AdminDashboardController(object):
         # call user controller
     def callUsersController(self):
         # self.matchView.u
-        self.admin_users_controller.start()    
+        self.admin_users_controller.start()
 
     def test(self):
         print("Test")
+
+    def displayBetFunc(self):
+        self.bets_model.show()

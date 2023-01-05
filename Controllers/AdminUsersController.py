@@ -1,5 +1,4 @@
 from pydoc import Helper
-from PyQt5 import QtWidgets, QtCore, QtGui
 import sys
 import random
 from datetime import date
@@ -60,7 +59,7 @@ class AdminUsersController(object):
         self.usersView.saveBtn.setEnabled(False)
         self.usersView.updateBtn.setEnabled(False)
         self.usersView.deleteBtn.setEnabled(True)
-        self.usersView.addFundBtn.setEnabled(True)
+        # self.usersView.addFundBtn.setEnabled(True)
 
         row = self.users_model.search(
             self.usersView.table_WDG.item(index, 0).text())
