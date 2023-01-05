@@ -57,7 +57,7 @@ class Ui_DashboardView(QtWidgets.QWidget):
         self.centerWidget()
         self.MainContentFrame = QtWidgets.QFrame(self.centralwidget)
         self.MainContentFrame.setGeometry(
-            QtCore.QRect(0, 96, 1150, 16777214))
+            QtCore.QRect(0, 96, 1250, 1650))
 
         self.MainContentFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.MainContentFrame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -301,8 +301,8 @@ class Ui_DashboardView(QtWidgets.QWidget):
     # end showLeftAside
 
     def centerAsideFunc(self):
-        MIN_WIDTH = 800
-        MAX_WIDTH = 1000
+        MIN_WIDTH = 1000
+        MAX_WIDTH = 600
         self.centralAsideFrame = QtWidgets.QFrame(self.MainContentFrame)
         self.centralAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
                                              "border-radius: 10px")

@@ -5,6 +5,8 @@ import sys
 from Controllers.AdminMatchsController import AdminMatchsController
 # 
 from Controllers.AdminUsersController import AdminUsersController
+from Helpers.Helpers import Helpers
+from Models.BalanceModel import BalanceModel
 from Models.BetsModel import BetsModel
 from Models.MatchsModel import MatchsModel
 # models
@@ -14,6 +16,7 @@ from Models.TeamsModel import TeamsModel
 # views
 from views.Admin.Matchs.MatchsView import MatchsView
 from views.Admin.Teams.TeamsView import TeamsView
+from views.Admin.Users.AddFundsView import AddFundsView
 from views.Admin.Users.UsersView import UsersView
 
 from views.Dashboard.AdminDashboardView import Ui_AdminDashboardView
@@ -33,12 +36,15 @@ class AdminDashboardController(object):
         self.teamView = TeamsView()
         self.matchView = MatchsView()
         self.userView = UsersView()
+        self.addFundsView = AddFundsView()
         # models
         self.priority_model = PrioritiesModel()
         self.team_model = TeamsModel()
         self.bets_model = BetsModel()
         self.matchs_model = MatchsModel()
-        
+        self.balance_model = BalanceModel()
+        # 
+        self.util = Helpers()
 
 
     def showDashboard(self, ):
@@ -99,6 +105,8 @@ class AdminDashboardController(object):
             lambda: self.displayTeams())
         self.admin_dashboard_ui.usersQPB.clicked.connect(
             lambda: self.callUsersController())    
+        self.admin_dashboard_ui.addFundsQPB.clicked.connect(
+            lambda: self.callBackAddFund())    
         # logout
         self.admin_dashboard_ui.logoutQPB.clicked.connect(
             lambda: self.callLogoutFunc())
@@ -171,7 +179,7 @@ class AdminDashboardController(object):
 
     def updateTeam(self):
         # verifications first
-        self.team_model.agent_id = 1
+        self.team_model.agent_id = self.user_id
         self.team_model.img = self.teamView.img_QLB.text()
         self.team_model.title = self.teamView.title_QLE.text()
         self.team_model.level = self.teamView.level_CBB.currentText()
@@ -237,6 +245,36 @@ class AdminDashboardController(object):
     def callMatchController(self):
         # self.matchView.u
         self.admin_matchs_controller.start()
+
+    
+    def callBackAddFund(self):
+        self.addFundsView.show()
+        self.addFundsView.btn_increase_amount_QPB.clicked.connect(
+            lambda: self.callbackButtonAmount())
+
+    def callbackButtonAmount(self):
+        code_user = self.addFundsView.code_user_QLE.text()
+        amount_increase = self.addFundsView.amount_increase_QLE.text()
+
+        if self.util.valid_str(code_user) and self.util.valid_float(amount_increase):
+            
+            user = self.admin_users_controller.getUserByCode(code_user)
+            
+            if user:
+                
+                actn=1   # add fund
+                self.balance_model.code_user = code_user
+                self.balance_model.action = actn
+                self.balance_model.agent_id = self.user_id
+                self.balance_model.montant=amount_increase
+                # save fund
+                self.balance_model.save() 
+                # close QDialog
+                self.addFundsView.clearFields()
+                self.addFundsView.accept()
+        else:
+            QtWidgets.QMessageBox.warning(
+                None, "Error", "Veuillez entrer des valeurs correctes", QtWidgets.QMessageBox.Ok)
 
         # call user controller
     def callUsersController(self):

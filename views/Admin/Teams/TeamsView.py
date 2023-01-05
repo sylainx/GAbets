@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from Helpers.Helpers import Helpers
 
 
-class TeamsView(QtWidgets.QWidget):
+class TeamsView(QtWidgets.QDialog):
 
     def __init__(self, parent=None) -> None:
         super().__init__()

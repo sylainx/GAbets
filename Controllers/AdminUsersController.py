@@ -1,7 +1,10 @@
+from pydoc import Helper
 from PyQt5 import QtWidgets, QtCore, QtGui
 import sys
 import random
 from datetime import date
+from Helpers.Helpers import Helpers
+from views.Admin.Users.AddFundsView import AddFundsView
 from views.Admin.Users.UsersView import UsersView
 from Models.UsersModel import UsersModel
 # views
@@ -17,8 +20,11 @@ class AdminUsersController(object):
 
         # views
         self.usersView = UsersView(self.parent)
+        self.addFundView = AddFundsView(self.parent)
         # models
         self.users_model = UsersModel()
+        # helpers
+        self.util = Helpers()
 
     def start(self, ):
         # Option to show widget
@@ -29,6 +35,7 @@ class AdminUsersController(object):
         self.usersView.table_WDG.cellClicked.connect(
             lambda: self.listenTabEvent())
 
+        
         # to delete user
         self.usersView.deleteBtn.clicked.connect(
             lambda: self.deleteElementEvent())
@@ -51,6 +58,7 @@ class AdminUsersController(object):
         self.usersView.saveBtn.setEnabled(False)
         self.usersView.updateBtn.setEnabled(False)
         self.usersView.deleteBtn.setEnabled(True)
+        self.usersView.addFundBtn.setEnabled(True)
 
         row = self.users_model.search(
             self.usersView.table_WDG.item(index, 0).text())
@@ -81,3 +89,11 @@ class AdminUsersController(object):
         if user:
             return user
         return None
+
+    def getUserByCode(self, code_user):
+        user = self.users_model.searchUserByCode(code_user)
+        if user:
+            return user
+        return None
+
+    

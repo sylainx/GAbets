@@ -3,6 +3,7 @@ import sys
 from Controllers.AdminMatchsController import AdminMatchsController
 from Controllers.PaymentController import PaymentController
 from Controllers.UserController import UserController
+from Models.BalanceModel import BalanceModel
 from Models.BetsModel import BetsModel
 # models
 from Models.PriorityModel import PrioritiesModel
@@ -29,6 +30,7 @@ class DashboardController():
         self.users_model = UsersModel()
         self.ratio_model = RatioModel()
         self.bets_model = BetsModel()
+        self.user_balance_model = BalanceModel()
         # controllers
         self.admin_cont_dash = AdminDashboardController(parent, self.user_id)
         self.users_contr = UserController(parent, self.user_id)
@@ -141,9 +143,9 @@ class DashboardController():
         amount_enter = self.ui_place_bet.amount_info_title_QLE.text()
         if len(amount_enter) > 0 :
             if self.coef:
-                _usr_mt = float(amount_enter) or 0
+                self._usr_mt = float(amount_enter) or 0
                 _coef = float(self.coef) or 0
-                self.montTotal = _coef * _usr_mt                
+                self.montTotal = _coef * self._usr_mt                
                 self.ui_place_bet.lbl_amount_to_win.setText(f"Montant à gagner: {self.montTotal} HTG")
                 return self.montTotal
             else:
@@ -158,16 +160,40 @@ class DashboardController():
 
 
     def makeBetFunc(self):
-        amountToBet = self.get_bet_amount()
-        if amountToBet :
-            self.bets_model.match_id= self.find_match_id
-            self.bets_model.ratio_id = self.coef
-            self.bets_model.amount=amountToBet        
-            self.bets_model.user_id= self.user_id
-            self.bets_model.status= 1
-            self.bets_model.save()
-            self.ui_place_bet.accept()
-
+        
+        if self._usr_mt :
+            # decrement value user
+            user_actual_balance= self.users_contr.get_actual_balance()
+            print(f" Actwsss: {user_actual_balance}")
+            if user_actual_balance and float(user_actual_balance) < 0:
+                user_actual_balance = float(user_actual_balance) #convert to float
+                if user_actual_balance >= self._usr_mt:
+                    print(f"MT Actwsss: {user_actual_balance}")
+                    self.bets_model.match_id= self.find_match_id
+                    self.bets_model.ratio_id = self.coef
+                    self.bets_model.amount=self._usr_mt        
+                    self.bets_model.user_id= self.user_id
+                    self.bets_model.status= 1
+                    # save in DB
+                    self.bets_model.save()
+                    # decrement value user
+                    actn = 2
+                    user_ctrn = self.users_model.searchCodeById(self.user_id)
+                    self.user_balance_model.code_user = user_ctrn[0]
+                    self.user_balance_model.action = actn
+                    self.user_balance_model.montant= self._usr_mt
+                    self.user_balance_model.save()
+                    # end value user
+                    self.ui_place_bet.accept()
+                else:
+                    QtWidgets.QMessageBox.information(
+                        None, "BALANCE ERROR", f"Votre balance est insuffisant pour placer ce pari {user_actual_balance}", QtWidgets.QMessageBox.Ok)
+            else:
+                QtWidgets.QMessageBox.information(
+                    None, "BALANCE ERROR", f"Vous ne pouvez pas realiser cette action: balance  {user_actual_balance}", QtWidgets.QMessageBox.Ok)
+        else:
+            QtWidgets.QMessageBox.information(
+                None, "AMOUNT ERROR", f"Veuillez entrer votre montant ", QtWidgets.QMessageBox.Ok)
     
     def callAdminDashboard(self):
         self.admin_cont_dash.showDashboard()

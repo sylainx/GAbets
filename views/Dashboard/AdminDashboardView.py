@@ -10,6 +10,7 @@ class Ui_AdminDashboardView(object):
         MainWindow.setObjectName("mainWindow")
         MainWindow.setWindowTitle("ADMIN AG BETS SPORTS")
         MainWindow.setMinimumSize(1235, 600)
+
         MainWindow.setStyleSheet("#title{\n"
                                  "    font-size: 18px;\n"
                                  "    font-weight:bold;\n"
@@ -60,7 +61,8 @@ class Ui_AdminDashboardView(object):
 
         self.MainContentFrame = QtWidgets.QFrame(self.centralwidget)
         self.MainContentFrame.setGeometry(
-            QtCore.QRect(0, 96, 1150, 16777214))
+            QtCore.QRect(0, 96, 1250, 1650))
+        
         # self.centerWidget()
         self.MainContentFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.MainContentFrame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -198,6 +200,19 @@ class Ui_AdminDashboardView(object):
         self.hLayout_centerHeader_FRM.addWidget(self.usersQPB)
         self.usersQPB.clicked.connect(lambda: self.printBet())
         # end users BTN
+        
+        # start addFund BTN
+        self.addFundsQPB = QtWidgets.QPushButton(self.centerHeaderFrame)
+        self.addFundsQPB.setStyleSheet("background-color: #1E1E1E;\n"
+                                    "color: #FAFAFA;\n"
+                                    "border-radius: 10px;\n"
+                                    "padding: 10px 15px;\n"
+                                    "")
+        self.addFundsQPB.setObjectName("addFundsQPB")
+        self.addFundsQPB.setText("Add funds")
+        self.hLayout_centerHeader_FRM.addWidget(self.addFundsQPB)
+        self.addFundsQPB.clicked.connect(lambda: self.printBet())
+        # end addFund BTN
 
         self.hLayout_centerHeader_FRM.setObjectName("hLayout_centerHeader_FRM")
 
@@ -254,6 +269,7 @@ class Ui_AdminDashboardView(object):
                                           "border-radius: 10px")
         self.LeftAsideFrame.setEnabled(True)
         self.LeftAsideFrame.setFixedWidth(MAX_WIDTH)
+        # self.LeftAsideFrame.setMaximumHeight(MAX_WIDTH * 1.5)
 
         vLayout_LeftAsideFrame = QtWidgets.QVBoxLayout(self.LeftAsideFrame)
         vLayout_LeftAsideFrame.setObjectName("verticalLeftAsideFrameLayout")
@@ -300,8 +316,7 @@ class Ui_AdminDashboardView(object):
             vLayout_Central_FRM.addWidget(self.chb_radio)
         # end loop
 
-        # vLayout_Central_FRM.addLayout(vLayout_Central_FRM)
-
+       
         self.LeftAsideFrame.setLayout(vLayout_Central_FRM)
 
     # end showLeftAside
@@ -314,21 +329,18 @@ class Ui_AdminDashboardView(object):
                                              "border-radius: 10px")
         self.centralAsideFrame.setEnabled(True)
         self.centralAsideFrame.setMinimumWidth(MIN_WIDTH)
-
-        self.vLayoutCenterAside = QtWidgets.QVBoxLayout(self.centralAsideFrame)
+        self.vLayoutCenterAside = QtWidgets.QVBoxLayout(self.centralAsideFrame)        
     # end centerAsideFunc
 
     def showListBetsFunc(self):
 
         #  FRAME: START RIGHT ASIDE
         self.table_WDG = QtWidgets.QTableWidget(self.centerHeaderFrame)
-        self.table_WDG.setMinimumWidth(900)
+        # self.table_WDG.setMinimumWidth(900)
         header = ("Id pariage", "Utilisateur", "Montant depensé", "Equipes duMatch", "Date")
 
         self.table_WDG.setColumnCount(len(header))        
-        self.table_WDG.setStyleSheet(
-            "color: #FAFAFA;\n"
-        )
+        self.table_WDG.setStyleSheet("color: #FAFAFA;\n")
         self.table_WDG.setHorizontalHeaderLabels(header)
 
         # add a signal on the QTableWidget
@@ -357,6 +369,22 @@ class Ui_AdminDashboardView(object):
 
             row += 1
 
+    def rightAsideFunc(self):
+
+        self.right_WDG = QtWidgets.QWidget()
+        self.right_WDG.setStyleSheet("background: red")
+        self.vLayout = QtWidgets.QVBoxLayout()
+        self.vLayout.addWidget(self.right_WDG)
+        self.vLayout.setAlignment(QtCore.Qt.AlignTop)
+        self.addFunc_QPB = QtWidgets.QPushButton()
+        # self.addFunc_QPB.setStyleSheet("backgro")
+
+        self.vLayout.addWidget(self.addFunc_QPB)
+
+        self.hMainLayout.addWidget(self.right_WDG)
+
+    # end rightAsideFunc
+        
     def printTest(self):
         print("match is clicked")
         # exit()

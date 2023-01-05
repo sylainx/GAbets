@@ -3,7 +3,7 @@ from Helpers.Helpers import Helpers
 from PyQt5.QtWidgets import QLabel, QRadioButton, QDateEdit, QLineEdit,QWidget
 
 
-class UsersView(QtWidgets.QWidget):
+class UsersView(QtWidgets.QDialog):
 
     def __init__(self, parent=None) -> None:
         super().__init__()

@@ -55,12 +55,13 @@ class MatchsView(QtWidgets.QWidget):
         self.category_teams_CbBx = QtWidgets.QComboBox()
         self.category_teams_CbBx.setStyleSheet(
             "color: #FAFAFA;\n"
+            "margin-bottom: 10px;\n"
         )
 
         self.team_on_category_CbBx = QtWidgets.QComboBox()
         self.team_on_category_CbBx.addItem("Liste des equipes:")
         self.team_on_category_CbBx.setStyleSheet(
-            "background-color: #2C2C2C; color: #FAFAFA")
+            "background-color: #2C2C2C; margin-bottom: 10px; color: #FAFAFA")
 
         # action btn
         hLayout4Btn = QtWidgets.QHBoxLayout()
@@ -71,14 +72,21 @@ class MatchsView(QtWidgets.QWidget):
                                    "border-radius: 10px;\n"
                                    "padding: 10px 15px;")
 
+        self.finishMatchBtn = QtWidgets.QPushButton("Terminer Match")
+        self.finishMatchBtn.setStyleSheet("background-color: #2C2C2C;\n"
+                                     "color: #FAFAFA;\n"
+                                     "border-radius: 10px;\n"
+                                     "padding: 10px 15px;")
+        self.finishMatchBtn.setEnabled(False)
         self.cancelBtn = QtWidgets.QPushButton("Annuler")
-        self.cancelBtn.setStyleSheet("background-color: #2C2C2C;\n"
+        self.cancelBtn.setStyleSheet("background-color: #E62641;\n"
                                      "color: #FAFAFA;\n"
                                      "border-radius: 10px;\n"
                                      "padding: 10px 15px;")
         self.cancelBtn.setEnabled(False)
         # add btn horizontal
         hLayout4Btn.addWidget(self.saveMatchBtn)
+        hLayout4Btn.addWidget(self.finishMatchBtn)
         hLayout4Btn.addWidget(self.cancelBtn)
 
         # add QLineEdit & QComboBox to formLayout
@@ -108,7 +116,6 @@ class MatchsView(QtWidgets.QWidget):
         self.table_WDG.setHorizontalHeaderLabels(header)
         self.table_WDG.setStyleSheet(
             "color: #FAFAFA;\n"
-            "font: 18px"
         )
         # add a signal on the QTableWidget
         # self.table_WDG.cellClicked.connect(lambda:self.eventOnTable())
@@ -186,7 +193,7 @@ class MatchsView(QtWidgets.QWidget):
         # main_FRM.mousePressEvent()
         # main_FRM.setContentsMargins(6,6,6,6)        
         main_FRM.setStyleSheet('background-color: #2C2C2C')
-        main_FRM.setMinimumWidth(600)
+        main_FRM.setMinimumWidth(700)
         vLayout_LineUp = QtWidgets.QVBoxLayout(main_FRM)
         vLayout_LineUp.setContentsMargins(10,10,10,10)
         vLayout_LineUp.setAlignment(QtCore.Qt.AlignTop)
@@ -204,7 +211,7 @@ class MatchsView(QtWidgets.QWidget):
                     f"lineups_container_FRM")
                 # self.lineups_container_FRM.setFixedWidth(MAX_WIDTH)
                 sizePolicy = QtWidgets.QSizePolicy(
-                    QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+                    QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Preferred)
                 sizePolicy.setHorizontalStretch(0)
                 sizePolicy.setVerticalStretch(0)
                 sizePolicy.setHeightForWidth(

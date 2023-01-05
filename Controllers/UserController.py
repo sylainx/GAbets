@@ -31,23 +31,28 @@ class UserController():
     def test(self):
         print("Test")
 
-    
     def get_actual_balance(self):
         if self.user_id:
-            actn=1
-            deposit = self.balance_model.searchForUser(user_id=self.user_id, action=actn)
-            actn=2
-            withdraw = self.balance_model.searchForUser(user_id=self.user_id, action=actn)
-            
-            ###
-            # loop on first data in the list
-            # get first data in tuple
-            # endend calculate sum of new list
-            ###
-            sum_deposit=sum([t[0] for t in deposit])
-            sum_withdraw=sum([t[0] for t in withdraw])
-            
-            return sum_deposit-sum_withdraw
+            user_infos = self.users_model.search(self.user_id)
+
+            if user_infos[5]:
+                actn = 1
+                deposit = self.balance_model.searchForUser(
+                    code_user=user_infos[5], action=actn)
+                actn = 2
+                withdraw = self.balance_model.searchForUser(
+                    code_user=user_infos[5], action=actn)
+
+                ###
+                # loop on first data in the list
+                # get first data in tuple
+                # endend calculate sum of new list
+                ###
+                sum_deposit = sum([t[0] for t in deposit])
+                sum_withdraw = sum([t[0] for t in withdraw])
+                return sum_deposit-sum_withdraw
+
+        return None
 
     def get_user_datas(self):
         if self.user_id:
