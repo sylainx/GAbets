@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Dec 30, 2022 at 06:49 PM
+-- Generation Time: Jan 05, 2023 at 04:09 PM
 -- Server version: 5.7.34
 -- PHP Version: 8.0.8
 
@@ -39,6 +39,15 @@ CREATE TABLE `bets` (
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `bets`
+--
+
+INSERT INTO `bets` (`id`, `match_id`, `ratio_id`, `user_id`, `created_at`, `amount`, `deleted_at`, `agent_id`, `status`) VALUES
+(1, 15, 2, 1, '2023-01-04 00:00:00', 8000, NULL, NULL, '1'),
+(2, 38, 3, 1, '2023-01-04 00:00:00', 135, NULL, NULL, '1'),
+(3, 33, 2, 1, '2023-01-04 00:00:00', 7000, NULL, NULL, '1');
+
 -- --------------------------------------------------------
 
 --
@@ -62,10 +71,32 @@ CREATE TABLE `matchs` (
 --
 
 INSERT INTO `matchs` (`id`, `home_team_id`, `move_team_id`, `priority_id`, `created_at`, `updated_at`, `deleted_at`, `agent_id`, `country`) VALUES
-(1, 15, 16, 2, '2022-12-29 04:36:33', '2022-12-29 04:36:33', NULL, 1, 'Haiti'),
-(5, 18, 20, 1, '2022-12-30 14:44:32', '2022-12-30 14:44:32', NULL, 1, 'Haiti'),
-(6, 24, 28, 1, '2022-12-30 14:44:32', '2022-12-30 14:44:32', NULL, 1, 'Portugal'),
-(7, 25, 26, 5, '2022-12-30 14:44:32', '2022-12-30 14:44:32', NULL, 1, 'Espagne');
+(15, 16, 15, 3, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'PORTUGAL'),
+(16, 15, 16, 3, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'HAITI'),
+(17, 15, 16, 3, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'PORTUGAL'),
+(18, 15, 16, 3, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(19, 16, 15, 3, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(20, 16, 15, 3, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(21, 27, 29, 1, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'PORTUGAL'),
+(22, 18, 24, 1, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(23, 28, 25, 1, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'ESPAGNE'),
+(24, 30, 20, 1, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'PORTUGAL'),
+(25, 26, 31, 1, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(26, 25, 24, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(27, 18, 29, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(28, 27, 16, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'ESPAGNE'),
+(29, 30, 20, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'HAITI'),
+(30, 31, 26, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'HAITI'),
+(31, 18, 27, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'PORTUGAL'),
+(32, 31, 16, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'PORTUGAL'),
+(33, 20, 28, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'PORTUGAL'),
+(34, 25, 26, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'ANGLETERRE'),
+(35, 24, 29, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'ANGLETERRE'),
+(36, 27, 25, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(37, 16, 26, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'HAITI'),
+(38, 31, 24, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'FRANCE'),
+(39, 29, 28, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'PORTUGAL'),
+(40, 18, 30, 4, '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, 1, 'ESPAGNE');
 
 -- --------------------------------------------------------
 
@@ -84,10 +115,30 @@ CREATE TABLE `match_teams` (
 --
 
 INSERT INTO `match_teams` (`match_id`, `home_team_id`, `away_team_id`) VALUES
-(1, 15, 16),
-(5, 18, 20),
-(6, 24, 28),
-(7, 25, 26);
+(17, 15, 16),
+(18, 15, 16),
+(19, 16, 15),
+(20, 16, 15),
+(21, 27, 29),
+(22, 18, 24),
+(23, 28, 25),
+(24, 30, 20),
+(25, 26, 31),
+(26, 25, 24),
+(27, 18, 29),
+(28, 27, 16),
+(29, 30, 20),
+(30, 31, 26),
+(31, 18, 27),
+(32, 31, 16),
+(33, 20, 28),
+(34, 25, 26),
+(35, 24, 29),
+(36, 27, 25),
+(37, 16, 26),
+(38, 31, 24),
+(39, 29, 28),
+(40, 18, 30);
 
 -- --------------------------------------------------------
 
@@ -142,7 +193,7 @@ CREATE TABLE `priority` (
 --
 
 INSERT INTO `priority` (`id`, `title`, `ratio`, `visible`) VALUES
-(1, 'Ligue des champions', 800, 1),
+(1, 'Ligue des champions', 1, 1),
 (2, 'Coupe du monde', 950, 1),
 (3, 'Eliminatoire', 200, 1),
 (4, 'Amical', 100, 1),
@@ -219,9 +270,16 @@ CREATE TABLE `ratios` (
 --
 
 INSERT INTO `ratios` (`id`, `title`, `ratio`, `visible`) VALUES
-(1, 'v1', 1, 1),
-(2, 'v2', 2, 1),
-(3, 'X', 0, 1);
+(1, '1-0', 1, 1),
+(2, '0-0', 3, 1),
+(3, '0-1', 1, 1),
+(4, '1-1', 2, 1),
+(5, '2-0', 3, 1),
+(6, '0-2', 3, 1),
+(7, '3-1', 4, 1),
+(8, '1-3', 3, 1),
+(9, '3-0', 3, 1),
+(10, '0-3', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -231,14 +289,26 @@ INSERT INTO `ratios` (`id`, `title`, `ratio`, `visible`) VALUES
 
 CREATE TABLE `solde` (
   `id` int(100) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `action` int(100) NOT NULL,
+  `code_user` varchar(255) NOT NULL,
+  `action` int(100) NOT NULL COMMENT '1=deposit| 2=withdraw',
   `montant` double NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
-  `deleted_at` datetime NOT NULL,
+  `deleted_at` datetime DEFAULT NULL,
   `agent_id` int(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `solde`
+--
+
+INSERT INTO `solde` (`id`, `code_user`, `action`, `montant`, `created_at`, `updated_at`, `deleted_at`, `agent_id`) VALUES
+(1, 'TEST_2113', 1, 150, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1),
+(2, 'TEST_2113', 1, 5000, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1),
+(3, 'TEST_2113', 2, 450, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1),
+(4, 'TEST_2113', 1, 400, '2023-01-05 00:00:00', '2023-01-05 00:00:00', NULL, 1),
+(5, 'CODE_480', 1, 300, '2023-01-05 00:00:00', '2023-01-05 00:00:00', NULL, 1),
+(6, 'CODE_255', 1, 500, '2023-01-05 00:00:00', '2023-01-05 00:00:00', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -296,16 +366,20 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime DEFAULT NULL,
-  `deleted_at` datetime DEFAULT NULL
+  `deleted_at` datetime DEFAULT NULL,
+  `is_admin` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`, `username`, `nif`, `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'Sylainx', 'Gauthier', 'hi@gmail.com', '4444444', 'TEST_2113', 'John', 'mrtop', '49382888', 'Masculin', '25/25/2022', '$2b$12$mjUuVJn1Z7n3VjmtKYIoQOwLw6MM782YyAI9qJJIORxuuinwZ6pxm', '2022-12-14 02:40:49', '2022-12-13 20:40:55', NULL),
-(2, 'hdhd', 'ksksk', 'hello@gmail.com', 'kdkkdk', '1', 'sksksk', 'sksk', 'dkkd', 'Feminin', '2022-12-21', '$2b$12$7JB.9LJHw5KBhXBrTBmhrO3hp3A7BuuGN62A/CAxbI9wCAyW/.n8K', '2022-12-14 00:00:00', '2022-12-14 00:00:00', NULL);
+INSERT INTO `users` (`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`, `username`, `nif`, `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`, `is_admin`) VALUES
+(1, 'Sylainx', 'Gauthier', 'hi@gmail.com', '4444444', 'TEST_2113', 'John', 'mrtop', '49382888', 'Masculin', '25/25/2022', '$2b$12$mjUuVJn1Z7n3VjmtKYIoQOwLw6MM782YyAI9qJJIORxuuinwZ6pxm', '2022-12-14 02:40:49', '2022-12-13 20:40:55', NULL, 1),
+(2, 'hdhd', 'ksksk', 'hello@gmail.com', 'kdkkdk', '1', 'sksksk', 'sksk', 'dkkd', 'Feminin', '2022-12-21', '$2b$12$7JB.9LJHw5KBhXBrTBmhrO3hp3A7BuuGN62A/CAxbI9wCAyW/.n8K', '2022-12-14 00:00:00', '2022-12-14 00:00:00', NULL, NULL),
+(3, 'test', 'test', 'test', '37373772 ', 'CODE_480', 'hell', 'test', '1235', 'Feminin', '2000-01-01', '$2b$12$bMhalBOLaZHOPTg.noxOwuZFnYDF.g/1c3qAcBXyH9MP7eaRrKtsi', '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, NULL),
+(4, 'helllo test', 'hello test', 'hlslsl', 'ddjjd', 'CODE_95', 'test', 'test', '3456789', 'Feminin', '2000-01-01', '$2b$12$I4oMjyZL8qcTIslfoJvUGOnPATEj4wj5POnaQnInK4f9URc9QmDp.', '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, NULL),
+(5, 'tesssss', 'tessss', 'tesskk', '3837377', 'CODE_255', 'delmas', 'tessss', '377373', 'Feminin', '2000-01-01', '$2b$12$/.TkNchQGvdFR3Gl42lCw.ma4.wz6/pYRHBv0PqFezLEwwV.g5dHG', '2023-01-03 00:00:00', '2023-01-03 00:00:00', NULL, NULL);
 
 --
 -- Indexes for dumped tables
@@ -380,7 +454,6 @@ ALTER TABLE `ratios`
 --
 ALTER TABLE `solde`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_solde_user` (`user_id`),
   ADD KEY `FK_solde_agent` (`agent_id`);
 
 --
@@ -396,7 +469,8 @@ ALTER TABLE `teams`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_email` (`email`),
-  ADD UNIQUE KEY `uniq_tel` (`tel`);
+  ADD UNIQUE KEY `uniq_tel` (`tel`),
+  ADD UNIQUE KEY `code_user` (`code_user`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -406,13 +480,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bets`
 --
 ALTER TABLE `bets`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `matchs`
 --
 ALTER TABLE `matchs`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `payments`
@@ -436,13 +510,13 @@ ALTER TABLE `priority`
 -- AUTO_INCREMENT for table `ratios`
 --
 ALTER TABLE `ratios`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `solde`
 --
 ALTER TABLE `solde`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `teams`
@@ -454,7 +528,7 @@ ALTER TABLE `teams`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -512,8 +586,7 @@ ALTER TABLE `priority_teams`
 -- Constraints for table `solde`
 --
 ALTER TABLE `solde`
-  ADD CONSTRAINT `FK_solde_agent` FOREIGN KEY (`agent_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_solde_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `FK_solde_agent` FOREIGN KEY (`agent_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `teams`

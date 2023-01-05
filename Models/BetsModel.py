@@ -13,10 +13,9 @@ class BetsModel:
         self.amount = amount
         self.agent_id = agent_id
         self.status = status
-
         self.util = Helpers()
 
-    def enregistrer(self):
+    def save(self):
         try:
 
             self.obj = DBConnection()

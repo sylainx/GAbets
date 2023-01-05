@@ -46,6 +46,7 @@ class AuthView(QWidget):
             "    height: 30px;\n"
             "    font-weight: bold;\n"
             "    border: 1px solid white;\n"
+            "    color: #FAFAFA;\n"
             "}\n"
             "QLineEdit:focus{\n"
             "    border:0px solid white\n"
@@ -177,9 +178,9 @@ class AuthView(QWidget):
         # adding rows
         # for name and adding input text
         form_layout.addWidget(self.label_title)
-        form_layout.addWidget(QLabel("Username"))
+        form_layout.addWidget(QLabel("Username").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtUsername_QLE)
-        form_layout.addWidget(QLabel("Password"))
+        form_layout.addWidget(QLabel("Password").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtPassword_QLE)
         form_layout.addWidget(self.lbl_errorMessage)
         form_layout.addWidget(self.login_QPB)
@@ -288,30 +289,30 @@ class AuthView(QWidget):
         # adding rows
         # for name and adding input text
         form_layout.addWidget(self.label_title)
-        form_layout.addWidget(QLabel(" First name"))
+        form_layout.addWidget(QLabel(" First name").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtFirstName)
-        form_layout.addWidget(QLabel("Last name"))
+        form_layout.addWidget(QLabel("Last name").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtLastName)
-        form_layout.addWidget(QLabel("User name"))
+        form_layout.addWidget(QLabel("User name").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtUsername)
-        form_layout.addWidget(QLabel("User Email"))
+        form_layout.addWidget(QLabel("User Email").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtEmail)
-        form_layout.addWidget(QLabel("user Adress"))
+        form_layout.addWidget(QLabel("user Adress").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtAdress)
-        form_layout.addWidget(QLabel("user Phone"))
+        form_layout.addWidget(QLabel("user Phone").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtPhone)
 
-        form_layout.addWidget(QLabel("Sexe"))
+        form_layout.addWidget(QLabel("Sexe").setStyleSheet("color:#FAFAFA"))
         form_layout.addLayout(q_gender_LYT)
 
-        form_layout.addWidget(QLabel("Date of birth"))
+        form_layout.addWidget(QLabel("Date of birth").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtDateOfBirth)
 
-        form_layout.addWidget(QLabel("user Nif"))
+        form_layout.addWidget(QLabel("user Nif").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtNif)
-        form_layout.addWidget(QLabel("Password"))
+        form_layout.addWidget(QLabel("Password").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtPassword_QLE)
-        form_layout.addWidget(QLabel("confirm Password"))
+        form_layout.addWidget(QLabel("confirm Password").setStyleSheet("color:#FAFAFA"))
         form_layout.addWidget(self.txtConfirmPassword)
         form_layout.addWidget(self.loginbtn)
 

@@ -72,3 +72,16 @@ class Helpers:
             return True
 
         return False
+
+    def valid_float(self, value: str):
+        if value.isdecimal():
+            if float(value):
+                return True
+
+        return False
+    
+    def valid_int(self, value: int):
+        if int(value):
+            return True
+
+        return False

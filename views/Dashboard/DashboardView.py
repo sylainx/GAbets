@@ -40,6 +40,7 @@ class Ui_DashboardView(QtWidgets.QWidget):
                                  "border-radius: 10px;\n"
                                  "padding: 10px 15px;"
                                  "}"
+                                 "QRadioButton{ color: #FAFAFA;}"
                                  "#loginbtn{\n"
                                  "    margin-top:15px;\n"
                                  "    height:50px;\n"
@@ -52,10 +53,11 @@ class Ui_DashboardView(QtWidgets.QWidget):
                                  "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.centralwidget.setStyleSheet("background:#2C2C2C")
         self.centerWidget()
         self.MainContentFrame = QtWidgets.QFrame(self.centralwidget)
         self.MainContentFrame.setGeometry(
-            QtCore.QRect(0, 96, 1150, 16777214))
+            QtCore.QRect(0, 96, 1250, 1650))
 
         self.MainContentFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.MainContentFrame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -125,7 +127,8 @@ class Ui_DashboardView(QtWidgets.QWidget):
         self.hLayout_LeftHeader_FRM.setContentsMargins(0, 0, 0, 0)
 
         self.lbl_user_name = QtWidgets.QLabel("")
-        self.lbl_user_name.setStyleSheet("font-size: 22px;color: #FAFAFA;")
+        self.lbl_user_name.setStyleSheet(
+            "font-size: 22px;color: #42b883; font-weight: bold")
         self.lbl_user_name.setMaximumWidth(100)
 
         self.hLayout_LeftHeader_FRM.addWidget(self.lbl_user_name)
@@ -264,7 +267,8 @@ class Ui_DashboardView(QtWidgets.QWidget):
         font.setWeight(75)
         self.title.setFont(font)
         self.title.setObjectName("title")
-        self.title.setStyleSheet("margin-bottom: 10px; color: #FAFAFA; padding: 5px;")
+        self.title.setStyleSheet(
+            "margin-bottom: 10px; color:#FAFAFA; padding: 5px;")
 
         vLayout_Central_FRM = QtWidgets.QVBoxLayout(central_FRM)
         vLayout_Central_FRM.setAlignment(QtCore.Qt.AlignTop)
@@ -297,8 +301,8 @@ class Ui_DashboardView(QtWidgets.QWidget):
     # end showLeftAside
 
     def centerAsideFunc(self):
-        MIN_WIDTH = 800
-        MAX_WIDTH = 1000
+        MIN_WIDTH = 1000
+        MAX_WIDTH = 600
         self.centralAsideFrame = QtWidgets.QFrame(self.MainContentFrame)
         self.centralAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
                                              "border-radius: 10px")
@@ -372,8 +376,6 @@ class Ui_DashboardView(QtWidgets.QWidget):
             self.Left_MatchContent_WDG, )
         # end head to head
 
-    
-
     def printTest(self):
         print("match is clicked")
         # exit()
@@ -385,4 +387,3 @@ class Ui_DashboardView(QtWidgets.QWidget):
     def printBet(self):
         print("Bet sport")
         # exit()
-   

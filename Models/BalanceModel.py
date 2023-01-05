@@ -6,8 +6,9 @@ import mysql.connector
 
 class BalanceModel:
 
-    def __init__(self, user_id=None, montant=None, agent_id=None, ):
-        self.user_id = user_id
+    def __init__(self, code_user=None, action=None, montant=None, agent_id=None, ):
+        self.code_user = code_user
+        self.action = action
         self.montant = montant
         self.agent_id = agent_id
         
@@ -19,14 +20,15 @@ class BalanceModel:
             self.obj = DBConnection()
             self.conn = self.obj.connection()
             # creer la chaine de requete
-            requete = " INSERT INTO `solde`(`id`, `user_id`, `montant`, `created_at`, \
+            
+            requete = " INSERT INTO `solde`(`id`, `code_user`, `action`, `montant`, `created_at`, \
                 `updated_at`, `deleted_at`, `agent_id`)\
-                VALUES (%s,%s,%s,%s,%s,%s,%s) "
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s) "
 
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)
             # definir les valeurs
-            valeurs = [None, self.user_id, self.montant, self.util.get_day(), self.util.get_day,
+            valeurs = [None, self.code_user, self.action, self.montant, self.util.get_day(), self.util.get_day(),
             None, self.agent_id]
 
             # executer la requete
@@ -48,19 +50,19 @@ class BalanceModel:
                 self.conn.commit()
                 # retourne le nombre de ligne affecte
                 QMessageBox.information(
-                    None, "Confirmation", "Enregistrement reussi", QMessageBox.Ok)
+                    None, "Confirmation - balance", "Enregistrement reussi", QMessageBox.Ok)
                 return inserted_id
 
             else:
                 QMessageBox.warning(
-                    None, "Error", "Quelque chose s'est mal passé", QMessageBox.Ok)
+                    None, "Error - balance", "BLC- Quelque chose s'est mal passé", QMessageBox.Ok)
             
             # validation du changement au niveau de la table
             self.cursor.close()
             self.conn.commit()
             
         except mysql.connector.Error as erreur:
-            QMessageBox.warning(None, "Erreur", "Erreur " +
+            QMessageBox.warning(None, "Erreur - balance", "BLC- Erreur " +
                                 str(erreur), QMessageBox.Ok)
             # fermer le cursor
             self.cursor.close()
@@ -82,7 +84,7 @@ class BalanceModel:
 
         except mysql.connector.Error as erreur:
             QMessageBox.warning(
-                None, "Erreur", "Impossible d'acceder a la BD " + str(erreur), QMessageBox.Ok)
+                None, "Erreur - balance", "BLC- Impossible d'acceder a la BD " + str(erreur), QMessageBox.Ok)
             # fermer le cursor
             self.cursor.close()
             # tester si la connexion est ouverte
@@ -104,7 +106,7 @@ class BalanceModel:
 
         except mysql.connector.Error as erreur:
             QMessageBox.warning(
-                None, "Erreur", "Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
+                None, "Erreur - balance", "BLC- Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
             # fermer le cursor
             self.cursor.close()
             # tester si la connexion est ouverte
@@ -114,24 +116,24 @@ class BalanceModel:
         return self.liste
 
 
-    def searchForUser(self, user_id, action=None):
+    def searchForUser(self, code_user, action=None):
         try:
             obj = DBConnection()
             self.conn = obj.connection()
-            requete = " SELECT montant,action,user_id FROM `solde` WHERE user_id=%s "
+            requete = " SELECT montant,action,code_user FROM `solde` WHERE code_user=%s "
             if action and action == 1 or action== 2:
                 requete += "AND action= %s"
             else:
                 requete += ""   # empty but necessary
             
             self.cursor = self.conn.cursor()
-            valeur = (user_id,action)
+            valeur = (code_user,action)
             self.cursor.execute(requete, valeur)
             self.liste = self.cursor.fetchall()
 
         except mysql.connector.Error as erreur:
             QMessageBox.warning(
-                None, "Erreur", "Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
+                None, "Erreur - balance", "BLC- Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
             # fermer le cursor
             self.cursor.close()
             # tester si la connexion est ouverte
@@ -146,18 +148,18 @@ class BalanceModel:
         try:
             obj = DBConnection()
             self.conn = obj.connection()
-            requete = " UPDATE `solde` SET user_id=%s, montant=%s, agent_id=%s,\
+            requete = " UPDATE `solde` SET code_user=%s, montant=%s, agent_id=%s,\
                 WHERE id=%s"
-            valeurs = (self.user_id, self.montant, self.agent_id, id)
+            valeurs = (self.code_user, self.montant, self.agent_id, id)
 
             self.cursor = self.conn.cursor()
             self.cursor.execute(requete, valeurs)
             self.conn.commit()
             QMessageBox.information(
-                None, "Confirmation", "Modification reussie", QMessageBox.Ok)
+                None, "Confirmation - balance", "BLC- Modification reussie", QMessageBox.Ok)
         except mysql.connector.Error as erreur:
             QMessageBox.warning(
-                None, "Erreur", "Impossible d'acceder a la BD " + str(erreur), QMessageBox.Ok)
+                None, "Erreur - balance", "BLC- Impossible d'acceder a la BD " + str(erreur), QMessageBox.Ok)
             # fermer le cursor
             self.cursor.close()
             # tester si la connexion est ouverte
@@ -175,13 +177,13 @@ class BalanceModel:
             valeur = (id,)
             self.cursor = self.conn.cursor()
             rep = QMessageBox.question(
-                None, "Confirmation", "Voulez-vous supprimer cette inscription", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+                None, "Confirmation - balance", "BLC- Voulez-vous supprimer cette inscription", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
             if rep == QMessageBox.Yes:
                 self.cursor.execute(requete, valeur)
                 self.conn.commit()
         except mysql.connector.Error as erreur:
             QMessageBox.warning(
-                None, "Erreur", "Impossible de surpprimer cett inscription: " + str(erreur), QMessageBox.Ok)
+                None, "Erreur - balance", "BLC- Impossible de surpprimer cett inscription: " + str(erreur), QMessageBox.Ok)
             # fermer le cursor
             self.cursor.close()
             # tester si la connexion est ouverte
