@@ -194,7 +194,7 @@ class AdminMatchsController(object):
         if team:
             return team
 
-        return False
+        return None
 
     def calculate_coefficient(self, pririotyMatch:int, t1Lvl: int, t2Lvl: int, ratioQuote):
         if pririotyMatch != None and t1Lvl !=  None and t2Lvl != None and ratioQuote  != None :

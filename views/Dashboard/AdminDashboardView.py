@@ -56,6 +56,7 @@ class Ui_AdminDashboardView(object):
                                  "")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
+        self.centralwidget.setStyleSheet("background-color: #2c2c2c")
 
         self.MainContentFrame = QtWidgets.QFrame(self.centralwidget)
         self.MainContentFrame.setGeometry(
@@ -184,14 +185,14 @@ class Ui_AdminDashboardView(object):
         self.teamQPB.setText("Equipes")
         self.hLayout_centerHeader_FRM.addWidget(self.teamQPB)
         # end team BTN
-        
+
         # start users BTN
         self.usersQPB = QtWidgets.QPushButton(self.centerHeaderFrame)
         self.usersQPB.setStyleSheet("background-color: #1E1E1E;\n"
-                                   "color: #FAFAFA;\n"
-                                   "border-radius: 10px;\n"
-                                   "padding: 10px 15px;\n"
-                                   "")
+                                    "color: #FAFAFA;\n"
+                                    "border-radius: 10px;\n"
+                                    "padding: 10px 15px;\n"
+                                    "")
         self.usersQPB.setObjectName("usersQPB")
         self.usersQPB.setText("Utilisateurs")
         self.hLayout_centerHeader_FRM.addWidget(self.usersQPB)
@@ -263,6 +264,7 @@ class Ui_AdminDashboardView(object):
 
         self.title = QtWidgets.QLabel(central_FRM)
         self.title.setText("Catégories")
+        self.title.setStyleSheet("color:#FAFAFA")
         font = QtGui.QFont()
         font.setFamily("JetBrains Mono")
         # font.setPointSize(-1)
@@ -285,6 +287,7 @@ class Ui_AdminDashboardView(object):
             id_, name, prio, visibility = type_row
             self.chb_radio = QtWidgets.QRadioButton()
             self.chb_radio.setText(f"{name}")
+            self.chb_radio.setStyleSheet("color:#FAFAFA")
             font = QtGui.QFont()
             font.setFamily("JetBrains Mono")
             font.setPointSize(14)
@@ -304,88 +307,55 @@ class Ui_AdminDashboardView(object):
     # end showLeftAside
 
     def centerAsideFunc(self):
-        MIN_WIDTH = 800
+        MIN_WIDTH = 900
         MAX_WIDTH = 1000
         self.centralAsideFrame = QtWidgets.QFrame(self.MainContentFrame)
         self.centralAsideFrame.setStyleSheet("background-color: #1E1E1E;\n"
                                              "border-radius: 10px")
         self.centralAsideFrame.setEnabled(True)
-        self.centralAsideFrame.setContentsMargins(0, 0, 0, 0)
         self.centralAsideFrame.setMinimumWidth(MIN_WIDTH)
 
         self.vLayoutCenterAside = QtWidgets.QVBoxLayout(self.centralAsideFrame)
     # end centerAsideFunc
 
-    def showListMatch(self):
+    def showListBetsFunc(self):
 
         #  FRAME: START RIGHT ASIDE
-        self.ListMatchContent_FRM = QtWidgets.QFrame(self.MainContentFrame)
+        self.table_WDG = QtWidgets.QTableWidget(self.centerHeaderFrame)
+        self.table_WDG.setMinimumWidth(900)
+        header = ("Id pariage", "Utilisateur", "Montant depensé", "Equipes duMatch", "Date")
 
-        self.ListMatchContent_FRM.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.ListMatchContent_FRM.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.ListMatchContent_FRM.setContentsMargins(0, 0, 0, 0)
-        self.ListMatchContent_FRM.setObjectName("ListMatchContent_FRM")
-        #
-        self.hLayout_ListMatchContent_FRM = QtWidgets.QHBoxLayout(
-            self.ListMatchContent_FRM)
-        self.hLayout_ListMatchContent_FRM.setObjectName(
-            "hLayout_ListMatchContent_FRM")
-        self.hLayout_ListMatchContent_FRM.setContentsMargins(0, 0, 0, 0)
-
-        # start left match content
-        self.Left_MatchContent_WDG = QtWidgets.QWidget(
-            self.ListMatchContent_FRM)
-        self.Left_MatchContent_WDG.setObjectName("Left_MatchContent_WDG")
-        self.vLayout_MatchContent = QtWidgets.QVBoxLayout(
-            self.Left_MatchContent_WDG)
-        self.vLayout_MatchContent.setContentsMargins(0, 0, 0, 0)
-        # self.vLayout_MatchContent.setSpacing(10)
-        self.vLayout_MatchContent.setObjectName("vLayout_MatchContent")
-
-        self.images_WDG = QtWidgets.QWidget(self.Left_MatchContent_WDG)
-        self.images_WDG.setMaximumSize(QtCore.QSize(400, 200))
-        self.images_WDG.setStyleSheet("background-image: url(./assets/images/tt.png);\n"
-                                      "border-radius: 15px;")
-        self.images_WDG.setObjectName("images_WDG")
-        self.vLayout_Image_WDG = QtWidgets.QVBoxLayout(self.images_WDG)
-        self.vLayout_Image_WDG.setContentsMargins(0, 0, 0, 0)
-        self.vLayout_Image_WDG.setSpacing(0)
-        self.vLayout_Image_WDG.setObjectName("vLayout_Image_WDG")
-        self.lbl_coverImage = QtWidgets.QLabel(self.images_WDG)
-        self.lbl_coverImage.setObjectName("label")
-
-        self.vLayout_Image_WDG.addWidget(self.lbl_coverImage)
-        self.vLayout_MatchContent.addWidget(self.images_WDG)
-
-        self.LineUpsContainer_WDG = QtWidgets.QWidget(
-            self.Left_MatchContent_WDG)
-
-        self.LineUpsContainer_WDG.setStyleSheet(
-            "background-color: #1E1E1E;"
-            "border-radius: 15px;"
+        self.table_WDG.setColumnCount(len(header))        
+        self.table_WDG.setStyleSheet(
+            "color: #FAFAFA;\n"
         )
-        self.LineUpsContainer_WDG.setObjectName("lineupsContainer")
+        self.table_WDG.setHorizontalHeaderLabels(header)
 
-        # TODO: content list of matchs
-        self.vLayout_ToLineUpContainer = QtWidgets.QVBoxLayout(
-            self.LineUpsContainer_WDG)
-        self.vLayout_ToLineUpContainer.setObjectName(
-            "vLayout_ToLineUpContainer")
-        self.vLayout_ToLineUpContainer.setAlignment(QtCore.Qt.AlignTop)
+        # add a signal on the QTableWidget
+        # self.table_WDG.cellClicked.connect(lambda: self.eventOnTable())
+        self.vLayoutCenterAside.addWidget(self.table_WDG)
 
-        self.vLayout_MatchContent.addWidget(self.LineUpsContainer_WDG)
-        self.hLayout_ListMatchContent_FRM.addWidget(
-            self.Left_MatchContent_WDG, )
-        # end head to head
+    def loadDatas(self, list):
 
-        self.right_details = QtWidgets.QWidget(self.ListMatchContent_FRM)
-        self.right_details.setStyleSheet("background-color: #2C2C2C; ")
-        self.right_details.setObjectName("right_details")
-        self.hLayout_ListMatchContent_FRM.addWidget(self.right_details)
+        self.table_WDG.setRowCount(len(list))
+        self.table_WDG.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
 
-        # self.vLayout_ToLineUpContainer.addWidget(self.ListMatchContent_FRM)
+        row = 0
+        for i in list:
+            self.table_WDG.setColumnWidth(row,200)
 
-        # TODO: end cent
+            self.table_WDG.setItem(
+                row, 0, QtWidgets.QTableWidgetItem(str(i['id'])))
+            self.table_WDG.setItem(
+                row, 1, QtWidgets.QTableWidgetItem(str(i['user'])))
+            self.table_WDG.setItem(
+                row, 2, QtWidgets.QTableWidgetItem(str(i['amount'])))
+            self.table_WDG.setItem(
+                row, 3, QtWidgets.QTableWidgetItem(str(i['match'])))
+            self.table_WDG.setItem(
+                row, 4, QtWidgets.QTableWidgetItem(str(i['date'])))
+
+            row += 1
 
     def printTest(self):
         print("match is clicked")

@@ -53,6 +53,9 @@ class MatchsView(QtWidgets.QWidget):
 
         # will get Categories of team
         self.category_teams_CbBx = QtWidgets.QComboBox()
+        self.category_teams_CbBx.setStyleSheet(
+            "color: #FAFAFA;\n"
+        )
 
         self.team_on_category_CbBx = QtWidgets.QComboBox()
         self.team_on_category_CbBx.addItem("Liste des equipes:")
@@ -103,6 +106,10 @@ class MatchsView(QtWidgets.QWidget):
 
         self.table_WDG.setColumnCount(len(header))
         self.table_WDG.setHorizontalHeaderLabels(header)
+        self.table_WDG.setStyleSheet(
+            "color: #FAFAFA;\n"
+            "font: 18px"
+        )
         # add a signal on the QTableWidget
         # self.table_WDG.cellClicked.connect(lambda:self.eventOnTable())
         self.formLayout.addWidget(self.table_WDG)

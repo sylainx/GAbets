@@ -5,6 +5,8 @@ import sys
 from Controllers.AdminMatchsController import AdminMatchsController
 # 
 from Controllers.AdminUsersController import AdminUsersController
+from Models.BetsModel import BetsModel
+from Models.MatchsModel import MatchsModel
 # models
 from Models.PriorityModel import PrioritiesModel
 from Models.TeamsModel import TeamsModel
@@ -25,6 +27,7 @@ class AdminDashboardController(object):
         # controllers
         self.admin_matchs_controller = AdminMatchsController(self,self.user_id)
         self.admin_users_controller = AdminUsersController(self,self.user_id)
+        
         # views
         self.admin_dashboard_ui = Ui_AdminDashboardView()
         self.teamView = TeamsView()
@@ -33,6 +36,8 @@ class AdminDashboardController(object):
         # models
         self.priority_model = PrioritiesModel()
         self.team_model = TeamsModel()
+        self.bets_model = BetsModel()
+        self.matchs_model = MatchsModel()
         
 
 
@@ -53,13 +58,36 @@ class AdminDashboardController(object):
         self.admin_dashboard_ui.hMainLayout.addWidget(self.admin_dashboard_ui.centralAsideFrame, alignment=QtCore.Qt.AlignJustify)
         
         # get value of child
-        getLineUps = self.admin_matchs_controller.loadLineUpsFunc()
-        self.admin_dashboard_ui.showListMatch()
-        self.admin_dashboard_ui.vLayoutCenterAside.addWidget(self.admin_dashboard_ui.ListMatchContent_FRM)
-        if getLineUps:
-            self.admin_dashboard_ui.vLayout_ToLineUpContainer.addChildWidget(getLineUps)
-        # self.admin_dashboard_ui.hMainLayout.addWidget()
+        self.admin_dashboard_ui.showListBetsFunc()
+        # donnees bets pour afficher dans la table        
+        getBetsData = self.bets_model.show()
+        if getBetsData:
+            list_info_bet = list()
+            # chercher nom equipe:
+            for row in getBetsData:
+                match_id= self.matchs_model.search(row[1])           
+                user= self.admin_users_controller.getUserById(row[3])
 
+                if match_id and user:
+                    hTm = self.team_model.search(match_id[1])[2]
+                    mvTm = self.team_model.search(match_id[2])[2]
+                    print(f"LIST INFO: {hTm} \n")
+                    print(f"LIST INFO: {mvTm} \n")
+                    
+                    if hTm and mvTm:
+                        dict_info_bet={
+                            'id': row[0],
+                            'amount': row[5],
+                            'match': f"{hTm} - {mvTm}",
+                            'user' : f"{user[1]} {user[2]}",
+                            'date' : row[4],
+                        }
+                        list_info_bet.append(dict_info_bet)
+            
+            # end nom equipe:
+            # print(f"LIST INFO: {list_info_bet} ")
+            self.admin_dashboard_ui.loadDatas(list_info_bet)
+        # end donnees bets table        
 
 
         # ======== A C T I O N S  ========

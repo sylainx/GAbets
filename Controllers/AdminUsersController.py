@@ -13,7 +13,7 @@ class AdminUsersController(object):
         self.parent = parent
         self.user_id = user_id
         super().__init__()
-         # controllers
+        # controllers
 
         # views
         self.usersView = UsersView(self.parent)
@@ -21,31 +21,33 @@ class AdminUsersController(object):
         self.users_model = UsersModel()
 
     def start(self, ):
-      # Option to show widget
-      self.usersView.show()
-      list_users = self.users_model.show()
-      if list_users:
-        self.usersView.loadDatas(list_users)
-      self.usersView.table_WDG.cellClicked.connect(lambda:self.listenTabEvent())
+        # Option to show widget
+        self.usersView.show()
+        list_users = self.users_model.show()
+        if list_users:
+            self.usersView.loadDatas(list_users)
+        self.usersView.table_WDG.cellClicked.connect(
+            lambda: self.listenTabEvent())
 
-      # to delete user
-      self.usersView.deleteBtn.clicked.connect(lambda:self.deleteElementEvent())  
-      # end 
-      # 
-      #
+        # to delete user
+        self.usersView.deleteBtn.clicked.connect(
+            lambda: self.deleteElementEvent())
+        # end
+        #
+        #
+
     def deleteElementEvent(self,):
         id = self.usersView.txtCode.text()
         if id:
-          self.users_model.delete(id)
+            self.users_model.delete(id)
         list_users = self.users_model.search()
         if list_users:
-          self.usersView.loadDatas(list_users)
-        
+            self.usersView.loadDatas(list_users)
 
     def listenTabEvent(self):
-          
+
         index = self.usersView.table_WDG.currentRow()
-        
+
         self.usersView.saveBtn.setEnabled(False)
         self.usersView.updateBtn.setEnabled(False)
         self.usersView.deleteBtn.setEnabled(True)
@@ -56,7 +58,8 @@ class AdminUsersController(object):
         if row:
 
             # fill form
-            self.users_model.id = self.usersView.table_WDG.item(index, 0).text()
+            self.users_model.id = self.usersView.table_WDG.item(
+                index, 0).text()
             self.usersView.txtFirstName.setText(str(row[1]))
             self.usersView.txtLastName.setText(str(row[2]))
             self.usersView.txtEmail.setText(str(row[3]))
@@ -65,9 +68,16 @@ class AdminUsersController(object):
             self.usersView.txtUsername.setText(str(row[7]))
             self.usersView.txtNif.setText(str(row[8]))
             if row[9] == "Masculin":
-              self.usersView.rdMale.setChecked(True)
+                self.usersView.rdMale.setChecked(True)
             else:
-              self.usersView.rdFemale.setChecked(True)  
-            self.usersView.txtDateOfBirth.setDate(date.fromisoformat(str(row[10])))
+                self.usersView.rdFemale.setChecked(True)
+            self.usersView.txtDateOfBirth.setDate(
+                date.fromisoformat(str(row[10])))
         else:
-            print("No data found")  
+            print("No data found")
+
+    def getUserById(self, usr_id):
+        user = self.users_model.search(usr_id)
+        if user:
+            return user
+        return None

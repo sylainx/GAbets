@@ -103,12 +103,13 @@ class TeamsModel:
         try:
             self.obj = DBConnection()
             self.conn = self.obj.connection()
-            requete = " SELECT* FROM `teams` WHERE id=%s "
+            requete = " SELECT * FROM `teams` WHERE id=%s "
             self.cursor = self.conn.cursor()
             valeur = (id,)
             self.cursor.execute(requete, valeur)
             self.liste = self.cursor.fetchone()
 
+            return self.liste
         except mysql.connector.Error as erreur:
             QMessageBox.warning(
                 None, "Erreur", "Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
@@ -118,7 +119,7 @@ class TeamsModel:
             if self.conn.is_connected():
                 # fermer la connexion
                 self.conn.close()
-        return self.liste
+        return None
 
     def searchByName(self, title:str):
         try:
