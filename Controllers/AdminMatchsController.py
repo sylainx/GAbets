@@ -43,6 +43,8 @@ class AdminMatchsController(object):
             lambda: self.findSelectedCategory())
         self.matchView.saveMatchBtn.clicked.connect(
             lambda: self.saveRandomMatch())
+        self.matchView.finishMatchBtn.clicked.connect(
+            lambda: self.callFinishMatchFunc())
 
         list_of_category_match = self.priority_model.show()
 
@@ -208,6 +210,12 @@ class AdminMatchsController(object):
             return odds
 
         return 100
+
+    
+
+    def callFinishMatchFunc(self):
+        print(f"finish mathc \n\n{self.get_match_by_id()}\n\n\n")
+        
 
     def closeMatchsWidget(self):
         """ 

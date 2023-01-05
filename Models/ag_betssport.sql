@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jan 04, 2023 at 01:16 AM
+-- Generation Time: Jan 05, 2023 at 04:09 PM
 -- Server version: 5.7.34
 -- PHP Version: 8.0.8
 
@@ -38,6 +38,15 @@ CREATE TABLE `bets` (
   `agent_id` int(11) DEFAULT NULL,
   `status` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bets`
+--
+
+INSERT INTO `bets` (`id`, `match_id`, `ratio_id`, `user_id`, `created_at`, `amount`, `deleted_at`, `agent_id`, `status`) VALUES
+(1, 15, 2, 1, '2023-01-04 00:00:00', 8000, NULL, NULL, '1'),
+(2, 38, 3, 1, '2023-01-04 00:00:00', 135, NULL, NULL, '1'),
+(3, 33, 2, 1, '2023-01-04 00:00:00', 7000, NULL, NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -184,7 +193,7 @@ CREATE TABLE `priority` (
 --
 
 INSERT INTO `priority` (`id`, `title`, `ratio`, `visible`) VALUES
-(1, 'Ligue des champions', 800, 1),
+(1, 'Ligue des champions', 1, 1),
 (2, 'Coupe du monde', 950, 1),
 (3, 'Eliminatoire', 200, 1),
 (4, 'Amical', 100, 1),
@@ -262,8 +271,15 @@ CREATE TABLE `ratios` (
 
 INSERT INTO `ratios` (`id`, `title`, `ratio`, `visible`) VALUES
 (1, '1-0', 1, 1),
-(2, '2-0', 2, 1),
-(3, '0-1', 0, 1);
+(2, '0-0', 3, 1),
+(3, '0-1', 1, 1),
+(4, '1-1', 2, 1),
+(5, '2-0', 3, 1),
+(6, '0-2', 3, 1),
+(7, '3-1', 4, 1),
+(8, '1-3', 3, 1),
+(9, '3-0', 3, 1),
+(10, '0-3', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -273,7 +289,7 @@ INSERT INTO `ratios` (`id`, `title`, `ratio`, `visible`) VALUES
 
 CREATE TABLE `solde` (
   `id` int(100) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `code_user` varchar(255) NOT NULL,
   `action` int(100) NOT NULL COMMENT '1=deposit| 2=withdraw',
   `montant` double NOT NULL,
   `created_at` datetime NOT NULL,
@@ -286,10 +302,13 @@ CREATE TABLE `solde` (
 -- Dumping data for table `solde`
 --
 
-INSERT INTO `solde` (`id`, `user_id`, `action`, `montant`, `created_at`, `updated_at`, `deleted_at`, `agent_id`) VALUES
-(1, 1, 1, 150, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1),
-(2, 1, 1, 5000, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1),
-(3, 1, 2, 450, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1);
+INSERT INTO `solde` (`id`, `code_user`, `action`, `montant`, `created_at`, `updated_at`, `deleted_at`, `agent_id`) VALUES
+(1, 'TEST_2113', 1, 150, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1),
+(2, 'TEST_2113', 1, 5000, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1),
+(3, 'TEST_2113', 2, 450, '2023-01-03 02:32:48', '2023-01-03 02:32:48', NULL, 1),
+(4, 'TEST_2113', 1, 400, '2023-01-05 00:00:00', '2023-01-05 00:00:00', NULL, 1),
+(5, 'CODE_480', 1, 300, '2023-01-05 00:00:00', '2023-01-05 00:00:00', NULL, 1),
+(6, 'CODE_255', 1, 500, '2023-01-05 00:00:00', '2023-01-05 00:00:00', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -325,17 +344,6 @@ INSERT INTO `teams` (`id`, `img`, `title`, `level`, `agent_id`, `created_at`, `u
 (29, 'assets/images/teams/fcb.png', 'Marseille', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
 (30, 'assets/images/teams/fcb.png', 'Monaco', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL),
 (31, 'assets/images/teams/fcb.png', 'Lyon', 1000, 1, '2022-12-30 00:00:00', '2022-12-30 00:00:00', NULL);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `test`
---
-
-CREATE TABLE `test` (
-  `id` int(100) NOT NULL,
-  `name` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -446,7 +454,6 @@ ALTER TABLE `ratios`
 --
 ALTER TABLE `solde`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `FK_solde_user` (`user_id`),
   ADD KEY `FK_solde_agent` (`agent_id`);
 
 --
@@ -457,18 +464,13 @@ ALTER TABLE `teams`
   ADD KEY `FK_team_agent` (`agent_id`);
 
 --
--- Indexes for table `test`
---
-ALTER TABLE `test`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `uniq_email` (`email`),
-  ADD UNIQUE KEY `uniq_tel` (`tel`);
+  ADD UNIQUE KEY `uniq_tel` (`tel`),
+  ADD UNIQUE KEY `code_user` (`code_user`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -478,7 +480,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bets`
 --
 ALTER TABLE `bets`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `matchs`
@@ -508,25 +510,19 @@ ALTER TABLE `priority`
 -- AUTO_INCREMENT for table `ratios`
 --
 ALTER TABLE `ratios`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `solde`
 --
 ALTER TABLE `solde`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `teams`
 --
 ALTER TABLE `teams`
   MODIFY `id` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
-
---
--- AUTO_INCREMENT for table `test`
---
-ALTER TABLE `test`
-  MODIFY `id` int(100) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -590,8 +586,7 @@ ALTER TABLE `priority_teams`
 -- Constraints for table `solde`
 --
 ALTER TABLE `solde`
-  ADD CONSTRAINT `FK_solde_agent` FOREIGN KEY (`agent_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_solde_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `FK_solde_agent` FOREIGN KEY (`agent_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `teams`
