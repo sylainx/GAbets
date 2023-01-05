@@ -111,6 +111,27 @@ class BetsModel:
                 self.conn.close()
         return self.liste
 
+    def searchByUserId(self, user_id):
+        try:
+            obj = DBConnection()
+            self.conn = obj.connection()
+            requete = " SELECT * FROM `bets` WHERE user_id=%s "
+            self.cursor = self.conn.cursor()
+            valeur = (user_id,)
+            self.cursor.execute(requete, valeur)
+            self.liste = self.cursor.fetchall()
+            return self.liste
+        except mysql.connector.Error as erreur:
+            QMessageBox.warning(
+                None, "Erreur", "Impossible de se connecter a la BD " + str(erreur), QMessageBox.Ok)
+            # fermer le cursor
+            self.cursor.close()
+            # tester si la connexion est ouverte
+            if self.conn.is_connected():
+                # fermer la connexion
+                self.conn.close()
+        return None
+
     def update(self, id):
         try:
             obj = DBConnection()

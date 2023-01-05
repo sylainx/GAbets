@@ -15,6 +15,7 @@ from views.Admin.Teams.TeamsView import TeamsView
 from views.Dashboard.DashboardView import Ui_DashboardView
 from Controllers.AdminDashboardController import AdminDashboardController
 from views.Dashboard.PlaceBetView import PlaceBetView
+from views.Dashboard.BetView import BetView
 
 
 class DashboardController():
@@ -38,6 +39,7 @@ class DashboardController():
         # views
         self.ui_place_bet = PlaceBetView()
         self.ui_dashboard = Ui_DashboardView()
+        self.betView = BetView()
         # properties
         self.coef = 0
 
@@ -97,6 +99,10 @@ class DashboardController():
         # ****** L O G O U T  ******
         self.ui_dashboard.logoutQPB.clicked.connect(
             lambda: self.callLogoutFunc())
+
+            #
+        self.ui_dashboard.betsQPBtn.clicked.connect(lambda: self.displayBetFunc())
+        # 
 
     # end showDahboardFunc
     def callPaymentFunc(self):
@@ -206,3 +212,12 @@ class DashboardController():
         self.parent.connected_user = False
         self.parent.toggleConnection()
         # end __INIT__ file
+
+    def displayBetFunc(self):
+        self.betView.show()
+        print(f"sss: {self.user_id}")
+        liste_bet =self.bets_model.searchByUserId(self.user_id)
+        if liste_bet:
+            self.betView.loadDatas(liste_bet)
+        else:
+            print("Nada")

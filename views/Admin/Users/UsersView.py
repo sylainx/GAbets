@@ -155,7 +155,7 @@ class UsersView(QtWidgets.QDialog):
         # add form layout to central Layout
         mainLayout.addLayout(self.text_userLayout)
         mainLayout.addLayout(self.hLayout4Btn)
-        mainLayout.addLayout(self.formLayout)
+       
         self.mainContainer_WDG.setLayout(mainLayout)
 
     def clearFields(self):

@@ -7,7 +7,7 @@ class BetView(QtWidgets.QDialog):
 
     def __init__(self, parent=None) -> None:
         super().__init__()
-        self.setWindowTitle("Users")
+        self.setWindowTitle("Pariages")
         self.setMinimumSize(100, 600)
         self.setMaximumSize(600, 640)
         self.centerWidget()
@@ -15,31 +15,11 @@ class BetView(QtWidgets.QDialog):
         self.setGeometry(
             QtCore.QRect(0, 96, 16777214, 16777214))
         # self.setModal(True)
-        self.setStyleSheet("background-color: #1E1E1E"
-        "QLabel{\n"
-            " \"JetBrains Mono\";\n"
-            "    color: #1E1E1E\n"
-            "}\n"
-            "\n"
-            "QLineEdit{\n"
-            "    border: 1px solid white;\n"
-            "}\n"
-            "QLineEdit:focus{\n"
-            "    border:0px solid white\n"
-            "}\n")
+        self.setStyleSheet("background-color: #2C2C2C")
         
-        # self.imgText_QLB = QtWidgets.QLabel()
-        # self.img_QLB = QtWidgets.QLabel()
-        # self.title_LBL = QtWidgets.QLabel()
-        # self.title_QLE = QtWidgets.QLineEdit()    
-        # self.level_LBL = QtWidgets.QLabel()
-        # self.level_CBB = QtWidgets.QComboBox()
-        # self.teamCategory_LBL = QtWidgets.QLabel()
-        # self.teamCategory_CHB = QtWidgets.QCheckBox()
-
         # call methods
         self.ui()
-        # self.createFormRegister()
+        self.displayForm()
         self.listOfDatas()
 
 
@@ -63,9 +43,17 @@ class BetView(QtWidgets.QDialog):
         mainLayout.addWidget(self.mainContainer_WDG)
         self.setLayout(mainLayout)
 
+    def  displayForm(self):
+       # layout
+        mainLayout = QtWidgets.QVBoxLayout()
         
-
-
+        #
+        self.formLayout = QtWidgets.QVBoxLayout()
+        self.formLayout.setAlignment(QtCore.Qt.AlignTop)    
+        
+        
+        mainLayout.addLayout(self.formLayout)
+        self.mainContainer_WDG.setLayout(mainLayout)
 
     def listOfDatas(self):
         
@@ -76,7 +64,7 @@ class BetView(QtWidgets.QDialog):
         self.table_WDG.setHorizontalHeaderLabels(header)
         # add a signal on the QTableWidget
         # self.table_WDG.cellClicked.connect(lambda:self.eventOnTable())
-        # self.formLayout.addWidget(self.table_WDG)
+        self.formLayout.addWidget(self.table_WDG)
 
     
     def loadDatas(self,list):
@@ -86,8 +74,7 @@ class BetView(QtWidgets.QDialog):
         # end image to load
         self.table_WDG.setRowCount(len(list))
         self.table_WDG.setStyleSheet(
-          "background-color: #2C2C2C;\n"
-           "color: #42b883;\n"
+           "color: #FAFAFA;\n"
            
         )
         row=0

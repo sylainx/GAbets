@@ -19,7 +19,7 @@ from views.Admin.Matchs.MatchsView import MatchsView
 from views.Admin.Teams.TeamsView import TeamsView
 from views.Admin.Users.AddFundsView import AddFundsView
 from views.Admin.Users.UsersView import UsersView
-from views.Dashboard.BetView import BetView
+
 from views.Dashboard.DashboardView import Ui_DashboardView
 
 from views.Dashboard.AdminDashboardView import Ui_AdminDashboardView
@@ -41,7 +41,7 @@ class AdminDashboardController(object):
         self.teamView = TeamsView()
         self.matchView = MatchsView()
         self.userView = UsersView()
-        self.betView = BetView()
+        
         self.addFundsView = AddFundsView()
         self.ui_dashboard = Ui_DashboardView()
         # models
@@ -117,9 +117,7 @@ class AdminDashboardController(object):
         self.admin_dashboard_ui.addFundsQPB.clicked.connect(
             lambda: self.callBackAddFund())
             
-            #
-        self.ui_dashboard.betsQPBtn.clicked.connect(lambda: self.displayBetFunc())
-        # 
+        
         # logout
         self.admin_dashboard_ui.logoutQPB.clicked.connect(
             lambda: self.callLogoutFunc())
@@ -297,5 +295,4 @@ class AdminDashboardController(object):
     def test(self):
         print("Test")
 
-    def displayBetFunc(self):
-        self.bets_model.show()
+    
