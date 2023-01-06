@@ -201,7 +201,8 @@ class DashboardController():
                     self.user_balance_model.code_user = user_ctrn[0]
                     self.user_balance_model.action = actn
                     self.user_balance_model.montant = self._usr_mt
-                    self.user_balance_model.save()
+                    self.user_balance_model.save()                    
+                    self.showDashboard()
                     # end value user
                     self.ui_place_bet.accept()
                 else:

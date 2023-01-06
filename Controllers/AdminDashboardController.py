@@ -267,25 +267,30 @@ class AdminDashboardController(object):
         amount_increase = self.addFundsView.amount_increase_QLE.text()
 
         if self.util.valid_str(code_user) and self.util.valid_float(amount_increase):
-
+            amount_increase= float(amount_increase)
             user = self.admin_users_controller.getUserByCode(code_user)
 
-            if user:
+            if amount_increase > 25 and amount_increase < 1000000:
+                if user:
 
-                actn = 1   # add fund
-                self.balance_model.code_user = code_user
-                self.balance_model.action = actn
-                self.balance_model.agent_id = self.user_id
-                self.balance_model.montant = amount_increase
-                # save fund
-                self.balance_model.save()
-                # close QDialog
-                self.addFundsView.clearFields()
-                self.users_controller.get_actual_balance()
-                self.addFundsView.accept()
+                    actn = 1   # add fund
+                    self.balance_model.code_user = code_user
+                    self.balance_model.action = actn
+                    self.balance_model.agent_id = self.user_id
+                    self.balance_model.montant = amount_increase
+                    # save fund
+                    self.balance_model.save()
+                    # close QDialog
+                    self.addFundsView.clearFields()
+                    self.users_controller.get_actual_balance()
+                    self.showDashboard()
+                    self.addFundsView.accept()
+            else:
+                QtWidgets.QMessageBox.warning(
+                    None, "Error", "La valeur doit etre entre 25 et 1,000,000", QtWidgets.QMessageBox.Ok)
         else:
             QtWidgets.QMessageBox.warning(
-                None, "Error", "Veuillez entrer des valeurs correctes", QtWidgets.QMessageBox.Ok)
+                None, "Error", "Veuillez verifier v∑os informations", QtWidgets.QMessageBox.Ok)
 
         # call user controller
     def callUsersController(self):

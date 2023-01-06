@@ -8,12 +8,10 @@ class UsersView(QtWidgets.QDialog):
     def __init__(self, parent=None) -> None:
         super().__init__()
         self.setWindowTitle("Users")
-        self.setMinimumSize(100, 600)
-        self.setMaximumSize(600, 640)
+        self.setMinimumSize(600,640)
+        self.setMaximumSize(1200, 700)
         self.centerWidget()
-        # self.move(parent.rect().center())
-        self.setGeometry(
-            QtCore.QRect(0, 96, 16777214, 16777214))
+        
         # self.setModal(True)
         self.setStyleSheet("background-color: #1E1E1E"
         "QLabel{\n"
@@ -69,7 +67,7 @@ class UsersView(QtWidgets.QDialog):
         
         #
         self.formLayout = QtWidgets.QVBoxLayout()
-        self.formLayout.setAlignment(QtCore.Qt.AlignTop)
+        # self.formLayout.setAlignment(QtCore.Qt.AlignTop)
 
         self.text_userLayout = QtWidgets.QVBoxLayout()
         self.q_gender_LYT = QtWidgets.QHBoxLayout()
@@ -155,6 +153,7 @@ class UsersView(QtWidgets.QDialog):
         # add form layout to central Layout
         mainLayout.addLayout(self.text_userLayout)
         mainLayout.addLayout(self.hLayout4Btn)
+        mainLayout.addLayout(self.formLayout)
        
         self.mainContainer_WDG.setLayout(mainLayout)
 
@@ -173,7 +172,6 @@ class UsersView(QtWidgets.QDialog):
         self.table_WDG.setColumnCount(len(header))
         self.table_WDG.setHorizontalHeaderLabels(header)
         # add a signal on the QTableWidget
-        self.table_WDG.cellClicked.connect(lambda:self.eventOnTable())
         self.formLayout.addWidget(self.table_WDG)
 
     
@@ -185,13 +183,9 @@ class UsersView(QtWidgets.QDialog):
         self.table_WDG.setRowCount(len(list))
         self.table_WDG.setStyleSheet(
           "background-color: #2C2C2C;\n"
-           "color: #42b883;\n"
-           
-        )
+           "color: #42b883;\n")
         row=0
         for i in list:
-            # imgTable_LBL.setPixmap(QtGui.QPixmap(str(i[1])))
-            # self.table_WDG.setItem(row,0,QtWidgets.QTableWidgetItem(imgTable_LBL))
             self.table_WDG.setItem(row, 0, QtWidgets.QTableWidgetItem(str(i[0])))
             self.table_WDG.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i[1])))
             self.table_WDG.setItem(row, 2, QtWidgets.QTableWidgetItem(str(i[2])))         
@@ -206,9 +200,7 @@ class UsersView(QtWidgets.QDialog):
             row+=1
 
 
-    def eventOnTable(self):
-        index=self.table_WDG.currentRow()
-
+    def changeBtnColor(self):
         
         self.saveBtn.setEnabled(False)
         self.saveBtn.setStyleSheet("background-color: #2C2C2C;\n"

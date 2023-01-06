@@ -282,7 +282,7 @@ class MatchsView(QtWidgets.QWidget):
                 font.setFamily("JetBrains Mono")
                 font.setPointSize(12)
                 self.lbl_score_homeTeam.setFont(font)
-                self.lbl_score_homeTeam.setText("5")
+                self.lbl_score_homeTeam.setText("0")
                 self.lbl_score_homeTeam.setObjectName(
                     f"{row['match_id']} lbl_score_homeTeam")
                 # add LBL_SCORE to HLayout

@@ -318,7 +318,6 @@ class Ui_AdminDashboardView(object):
 
        
         self.LeftAsideFrame.setLayout(vLayout_Central_FRM)
-
     # end showLeftAside
 
     def centerAsideFunc(self):

@@ -38,11 +38,17 @@ class AdminUsersController(object):
         # to delete user
         self.usersView.deleteBtn.clicked.connect(
             lambda: self.deleteElementEvent())
+        self.usersView.updateBtn.clicked.connect(lambda:self.updateUserFunc())
         # end
         #
         #
 
+    def updateUserFunc(self,):
+        self.usersView.changeBtnColor()
+        print("Update")
+
     def deleteElementEvent(self,):
+        self.usersView.changeBtnColor()
         index = self.usersView.table_WDG.currentRow()
         id = self.usersView.table_WDG.item(index, 0).text()
         code_id = int(id)
@@ -57,7 +63,7 @@ class AdminUsersController(object):
         index = self.usersView.table_WDG.currentRow()
 
         self.usersView.saveBtn.setEnabled(False)
-        self.usersView.updateBtn.setEnabled(False)
+        self.usersView.updateBtn.setEnabled(True)
         self.usersView.deleteBtn.setEnabled(True)
         # self.usersView.addFundBtn.setEnabled(True)
 
@@ -80,8 +86,8 @@ class AdminUsersController(object):
                 self.usersView.rdMale.setChecked(True)
             else:
                 self.usersView.rdFemale.setChecked(True)
-            self.usersView.txtDateOfBirth.setDate(
-                date.fromisoformat(str(row[10])))
+            # self.usersView.txtDateOfBirth.setDate(
+            #     date.fromisoformat(str(row[10])))
         else:
             print("No data found")
 
