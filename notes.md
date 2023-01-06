@@ -1,3 +1,10 @@
+#README
+
+GAUTHIER Mario Sylainx S.
+ALEXANDRE Ismael Ludens
+JEAN-BAPTISTE Lens
+
+
 # Dependencies
 
 ### library to install to run this project
