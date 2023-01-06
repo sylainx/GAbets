@@ -100,9 +100,10 @@ class DashboardController():
         self.ui_dashboard.logoutQPB.clicked.connect(
             lambda: self.callLogoutFunc())
 
-            #
-        self.ui_dashboard.betsQPBtn.clicked.connect(lambda: self.displayBetFunc())
-        # 
+        #
+        self.ui_dashboard.betsQPBtn.clicked.connect(
+            lambda: self.displayBetFunc())
+        #
 
     # end showDahboardFunc
     def callPaymentFunc(self):
@@ -126,60 +127,72 @@ class DashboardController():
                 self.ui_place_bet.show()
                 self.ui_place_bet.update_match_info(self.dict_matchSelected)
                 # press one odd button
-                self.ui_place_bet.group_bet_choice.buttonClicked.connect(lambda x:self.changeOddValue(x))
-                # gggg                
-                self.ui_place_bet.amount_info_title_QLE.textChanged.connect(lambda:self.get_bet_amount())
-                self.ui_place_bet.btn_place_bet.clicked.connect(lambda:self.makeBetFunc())
+                self.ui_place_bet.group_bet_choice.buttonClicked.connect(
+                    lambda x: self.changeOddValue(x))
+                # gggg
+                self.ui_place_bet.amount_info_title_QLE.textChanged.connect(
+                    lambda: self.get_bet_amount())
+                self.ui_place_bet.btn_place_bet.clicked.connect(
+                    lambda: self.makeBetFunc())
 
     def changeOddValue(self, btn: QtWidgets.QPushButton):
         self.ui_place_bet.lbl_errorMsg.setVisible(False)
         self.get_bet_amount()
         # valeur cote(odd)
-        self.selectedOdd= btn.text()
-        
+        self.selectedOdd = btn.text()
+
         if self.selectedOdd and self.dict_matchSelected:
             self.coef = self.dict_matchSelected[self.selectedOdd]
-            self.ui_place_bet.lbl_odd_selected_title.setText(f"Coef: {self.coef}")
-            
-    
+            self.ui_place_bet.lbl_odd_selected_title.setText(
+                f"Coef: {self.coef}")
+
     def get_bet_amount(self):
         # montant a gagner
         self.ui_place_bet.lbl_errorMsg.setVisible(False)
 
         amount_enter = self.ui_place_bet.amount_info_title_QLE.text()
-        if len(amount_enter) > 0 :
-            if self.coef:
-                self._usr_mt = float(amount_enter) or 0
-                _coef = float(self.coef) or 0
-                self.montTotal = _coef * self._usr_mt                
-                self.ui_place_bet.lbl_amount_to_win.setText(f"Montant à gagner: {self.montTotal} HTG")
-                return self.montTotal
+        if len(amount_enter) > 0:
+            if amount_enter.isnumeric() and float(amount_enter) >= 25 and float(amount_enter) <= 75000:
+                if self.coef:
+                    self._usr_mt = float(amount_enter) or 0
+                    _coef = float(self.coef) or 0
+                    self.montTotal = _coef * self._usr_mt
+                    self.ui_place_bet.lbl_amount_to_win.setText(
+                        f"Montant à gagner: {self.montTotal} HTG")
+                    return self.montTotal
+                else:
+                    self.ui_place_bet.lbl_errorMsg.setVisible(True)
+                    self.ui_place_bet.lbl_errorMsg.setText(
+                        f"Veuillez selectionner un cote!")
             else:
                 self.ui_place_bet.lbl_errorMsg.setVisible(True)
-                self.ui_place_bet.lbl_errorMsg.setText(f"Veuillez selectionner un cote!")
-        else: 
-            self.montTotal=0
+                self.ui_place_bet.lbl_errorMsg.setText(
+                    f"Veuillez entrer une valeur correcte entre 25 et 75 000!")
+        else:
+            self.montTotal = 0
             self.ui_place_bet.lbl_errorMsg.setVisible(True)
-            self.ui_place_bet.lbl_errorMsg.setText(f"Veuillez entrer une valeur!")
-            
+            self.ui_place_bet.lbl_errorMsg.setText(
+                f"Veuillez entrer une valeur!")
+
         return None
 
-
     def makeBetFunc(self):
-        
-        if self._usr_mt :
+
+        if self._usr_mt:
             # decrement value user
-            user_actual_balance= self.users_contr.get_actual_balance()
-            print(f" Actwsss: {user_actual_balance}")
-            if user_actual_balance and float(user_actual_balance) < 0:
-                user_actual_balance = float(user_actual_balance) #convert to float
+            user_actual_balance = self.users_contr.get_actual_balance()
+            print(f" Actwsss: {type(user_actual_balance)}")
+            print(f" Actwsss: {type(self._usr_mt)}")
+            if float(user_actual_balance):
+                user_actual_balance = float(
+                    user_actual_balance)  # convert to float
                 if user_actual_balance >= self._usr_mt:
                     print(f"MT Actwsss: {user_actual_balance}")
-                    self.bets_model.match_id= self.find_match_id
+                    self.bets_model.match_id = self.find_match_id
                     self.bets_model.ratio_id = self.coef
-                    self.bets_model.amount=self._usr_mt        
-                    self.bets_model.user_id= self.user_id
-                    self.bets_model.status= 1
+                    self.bets_model.amount = self.montTotal
+                    self.bets_model.user_id = self.user_id
+                    self.bets_model.status = 1
                     # save in DB
                     self.bets_model.save()
                     # decrement value user
@@ -187,24 +200,23 @@ class DashboardController():
                     user_ctrn = self.users_model.searchCodeById(self.user_id)
                     self.user_balance_model.code_user = user_ctrn[0]
                     self.user_balance_model.action = actn
-                    self.user_balance_model.montant= self._usr_mt
+                    self.user_balance_model.montant = self._usr_mt
                     self.user_balance_model.save()
                     # end value user
                     self.ui_place_bet.accept()
                 else:
                     QtWidgets.QMessageBox.information(
                         None, "BALANCE ERROR", f"Votre balance est insuffisant pour placer ce pari {user_actual_balance}", QtWidgets.QMessageBox.Ok)
+
             else:
                 QtWidgets.QMessageBox.information(
                     None, "BALANCE ERROR", f"Vous ne pouvez pas realiser cette action: balance  {user_actual_balance}", QtWidgets.QMessageBox.Ok)
         else:
             QtWidgets.QMessageBox.information(
                 None, "AMOUNT ERROR", f"Veuillez entrer votre montant ", QtWidgets.QMessageBox.Ok)
-    
+
     def callAdminDashboard(self):
         self.admin_cont_dash.showDashboard()
-
-
 
     def callLogoutFunc(self):
         self.ui_dashboard.setVisible(False)
@@ -216,7 +228,7 @@ class DashboardController():
     def displayBetFunc(self):
         self.betView.show()
         print(f"sss: {self.user_id}")
-        liste_bet =self.bets_model.searchByUserId(self.user_id)
+        liste_bet = self.bets_model.searchByUserId(self.user_id)
         if liste_bet:
             self.betView.loadDatas(liste_bet)
         else:

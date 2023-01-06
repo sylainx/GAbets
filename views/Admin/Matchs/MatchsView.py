@@ -260,18 +260,18 @@ class MatchsView(QtWidgets.QWidget):
                 # add QPB to HLayout
                 self.hLayout_HomeTeam.addWidget(self.homeTeam_QPB)
 
-                self.lbl_rate_hometeam = QtWidgets.QLabel(self.homeTeam_FRM)
-                self.lbl_rate_hometeam.setContentsMargins(0,0,0,0)
-                font = QtGui.QFont()
-                font.setFamily("JetBrains Mono")
-                font.setPointSize(10)
-                self.lbl_rate_hometeam.setFont(font)
-                self.lbl_rate_hometeam.setStyleSheet("color: #E62641;font:10px;")
-                self.lbl_rate_hometeam.setObjectName(
-                    f"{row['match_id']} lbl_rate_hometeam")
-                self.lbl_rate_hometeam.setText("1.5")
+                # self.lbl_rate_hometeam = QtWidgets.QLabel(self.homeTeam_FRM)
+                # self.lbl_rate_hometeam.setContentsMargins(0,0,0,0)
+                # font = QtGui.QFont()
+                # font.setFamily("JetBrains Mono")
+                # font.setPointSize(10)
+                # self.lbl_rate_hometeam.setFont(font)
+                # self.lbl_rate_hometeam.setStyleSheet("color: #E62641;font:10px;")
+                # self.lbl_rate_hometeam.setObjectName(
+                #     f"{row['match_id']} lbl_rate_hometeam")
+                # self.lbl_rate_hometeam.setText("1.5")
                 # add LBL_RATE to HLayout
-                self.hLayout_HomeTeam.addWidget(self.lbl_rate_hometeam)
+                # self.hLayout_HomeTeam.addWidget(self.lbl_rate_hometeam)
 
                 self.lbl_score_homeTeam = QtWidgets.QLabel(self.homeTeam_FRM)
                 self.lbl_score_homeTeam.setLayoutDirection(
@@ -317,17 +317,17 @@ class MatchsView(QtWidgets.QWidget):
                 self.lbl_score_awayTeam.setFont(font)
                 self.hLayout_awayTeam.addWidget(self.lbl_score_awayTeam)
 
-                self.lbl_rate_awayTeam = QtWidgets.QLabel(self.awayTeam_FRM)
-                self.lbl_rate_awayTeam.setContentsMargins(0,0,0,0)
-                self.lbl_rate_awayTeam.setStyleSheet("color: #E62641;font:10px;")
-                self.lbl_rate_awayTeam.setObjectName(
-                    f"{row['match_id']} lbl_rate_awayTeam")
-                font = QtGui.QFont()
-                font.setFamily("JetBrains Mono")
-                font.setPointSize(12)
-                self.lbl_rate_awayTeam.setFont(font)
-                self.lbl_rate_awayTeam.setText("1.5")
-                self.hLayout_awayTeam.addWidget(self.lbl_rate_awayTeam)
+                # self.lbl_rate_awayTeam = QtWidgets.QLabel(self.awayTeam_FRM)
+                # self.lbl_rate_awayTeam.setContentsMargins(0,0,0,0)
+                # self.lbl_rate_awayTeam.setStyleSheet("color: #E62641;font:10px;")
+                # self.lbl_rate_awayTeam.setObjectName(
+                #     f"{row['match_id']} lbl_rate_awayTeam")
+                # font = QtGui.QFont()
+                # font.setFamily("JetBrains Mono")
+                # font.setPointSize(12)
+                # self.lbl_rate_awayTeam.setFont(font)
+                # self.lbl_rate_awayTeam.setText("1.5")
+                # self.hLayout_awayTeam.addWidget(self.lbl_rate_awayTeam)
 
                 self.qpb_awayTeam = QtWidgets.QPushButton(self.awayTeam_FRM)
                 self.qpb_awayTeam.setLayoutDirection(QtCore.Qt.RightToLeft)

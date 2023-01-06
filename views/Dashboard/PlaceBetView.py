@@ -128,7 +128,7 @@ class PlaceBetView(QtWidgets.QDialog):
                 self.bet_choice_QPB = QtWidgets.QPushButton()
                 self.bet_choice_QPB.setText(f"{title}")
                 self.bet_choice_QPB.setStyleSheet(
-                    "margin:0.5px; background:red;")
+                    "margin:0.5px; background:#1e1e1e; color: #FAFAFA")
                 font = QtGui.QFont()
                 font.setFamily("JetBrains Mono")
                 font.setPointSize(14)
