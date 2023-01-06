@@ -47,9 +47,13 @@ class AuthView(QWidget):
             "    font-weight: bold;\n"
             "    border: 1px solid white;\n"
             "    color: #FAFAFA;\n"
+            "margin: 10px;"
             "}\n"
             "QLineEdit:focus{\n"
             "    border:0px solid white\n"
+            "}\n"
+            "QRadioButton{\n"
+            "    color: #FAFAFA;\n"
             "}\n"
             "")
 
@@ -131,6 +135,7 @@ class AuthView(QWidget):
                                     "text-align:center;\n"
                                     "background-color: #1E1E1E;\n"
                                     "border-radius:10px;\n"
+                                    "border: 1px solid white;\n"
                                     "font-size:15px;\n"
                                     )
 
@@ -153,6 +158,7 @@ class AuthView(QWidget):
         self.no_account_HLYT.addWidget(self.inviteSignUpBtn)
         form_layout.setAlignment(Qt.AlignTop)
         self.label_title = QLabel("Login")
+        
         self.label_title.setAlignment(QtCore.Qt.AlignCenter)
         self.label_title.setStyleSheet("    font-size: 20px;\n"
                                        "    font-weight:bold;\n"
@@ -163,6 +169,8 @@ class AuthView(QWidget):
 
         self.txtUsername_QLE = QLineEdit()
         self.txtPassword_QLE = QLineEdit()
+        self.txtUsername_QLE.setPlaceholderText("Username")
+        self.txtPassword_QLE.setPlaceholderText("Password")
         self.txtPassword_QLE.setEchoMode(QLineEdit.Password)
 
         self.lbl_errorMessage = QLabel()
@@ -173,6 +181,7 @@ class AuthView(QWidget):
             "font-size: 12px;"
             "text-align:center;"
             "margin: 10px 10px 0px 10px;"
+            ""
         )
 
         # adding rows
@@ -231,6 +240,7 @@ class AuthView(QWidget):
                                     "text-align:center;\n"
                                     "background-color: #1E1E1E;\n"
                                     "border-radius:10px;\n"
+                                    "border: 1px solid white;\n"
                                     "font-size:18px;\n"
                                     )
                                     
@@ -275,14 +285,23 @@ class AuthView(QWidget):
         )
 
         self.txtFirstName = QLineEdit()
+        self.txtFirstName.setPlaceholderText("Firstrname")
         self.txtLastName = QLineEdit()
+        self.txtLastName.setPlaceholderText("Lastname")
         self.txtUsername = QLineEdit()
+        self.txtUsername.setPlaceholderText("Username")
         self.txtAdress = QLineEdit()
+        self.txtAdress.setPlaceholderText("User Address")
         self.txtEmail = QLineEdit()
+        self.txtEmail.setPlaceholderText("user Email")
         self.txtPhone = QLineEdit()
+        self.txtPhone.setPlaceholderText("user Phone")
         self.txtNif = QLineEdit()
+        self.txtNif.setPlaceholderText("user Nif")
         self.txtPassword_QLE = QLineEdit()
+        self.txtPassword_QLE.setPlaceholderText("user Password")
         self.txtConfirmPassword = QLineEdit()
+        self.txtConfirmPassword.setPlaceholderText("Confirm Password")
         self.txtConfirmPassword.setEchoMode(QLineEdit.Password)
         self.txtPassword_QLE.setEchoMode(QLineEdit.Password)
 
