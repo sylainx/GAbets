@@ -1,9 +1,31 @@
-# GAbets
+# LIST MEMBERS
 
-Une application de pari sportif en PYTHON, qui permettra aux amateurs de Football de parier sur 
-leurs équipes afin de gagner de l’argent.
+    - GAUTHIER Mario Sylainx S.
+    - ALEXANDRE Ismael Ludens
+    - JEAN-BAPTISTE Lens
+    - MERIDIEN Hachley
 
-Il s’agit d’une application Desktop utilisant l’API graphique PYQT(Version 5) et connectée à un SGBDR (Sqlite ou Mysql).
 
-La première version de cette application 
-comprendra 4 modules
+# Dependencies
+
+### library to install to run this project
+``` shell
+pip install PyQt5
+pip install pyqt-tools
+# download mysql.connect
+pip install mysql.connector
+# download bcrypt
+pip install bcrypt
+
+```
+
+# COLORS
+    rouge: #E62641;
+    color: #FAFAFA; #WHITE
+    GREEN: #106327 
+    light gray: #2C2C2C; 
+    dark gray: #1E1E1E;
+
+
+### BUGS
+    - Duplication pour enregistrer une equipe   

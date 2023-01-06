@@ -337,7 +337,7 @@ class Ui_AdminDashboardView(object):
         #  FRAME: START RIGHT ASIDE
         self.table_WDG = QtWidgets.QTableWidget(self.centerHeaderFrame)
         # self.table_WDG.setMinimumWidth(900)
-        header = ("Id pariage", "Utilisateur", "Montant depensé", "Equipes duMatch", "Date")
+        header = ("Id pariage", "Utilisateur", "Montant a gagner", "Equipes duMatch", "Date")
 
         self.table_WDG.setColumnCount(len(header))        
         self.table_WDG.setStyleSheet("color: #FAFAFA;\n")
