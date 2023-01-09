@@ -277,6 +277,7 @@ class AuthView(QWidget):
         q_gender_LYT.addWidget(self.rdFemale)
         q_gender_LYT.addWidget(self.rdMale)
         # Create date
+        # self.maxDate =
         self.txtDateOfBirth = QDateEdit()
         self.txtDateOfBirth.setDisplayFormat("dd/MM/yyyy")
         self.txtDateOfBirth.setCalendarPopup(True)

@@ -43,7 +43,7 @@ class PlaceBetView(QtWidgets.QDialog):
 
     def createView(self):
 
-        # ======= Details of match =========
+         # ======= Details of match =========
         self.container_details_WDG = QtWidgets.QWidget(self.mainContainer_WDG)
         self.container_details_WDG.setMinimumSize(400, 350)
 

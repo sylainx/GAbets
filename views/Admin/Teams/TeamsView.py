@@ -140,6 +140,7 @@ class TeamsView(QtWidgets.QDialog):
 
         self.table_WDG.setColumnCount(len(header))
         self.table_WDG.setHorizontalHeaderLabels(header)
+        self.table_WDG.setStyleSheet("color: #FAFAFA")
         # add a signal on the QTableWidget
         self.table_WDG.cellClicked.connect(lambda:self.eventOnTable())
         self.formLayout.addWidget(self.table_WDG)

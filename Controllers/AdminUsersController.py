@@ -34,13 +34,11 @@ class AdminUsersController(object):
         self.usersView.table_WDG.cellClicked.connect(
             lambda: self.listenTabEvent())
 
-        
         # to delete user
         self.usersView.deleteBtn.clicked.connect(
             lambda: self.deleteElementEvent())
         self.usersView.updateBtn.clicked.connect(lambda:self.updateUserFunc())
         # end
-        #
         #
 
     def updateUserFunc(self,):

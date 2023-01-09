@@ -8,7 +8,7 @@ class UsersView(QtWidgets.QDialog):
     def __init__(self, parent=None) -> None:
         super().__init__()
         self.setWindowTitle("Users")
-        self.setMinimumSize(600,640)
+        self.setMinimumSize(750,640)
         self.setMaximumSize(1200, 700)
         self.centerWidget()
         
@@ -68,8 +68,9 @@ class UsersView(QtWidgets.QDialog):
         #
         self.formLayout = QtWidgets.QVBoxLayout()
         # self.formLayout.setAlignment(QtCore.Qt.AlignTop)
+        gridLayout = QtWidgets.QGridLayout()
 
-        self.text_userLayout = QtWidgets.QVBoxLayout()
+        self.vLyt_FormView = QtWidgets.QVBoxLayout()
         self.q_gender_LYT = QtWidgets.QHBoxLayout()
         # add radioButton to Widget
         self.rdMale = QRadioButton("Masculin")
@@ -82,7 +83,7 @@ class UsersView(QtWidgets.QDialog):
         self.txtDateOfBirth.setDisplayFormat("dd/MM/yyyy")
         self.txtDateOfBirth.setCalendarPopup(True)
         self.txtDateOfBirth.setStyleSheet(
-            "color: #FAFAFA;\n"
+            "color: #2C2C2C;\n"
         )
 
         self.txtCode = QLineEdit()
@@ -100,26 +101,30 @@ class UsersView(QtWidgets.QDialog):
         self.txtPassword_QLE.setEchoMode(QLineEdit.Password)
 
         # adding rows
-        # for name and adding input text
-        self.text_userLayout.addWidget(QLabel(" First name"))
-        self.text_userLayout.addWidget(self.txtFirstName)
-        self.text_userLayout.addWidget(QLabel("Last name"))
-        self.text_userLayout.addWidget(self.txtLastName)
-        self.text_userLayout.addWidget(QLabel("User name"))
-        self.text_userLayout.addWidget(self.txtUsername)
-        self.text_userLayout.addWidget(QLabel("User Email"))
-        self.text_userLayout.addWidget(self.txtEmail)
-        self.text_userLayout.addWidget(QLabel("user Adress"))
-        self.text_userLayout.addWidget(self.txtAdress)
-        self.text_userLayout.addWidget(QLabel("user Phone"))
-        self.text_userLayout.addWidget(self.txtPhone)
-        self.text_userLayout.addWidget(QLabel("Sexe"))
-        self.text_userLayout.addLayout(self.q_gender_LYT)
-        self.text_userLayout.addWidget(QLabel("Date of birth"))
-        self.text_userLayout.addWidget(self.txtDateOfBirth)
+        gridLayout.addWidget(QLabel(" First name"), 0,0)
+        gridLayout.addWidget(self.txtFirstName, 0,1)
+        gridLayout.addWidget(QLabel("Last name"), 0,2)
+        gridLayout.addWidget(self.txtLastName, 0,3)
 
-        self.text_userLayout.addWidget(QLabel("user Nif"))
-        self.text_userLayout.addWidget(self.txtNif)
+        gridLayout.addWidget(QLabel("User name"), 1,0)
+        gridLayout.addWidget(self.txtUsername, 1,1)
+        gridLayout.addWidget(QLabel("User Email"),1,2)
+        gridLayout.addWidget(self.txtEmail,1,3)
+
+        gridLayout.addWidget(QLabel("user Adress"),2,0)
+        gridLayout.addWidget(self.txtAdress,2,1)
+        gridLayout.addWidget(QLabel("user Phone"),2,2)
+        gridLayout.addWidget(self.txtPhone,2,3)
+        
+        gridLayout.addWidget(QLabel("Sexe"),3,0)
+        gridLayout.addLayout(self.q_gender_LYT,3,1)
+
+        gridLayout.addWidget(QLabel("Date of birth"),4,0)
+        gridLayout.addWidget(self.txtDateOfBirth,4,1)
+        gridLayout.addWidget(QLabel("user Nif"),4,2)
+        gridLayout.addWidget(self.txtNif,4,3)
+        # grid
+        self.vLyt_FormView.addLayout(gridLayout)
 
 
          # action btn        
@@ -151,7 +156,7 @@ class UsersView(QtWidgets.QDialog):
        
 
         # add form layout to central Layout
-        mainLayout.addLayout(self.text_userLayout)
+        mainLayout.addLayout(self.vLyt_FormView)
         mainLayout.addLayout(self.hLayout4Btn)
         mainLayout.addLayout(self.formLayout)
        
@@ -177,14 +182,14 @@ class UsersView(QtWidgets.QDialog):
     
     def loadDatas(self,list):
 
-        # image to load
-        imgTable_LBL = QtWidgets.QLabel()
         # end image to load
         self.table_WDG.setRowCount(len(list))
         self.table_WDG.setStyleSheet(
           "background-color: #2C2C2C;\n"
            "color: #42b883;\n")
         row=0
+        print(f"ROW: {list}")
+        
         for i in list:
             self.table_WDG.setItem(row, 0, QtWidgets.QTableWidgetItem(str(i[0])))
             self.table_WDG.setItem(row, 1, QtWidgets.QTableWidgetItem(str(i[1])))
