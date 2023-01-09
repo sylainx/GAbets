@@ -68,8 +68,11 @@ class TeamsView(QtWidgets.QDialog):
         self.img_QLB.setPixmap(pixmap)
 
         self.title_LBL.setText("Titre")
+        self.title_LBL.setStyleSheet("color: #FAFAFA")
         self.level_LBL.setText("Niveau")
+        self.level_CBB.setStyleSheet("color: #FAFAFA")
         self.teamCategory_LBL.setText("Categorie d'equipe")
+        self.teamCategory_LBL.setStyleSheet("color: #FAFAFA")
         # list combobox
         level_list = list(["10", "100", "1000"])
         self.level_CBB.addItems(level_list)
@@ -112,8 +115,8 @@ class TeamsView(QtWidgets.QDialog):
         hLayout4Btn.addWidget(self.deleteBtn)
         
         # add QLineEdit & QComboBox to formLayout
-        self.formLayout.addWidget(self.imgText_QLB)
-        self.formLayout.addWidget(self.img_QLB)
+        # self.formLayout.addWidget(self.imgText_QLB)
+        # self.formLayout.addWidget(self.img_QLB)
         self.formLayout.addWidget(self.title_LBL)
         self.formLayout.addWidget(self.title_QLE)
         self.formLayout.addWidget(self.level_LBL)

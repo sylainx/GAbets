@@ -69,8 +69,10 @@ class DashboardController():
             self.ui_dashboard.vLayout_ToLineUpContainer.addChildWidget(
                 getLineUps)
         # self.ui_dashboard.hMainLayout.addWidget()
-        self.match_controller.matchView.group_btn_bets.buttonClicked.connect(
-            lambda x: self.matchCallBack(x))
+        
+        if hasattr(self.match_controller.matchView, 'group_btn_bets'):
+            self.match_controller.matchView.group_btn_bets.buttonClicked.connect(
+                lambda x: self.matchCallBack(x))
 
         # load liste des quotes
         ratios = self.ratio_model.show()

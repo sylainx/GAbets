@@ -3,6 +3,7 @@ import sys
 import random
 from Models.MatchTeams import MatchTeams
 from Models.MatchsModel import MatchsModel
+from Models.PlayMatchsModel import PlayMatchModel
 # models
 from Models.PriorityModel import PrioritiesModel
 from Models.RatioModel import RatioModel
@@ -29,6 +30,7 @@ class AdminMatchsController(object):
         self.matchs_model = MatchsModel()
         self.ratios_model = RatioModel()
         self.matchs_team_model = MatchTeams()
+        self.playMatch_model = PlayMatchModel()
 
     def start(self, ):
         # Option to show widget
@@ -147,7 +149,7 @@ class AdminMatchsController(object):
             - the match category
             - and the match date 
         """
-        list_of_matchs = self.matchs_model.show()
+        list_of_matchs = self.matchs_model.get_available_matchs()
         if len(list_of_matchs) > 0:
 
             listMatch_filter = list()
@@ -191,6 +193,7 @@ class AdminMatchsController(object):
             return next(filter(lambda x: x['match_id'] == int(matchId), list_matchs), None)
 
         return None
+    
     def getTeamById(self, team_id):
         team = self.team_model.search(team_id)
         if team:
@@ -214,7 +217,30 @@ class AdminMatchsController(object):
     
 
     def callFinishMatchFunc(self):
-        print(f"finish mathc \n\n{self.get_match_by_id()}\n\n\n")
+        all_matchs = self.loadMatchsFunc()
+        list_match = list()
+        
+        if all_matchs:
+            for match in all_matchs:
+                selected_match = self.get_match_by_id(match['match_id'])
+                if selected_match:
+                    list_match.append(selected_match['match_id'])
+                    # random pour ratio
+                    ratio_selected = self.randomScore()
+                    print(f" Ratio selected: {ratio_selected}")
+                    if ratio_selected:
+                        print(f" Ratio selected: { (ratio_selected[1]).split('-') }")
+                        self.playMatch_model.match_id= selected_match['match_id']
+                        self.playMatch_model.score_1= (ratio_selected[1]).split("-")[0]
+                        self.playMatch_model.score_2= (ratio_selected[1]).split("-")[1]
+                        self.playMatch_model.status= "TERMINER"
+                        self.playMatch_model.agent_id = self.user_id
+                        self.playMatch_model.save()
+                        self.loadMatchsFunc()
+
+        print(f"\n\nall ID matchs \n{list_match}\n\n")
+
+        
         
 
     def closeMatchsWidget(self):
@@ -228,3 +254,11 @@ class AdminMatchsController(object):
 
     def test(self):
         print("Test")
+
+    def randomScore(self,):
+        list_ratio = self.ratios_model.show()
+        print(f"List ratio: {list_ratio}")
+        if list_ratio:
+            ratio = random.choice(list_ratio)
+            if ratio:
+                return ratio

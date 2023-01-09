@@ -284,6 +284,7 @@ class AuthView(QWidget):
         self.txtDateOfBirth.setStyleSheet(
             "color: #FAFAFA;\n"
         )
+        # match date 
 
         self.txtFirstName = QLineEdit()
         self.txtFirstName.setPlaceholderText("Firstrname")

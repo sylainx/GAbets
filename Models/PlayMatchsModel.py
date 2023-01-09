@@ -1,24 +1,20 @@
+from Helpers.Helpers import Helpers
 from Models.dbconnection import DBConnection
 from PyQt5.QtWidgets import QMessageBox
 import mysql.connector
 from datetime import date
 
 
-class RegisterModel:
+class PlayMatchModel:
 
-    def __init__(self, lastname=None, firstname=None, email=None, sexe=None, date_nais=None, tel=None, password=None,
-                 address=None, agent_id=None, username=None, nif=None):
-        self.lastname = lastname
-        self.firstname = firstname
-        self.username = username
-        self.email = email
-        self.sexe = sexe
-        self.date_nais = date_nais
-        self.tel = tel
-        self.password = password
-        self.address = address
-        self.nif = nif
+    def __init__(self, match_id=None, score_1=None, score_2=None, status=None, agent_id=None):
+        self.match_id = match_id
+        self.score_1 = score_1
+        self.score_2 = score_2
+        self.status = status
         self.agent_id = agent_id
+        self.util = Helpers()
+
 
     def save(self):
         try:
@@ -26,19 +22,14 @@ class RegisterModel:
             self.obj = DBConnection()
             self.conn = self.obj.connection()
             
-            # hash password
-            pwd_hashed = self.util.hash_password(self.password)
-
             # creer la chaine de requete
-            requete = " INSERT INTO `play_match`(`id`, `firstname`, `lastname`, `email`, `tel`, `code_user`, `address`, `username`, `nif`, \
-                `sexe`, `dataNais`, `password`, `created_at`, `updated_at`, `deleted_at`) \
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) "
+            requete = " INSERT INTO `play_match`(`id`, `match_id`, `score_1`, `score_2`, `status`, `agent_id`, `created_at`, `updated_at`, `deleted_at`) \
+                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s) "
 
             # definir un cursor
             self.cursor = self.conn.cursor(prepared=True)
             # definir les valeurs
-            valeurs = [None, self.firstname, self.lastname, self.email, self.tel, code_user,
-                       self.address, self.username, self.nif, self.sexe, self.date_nais, pwd_hashed, self.get_day, self.get_day, None]
+            valeurs = [None, self.match_id, self.score_1, self.score_2,self.status, self.agent_id, self.util.get_day(), self.util.get_day() , None]
 
             # executer la requete
             self.cursor.execute(requete, valeurs)
@@ -116,53 +107,3 @@ class RegisterModel:
                 # fermer la connexion
                 self.conn.close()
         return self.liste
-
-    def update(self):
-        try:
-            obj = DBConnection()
-            self.conn = obj.connection()
-            requete = " UPDATE `play_match` SET firstname=%s, lastname=%s, username=%s, email=%s, sexe=%s, datenais=%s, tel=%s, \
-                address=%s, nif=%s, updated_at=%s,\
-             WHERE CODE=%s"
-            valeurs = (self.firstname, self.lastname, self.username, self.email, self.sexe, self.date_nais,
-                       self.tel, self.address, self.nif, self.get_day)
-            self.cursor = self.conn.cursor()
-            self.cursor.execute(requete, valeurs)
-            self.conn.commit()
-            QMessageBox.information(
-                None, "Confirmation", "Modification reussie", QMessageBox.Ok)
-        except mysql.connector.Error as erreur:
-            QMessageBox.warning(
-                None, "Erreur", "Impossible d'acceder a la BD " + str(erreur), QMessageBox.Ok)
-            # fermer le cursor
-            self.cursor.close()
-            # tester si la connexion est ouverte
-            if self.conn.is_connected():
-                # fermer la connexion
-                self.conn.close()
-
-    def delete(self, code):
-
-        try:
-            obj = DBConnection()
-            conn = obj.connection()
-            requete = " DELETE FROM `play_match` WHERE CODE=%s "
-            valeur = (code,)
-            self.cursor = self.conn.cursor()
-            rep = QMessageBox.question(
-                None, "Confirmation", "Voulez-vous supprimer cette inscription", QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-            if rep == QMessageBox.Yes:
-                self.cursor.execute(requete, valeur)
-                self.conn.commit()
-        except mysql.connector.Error as erreur:
-            QMessageBox.warning(
-                None, "Erreur", "Impossible de surpprimer cett inscription: " + str(erreur), QMessageBox.Ok)
-            # fermer le cursor
-            self.cursor.close()
-            # tester si la connexion est ouverte
-            if self.conn.is_connected():
-                # fermer la connexion
-                self.conn.close()
-
-    def get_day(self,):
-        return date.today()

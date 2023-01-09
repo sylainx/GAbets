@@ -159,3 +159,24 @@ class MatchsModel:
 
     def get_day(self,):
         return date.today()
+
+    
+    def get_available_matchs(self):
+        try:
+            self.obj = DBConnection()
+            self.conn = self.obj.connection()
+            # requete de selection
+            requete = " SELECT * FROM matchs WHERE matchs.id NOT IN (SELECT play_match.match_id FROM play_match) "
+            self.cursor = self.conn.cursor()
+            self.cursor.execute(requete)
+            self.liste = self.cursor.fetchall()
+        except mysql.connector.Error as erreur:
+            QMessageBox.warning(
+                None, "Erreur", "Impossible d'acceder a la BD " + str(erreur), QMessageBox.Ok)
+            # fermer le cursor
+            self.cursor.close()
+            # tester si la connexion est ouverte
+            if self.conn.is_connected():
+                # fermer la connexion
+                self.conn.close()
+        return self.liste

@@ -77,7 +77,7 @@ class MatchsView(QtWidgets.QWidget):
                                      "color: #FAFAFA;\n"
                                      "border-radius: 10px;\n"
                                      "padding: 10px 15px;")
-        self.finishMatchBtn.setEnabled(False)
+        
         self.cancelBtn = QtWidgets.QPushButton("Annuler")
         self.cancelBtn.setStyleSheet("background-color: #E62641;\n"
                                      "color: #FAFAFA;\n"
@@ -248,7 +248,7 @@ class MatchsView(QtWidgets.QWidget):
                 
                 self.iconHomeTeam.addPixmap(QtGui.QPixmap("./assets/images/teams/ajax.png"),
                                             QtGui.QIcon.Normal, QtGui.QIcon.Off)
-                self.homeTeam_QPB.setIcon(self.iconHomeTeam)
+                # self.homeTeam_QPB.setIcon(self.iconHomeTeam)
                 self.homeTeam_QPB.setIconSize(QtCore.QSize(32, 32))
                 font = QtGui.QFont()
                 font.setFamily("JetBrains Mono")
@@ -337,7 +337,7 @@ class MatchsView(QtWidgets.QWidget):
                 self.iconAwayTeam = QtGui.QIcon()
                 self.iconAwayTeam.addPixmap(QtGui.QPixmap("./assets/images/teams/fcb.png"),
                                             QtGui.QIcon.Normal, QtGui.QIcon.Off)
-                self.qpb_awayTeam.setIcon(self.iconAwayTeam)
+                # self.qpb_awayTeam.setIcon(self.iconAwayTeam)
                 font = QtGui.QFont()
                 font.setFamily("JetBrains Mono")
                 font.setPointSize(12)
